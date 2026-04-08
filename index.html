@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ค่ายวิศวพัฒน์ 13 | WisawaPat Camp</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* =========================================
+           1. DESIGN SYSTEM & VARIABLES
+           ========================================= */
+        :root {
+            --crimson-red: #8B1A1A; 
+            --glam-white: #FFFFFF;
+            --glam-gray: #F5F7FA; 
+            --text-dark: #2C3E50;
+            --text-muted: #596A7A;
+            --gold-accent: #C5A059; 
+            --footer-bg: #1A1A1A;
+        }
+
+        body { 
+            font-family: 'Sarabun', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: var(--glam-gray); 
+            color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1, h2, h3, h4, h5 { font-family: 'Prompt', sans-serif; }
+
+        /* =========================================
+           2. NAVIGATION BAR & DROPDOWN MENU
+           ========================================= */
+        nav { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 1em 4em; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; 
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); 
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05); 
+        }
+
+        .nav-brand img { height: 45px; width: auto; }
+        
+        .nav-links { display: flex; align-items: center; }
+        .nav-links > a, .dropdown > a { 
+            color: var(--text-dark); text-decoration: none; margin: 0 20px; 
+            font-family: 'Prompt', sans-serif; font-weight: 500; font-size: 1.05em; 
+            position: relative; transition: color 0.3s ease; cursor: pointer;
+        }
+
+        .nav-links > a::after, .dropdown > a::after {
+            content: ''; position: absolute; width: 0; height: 2px;
+            bottom: -5px; left: 0; background-color: var(--crimson-red);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links > a:hover, .dropdown:hover > a { color: var(--crimson-red); }
+        .nav-links > a:hover::after, .dropdown:hover > a::after { width: 100%; }
+
+        /* ระบบ Dropdown Menu แบบคลีนๆ */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { 
+            display: none; position: absolute; background-color: var(--glam-white); 
+            min-width: 240px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            z-index: 1; border-radius: 8px; top: 150%; left: 50%; transform: translateX(-50%);
+            border-top: 3px solid var(--crimson-red); overflow: hidden;
+        }
+        
+        .dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.3s ease; }
+        
+        .dropdown-content a { 
+            color: var(--text-dark); padding: 15px 20px; text-decoration: none; 
+            display: block; margin: 0; font-size: 0.95em; border-bottom: 1px solid #f0f0f0; 
+            transition: all 0.2s ease;
+        }
+        
+        .dropdown-content a:hover { 
+            background-color: var(--glam-gray); color: var(--crimson-red); padding-left: 25px; 
+        }
+
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translate(-50%, 10px); } 
+            to { opacity: 1; transform: translate(-50%, 0); } 
+        }
+
+        .staff-btn { 
+            background-color: var(--glam-white); color: var(--crimson-red); 
+            padding: 8px 25px; border: 1px solid var(--crimson-red); border-radius: 30px; 
+            font-family: 'Prompt', sans-serif; font-weight: 600; cursor: pointer; transition: all 0.3s ease; 
+        }
+        .staff-btn:hover { background-color: var(--crimson-red); color: var(--glam-white); box-shadow: 0 4px 15px rgba(139, 26, 26, 0.2); }
+
+        /* =========================================
+           3. HERO SECTION (หน้าปก)
+           ========================================= */
+        .hero {
+            position: relative; height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center; color: var(--glam-white);
+            background: linear-gradient(rgba(139, 26, 26, 0.75), rgba(44, 62, 80, 0.85)), url('images/ออกไซต์หน้าอบต.เก่า.JPG');
+            background-size: cover; background-position: center; background-attachment: fixed; padding-top: 60px; 
+        }
+
+        .hero h1 { font-size: 4.5em; margin: 0; letter-spacing: 2px; font-weight: 600; text-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .hero h2 { font-size: 1.5em; font-weight: 300; margin: 10px 0 25px 0; color: var(--gold-accent); letter-spacing: 2px; text-transform: uppercase; }
+        .hero p { font-size: 1.2em; font-weight: 300; max-width: 800px; line-height: 1.8; color: #E0E0E0; margin-bottom: 40px; }
+        .hero-btn { background-color: var(--glam-white); color: var(--crimson-red); padding: 15px 45px; text-decoration: none; font-family: 'Prompt', sans-serif; font-size: 1.1em; font-weight: 600; border-radius: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: all 0.3s ease; }
+        .hero-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,0,0,0.3); background-color: var(--glam-gray); }
+
+        /* =========================================
+           4. SHARED CLASSES
+           ========================================= */
+        .section-padding { padding: 100px 10%; }
+        .section-title { text-align: center; font-size: 2.5em; color: var(--crimson-red); margin-bottom: 15px; }
+        .section-subtitle { text-align: center; font-size: 1.2em; color: var(--text-muted); margin-bottom: 50px; font-family: 'Prompt', sans-serif; }
+
+        /* =========================================
+           5. ABOUT SECTION
+           ========================================= */
+        .about-section { background-color: var(--glam-white); }
+        .about-content {
+            max-width: 900px; margin: 0 auto; text-align: justify; font-size: 1.15em; line-height: 1.8; 
+            color: var(--text-dark); background-color: var(--glam-gray); padding: 50px; 
+            border-radius: 12px; border-left: 6px solid var(--crimson-red); box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        }
+
+        /* =========================================
+           6. IMPACT STATS
+           ========================================= */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; margin-top: 40px; }
+        .stat-card { background-color: var(--glam-white); padding: 40px 20px; border-radius: 12px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.04); border-bottom: 4px solid var(--gold-accent); transition: transform 0.3s ease; }
+        .stat-card:hover { transform: translateY(-10px); }
+        .stat-number { font-size: 3.5em; font-weight: 600; color: var(--crimson-red); margin: 0 0 10px 0; font-family: 'Prompt', sans-serif; line-height: 1; }
+        .stat-desc { color: var(--text-muted); font-size: 1.1em; margin: 0; }
+        .philosophy-text { text-align: center; max-width: 800px; margin: 0 auto 50px auto; font-size: 1.25em; line-height: 1.8; color: var(--text-dark); }
+        .philosophy-text strong { color: var(--crimson-red); }
+
+        /* =========================================
+           7. TESTIMONIALS SECTION (ความในใจ)
+           ========================================= */
+        .testimonial-section { background-color: var(--glam-gray); }
+        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
+        .testi-card { background-color: var(--glam-white); padding: 40px 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); position: relative; border-bottom: 4px solid var(--gold-accent); transition: transform 0.3s ease; }
+        .testi-card:hover { transform: translateY(-10px); }
+        .quote-icon { font-family: 'Prompt', sans-serif; font-size: 4em; color: rgba(197, 160, 89, 0.2); position: absolute; top: 10px; right: 20px; line-height: 1; }
+        .testi-text { font-size: 1.1em; color: var(--text-muted); line-height: 1.7; font-style: italic; margin-bottom: 25px; position: relative; z-index: 2; }
+        .testi-profile { display: flex; align-items: center; gap: 15px; border-top: 1px solid #eee; padding-top: 20px; }
+        .testi-img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid var(--crimson-red); }
+        .testi-info h4 { margin: 0; color: var(--crimson-red); font-size: 1.1em; }
+        .testi-info p { margin: 0; font-size: 0.9em; color: var(--text-muted); }
+        .testi-badge { display: inline-block; background-color: var(--crimson-red); color: white; font-size: 0.75em; padding: 3px 8px; border-radius: 12px; margin-top: 5px; font-family: 'Prompt'; font-weight: 400;}
+
+        /* =========================================
+           8. TIMELINE SECTION
+           ========================================= */
+        .timeline-section { background-color: var(--glam-white); }
+        .timeline-container { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 40px; }
+        .timeline-box { background-color: var(--glam-gray); padding: 30px; border-radius: 12px; width: 250px; text-align: center; border-top: 4px solid var(--crimson-red); box-shadow: 0 5px 15px rgba(0,0,0,0.03); transition: all 0.3s ease; }
+        .timeline-box:hover { background-color: var(--crimson-red); color: var(--glam-white); }
+        .timeline-box:hover .timeline-date, .timeline-box:hover .timeline-event, .timeline-box:hover .stat-desc { color: var(--glam-white); }
+        .timeline-date { font-family: 'Prompt', sans-serif; color: var(--gold-accent); font-weight: 600; font-size: 1.1em; margin-bottom: 10px; transition: color 0.3s ease; }
+        .timeline-event { font-weight: bold; font-size: 1.2em; color: var(--text-dark); margin-bottom: 10px; transition: color 0.3s ease; }
+
+        /* =========================================
+           9. TEAM SECTION
+           ========================================= */
+        .team-section { background-color: var(--glam-gray); }
+        .founder-card {
+            background: linear-gradient(135deg, var(--crimson-red), #4A0E0E); color: var(--glam-white);
+            width: 100%; max-width: 700px; margin: 0 auto 60px auto; padding: 40px; border-radius: 16px;
+            display: flex; align-items: center; gap: 35px; box-shadow: 0 15px 35px rgba(139, 26, 26, 0.25);
+            border: 2px solid var(--gold-accent); text-align: left;
+        }
+        .founder-card .team-img-wrapper { margin: 0; width: 150px; height: 150px; flex-shrink: 0; border-color: var(--gold-accent); background-color: var(--glam-white); }
+        .founder-card h4 { color: var(--gold-accent); font-size: 1.8em; margin: 0 0 10px 0; }
+        .founder-card p { color: #E0E0E0; font-size: 1.1em; margin: 0; line-height: 1.6; }
+        
+        .team-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; margin-top: 50px; }
+        .team-card {
+            background-color: var(--glam-white); width: 260px; padding: 40px 20px; border-radius: 16px;
+            text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: all 0.3s ease;
+            border-bottom: 4px solid var(--crimson-red);
+        }
+        .team-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(139, 26, 26, 0.15); }
+        .team-img-wrapper {
+            width: 120px; height: 120px; margin: 0 auto 20px auto; border-radius: 50%; padding: 5px;
+            border: 2px dashed var(--gold-accent); background-color: var(--glam-gray);
+        }
+        .team-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+        .team-name { font-family: 'Prompt', sans-serif; font-size: 1.3em; font-weight: 600; color: var(--text-dark); margin: 0 0 5px 0; }
+        .team-role { font-size: 1.05em; color: var(--crimson-red); font-weight: 500; margin: 0; }
+
+        /* Staff Departments Grid */
+        .staff-departments { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 60px; text-align: left; }
+        .dept-box { background-color: var(--glam-white); padding: 25px 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.03); border-top: 4px solid var(--gold-accent); }
+        .dept-title { color: var(--crimson-red); font-family: 'Prompt', sans-serif; font-size: 1.2em; font-weight: 600; border-bottom: 1px solid #EEEEEE; padding-bottom: 10px; margin-bottom: 15px; margin-top: 0; }
+        .dept-list { list-style: none; padding: 0; margin: 0; color: var(--text-dark); line-height: 1.9; }
+        .dept-list li { position: relative; padding-left: 20px; }
+        .dept-list li::before { content: "•"; color: var(--gold-accent); font-weight: bold; position: absolute; left: 0; font-size: 1.2em; }
+
+        /* =========================================
+           10. SPONSORS SECTION
+           ========================================= */
+        .sponsor-section { background-color: var(--glam-white); text-align: center; }
+        .sponsor-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 40px; opacity: 0.7; }
+        .sponsor-placeholder { 
+            background-color: #E2E8F0; width: 180px; height: 90px; border-radius: 8px; display: flex; 
+            align-items: center; justify-content: center; color: var(--text-muted); font-family: 'Prompt'; 
+            font-size: 0.9em; transition: all 0.3s ease; border: 1px dashed #CBD5E1;
+        }
+        .sponsor-placeholder:hover { opacity: 1; transform: scale(1.05); background-color: var(--glam-white); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+
+        /* =========================================
+           11. FOOTER
+           ========================================= */
+        footer { background-color: var(--footer-bg); color: var(--glam-gray); padding: 60px 10%; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 30px; }
+        .footer-col { flex: 1; min-width: 250px; }
+        .footer-col h4 { color: var(--gold-accent); font-size: 1.3em; border-bottom: 2px solid var(--crimson-red); padding-bottom: 10px; display: inline-block; margin-top: 0; }
+        .footer-col p, .footer-col a { color: #CCCCCC; text-decoration: none; line-height: 1.8; display: block; margin-bottom: 5px; }
+        .footer-col a:hover { color: var(--glam-white); }
+        .footer-bottom { text-align: center; width: 100%; border-top: 1px solid #333; padding-top: 20px; margin-top: 40px; color: #888; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-brand">
+            <img src="images/logo.png" alt="โลโก้ค่ายวิศวพัฒน์">
+        </div>
+        <div class="nav-links">
+            <a href="#about">เกี่ยวกับค่าย</a>
+            
+            <div class="dropdown">
+                <a href="#history">ประวัติค่าย ▾</a>
+                <div class="dropdown-content">
+                    <a href="history/camp12.html">วิศวพัฒน์ 12 (จ.น่าน)</a>
+                    <a href="history/camp11.html">วิศวพัฒน์ 11 (จ.สระแก้ว)</a>
+                    <a href="history/camp10.html">วิศวพัฒน์ 10 (จ.กาญจนบุรี)</a>
+                    <a href="history/camp9.html">วิศวพัฒน์ 9</a>
+                    <a href="history/camp8.html">วิศวพัฒน์ 8</a>
+                </div>
+            </div>
+
+            <a href="#testimonials">ความในใจ</a>
+            <a href="#timeline">แผนดำเนินงาน</a>
+            <a href="#team">ทีมงาน</a>
+        </div>
+        <button class="staff-btn">STAFF PORTAL</button>
+    </nav>
+
+    <section class="hero" id="home">
+        <h1>วิศวพัฒน์ ๑๓</h1>
+        <h2>Understanding • Engaging • Developing</h2>
+        <p>เข้าใจความต้องการของชุมชน เข้าถึงเพื่อร่วมมือกัน และพัฒนาทางออกที่ยั่งยืน<br>ร่วมเป็นส่วนหนึ่งกับชมรมนิสิตทุน คณะวิศวกรรมศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย ในการยกระดับคุณภาพชีวิตชุมชน ผ่านการประยุกต์ใช้องค์ความรู้ทางวิศวกรรมอย่างเต็มรูปแบบ</p>
+        <a href="#timeline" class="hero-btn">ดูรายละเอียดกิจกรรม</a>
+    </section>
+
+    <section id="about" class="section-padding about-section">
+        <h3 class="section-title">หลักการและเหตุผล</h3>
+        <p class="section-subtitle">จุดมุ่งหมายของการสร้างสรรค์ประโยชน์เพื่อชุมชน</p>
+        <div class="about-content">
+            <p>โครงการค่ายวิศวพัฒน์ถือกำเนิดขึ้นจากเจตนารมณ์ร่วมของนิสิตทุนและคณะทำงาน ซึ่งมีจุดมุ่งหมายในการนำองค์ความรู้ทางวิศวกรรมมาประยุกต์ใช้เพื่อสร้างประโยชน์อย่างเป็นรูปธรรมแก่ชุมชนและสังคม นับตั้งแต่การริเริ่มโครงการในปีการศึกษา 2559 โครงการได้ดำเนินงานสืบเนื่อง และขยายความร่วมมือกับชุมชน โดยมุ่งสร้างการพัฒนาที่ยั่งยืนในพื้นที่ พร้อมปลูกฝังจิตสาธารณะ ความรับผิดชอบต่อสังคมและเสริมสร้างภาวะผู้นำแก่นิสิตผู้เข้าร่วมโครงการ</p>
+            <p>โครงการในปีนี้จึงมุ่งเน้น <strong>"การบูรณาการระบบน้ำให้เกิดความสมบูรณ์"</strong> เพื่อให้ชุมชนสามารถใช้งานระบบได้จริงอย่างมีประสิทธิภาพเต็มศักยภาพ ควบคู่กับการก่อสร้างฐานรากวิศวกรรมและโครงสร้างรองรับแผงโซลาร์เซลล์ เพื่อเตรียมความพร้อมพื้นที่สำหรับการติดตั้งและใช้งานระบบพลังงานแสงอาทิตย์อย่างยั่งยืน ณ ชุมชนบ้านเชตวัน ตำบลสันทะ อำเภอนาน้อย จังหวัดน่าน</p>
+        </div>
+    </section>
+
+    <section id="history" class="section-padding" style="background-color: var(--glam-gray);">
+        <h3 class="section-title">ประวัติและผลงานค่ายวิศวพัฒน์</h3>
+        <p class="section-subtitle">เส้นทางการสร้างสรรค์ประโยชน์เพื่อสังคมของพวกเรา</p>
+
+        <img src="images/camp-history-12-1.JPG" alt="ภาพประวัติค่าย 12" style="width: 100%; border-radius: 12px; margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+        
+        <div style="max-width: 800px; margin: 0 auto; background-color: var(--glam-white); padding: 40px; border-radius: 12px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.03); border: 1px dashed #CBD5E1;">
+            <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="var(--gold-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 15px;">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            <h4 style="color: var(--text-dark); font-size: 1.5em; margin-top: 0;">กำลังรวบรวมข้อมูลประวัติค่ายย้อนหลัง</h4>
+            <p style="color: var(--text-muted); font-size: 1.1em; line-height: 1.6;">
+                ทีมงานกำลังเรียบเรียงข้อมูลความสำเร็จและภาพความประทับใจจากค่ายวิศวพัฒน์ในปีก่อนๆ<br>
+                เพื่อนำเสนอให้ทุกท่านได้เห็นถึงเจตนารมณ์ของเราเร็วๆ นี้
+            </p>
+        </div>
+    </section>
+
+    <section id="impact" class="section-padding" style="background-color: var(--glam-white);">
+        <h3 class="section-title">ผลลัพธ์เพื่อความยั่งยืน</h3>
+        <p class="section-subtitle">ความสำเร็จจากโมเดลห้วยน้ำเพี้ย (สิงหาคม 2567 - พฤษภาคม 2568)</p>
+        <p class="philosophy-text">เราไม่ได้เพียงแค่เข้าไปสร้างสิ่งปลูกสร้าง แต่เรา <strong>"ร่วมออกแบบ ร่วมสร้าง และร่วมเรียนรู้"</strong> ไปพร้อมกับชุมชน เพื่อให้มั่นใจว่าทุกการพัฒนา คือสิ่งที่ชุมชนเป็นเจ้าของและสามารถดูแลรักษาต่อไปได้อย่างยั่งยืน</p>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <p class="stat-number">400</p>
+                <p class="stat-desc">ไร่ของพื้นที่การเกษตร<br>ที่เข้าถึงระบบบริหารจัดการน้ำ</p>
+            </div>
+            <div class="stat-card">
+                <p class="stat-number">6,711</p>
+                <p class="stat-desc">ต้นไม้ที่ถูกปลูกเพื่อฟื้นฟูพื้นที่ป่า<br>ลดการทำไร่เลื่อนลอย</p>
+            </div>
+            <div class="stat-card">
+                <p class="stat-number">300</p>
+                <p class="stat-desc">ตัน/ปี ของปริมาณคาร์บอน<br>ที่คาดว่าจะลดลงได้จากการฟื้นฟู</p>
+            </div>
+            <div class="stat-card">
+                <p class="stat-number">12%</p>
+                <p class="stat-desc">อัตราการเติบโตของรายได้เฉลี่ย<br>ของครัวเรือนที่เข้าร่วมโครงการ</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" class="section-padding testimonial-section">
+        <h3 class="section-title">เสียงจากชาวค่าย</h3>
+        <p class="section-subtitle">ประสบการณ์และความประทับใจจากผู้ร่วมอุดมการณ์ในรุ่นที่ผ่านมา</p>
+
+        <div class="testimonial-grid">
+            <div class="testi-card">
+                <div class="quote-icon">"</div>
+                <p class="testi-text">"การได้ลงพื้นที่จริงทำให้เห็นว่า ความรู้ที่เราเรียนมาในห้องเรียนมันสามารถสร้างความเปลี่ยนแปลงให้ชีวิตคนอื่นได้จริงๆ ค่ายนี้สอนให้เราโตขึ้น ทั้งความคิดและการทำงานร่วมกับผู้อื่น"</p>
+                <div class="testi-profile">
+                    <img src="https://ui-avatars.com/api/?name=F&background=8B1A1A&color=fff" alt="รูปผู้เข้าร่วม" class="testi-img">
+                    <div class="testi-info">
+                        <h4>นายใจดี รักเรียน (ฟลุ๊ค)</h4>
+                        <p>ภาควิชาวิศวกรรมเหมืองแร่และปิโตรเลียม ชั้นปีที่ 3</p>
+                        <span class="testi-badge">ผู้เข้าร่วม ค่ายวิศวพัฒน์ 12</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testi-card">
+                <div class="quote-icon">"</div>
+                <p class="testi-text">"เหนื่อยแต่คุ้มค่ามากค่ะ ได้เห็นรอยยิ้มของชาวบ้านตอนที่ระบบน้ำใช้งานได้ มันเป็นความภูมิใจที่อธิบายไม่ถูกเลย แถมยังได้เพื่อนใหม่ต่างภาควิชาที่สนิทกันมาจนถึงทุกวันนี้"</p>
+                <div class="testi-profile">
+                    <img src="https://ui-avatars.com/api/?name=Y&background=C5A059&color=fff" alt="รูปผู้เข้าร่วม" class="testi-img">
+                    <div class="testi-info">
+                        <h4>นางสาวสมหญิง จริงใจ (หญิง)</h4>
+                        <p>ภาควิชาวิศวกรรมโยธา ชั้นปีที่ 4</p>
+                        <span class="testi-badge">ประธานค่ายวิศวพัฒน์ 11</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testi-card">
+                <div class="quote-icon">"</div>
+                <p class="testi-text">"ประทับใจกระบวนการทำงานที่เป็นระบบของค่าย เราไม่ได้แค่ไปสร้างแล้วจบ แต่เรามีกระบวนการ Co-design กับชาวบ้าน ทำให้สิ่งที่สร้างไปเกิดความยั่งยืนจริงๆ"</p>
+                <div class="testi-profile">
+                    <img src="https://ui-avatars.com/api/?name=K&background=2C3E50&color=fff" alt="รูปผู้เข้าร่วม" class="testi-img">
+                    <div class="testi-info">
+                        <h4>นายกล้าหาญ ชาญชัย (กล้า)</h4>
+                        <p>ภาควิชาวิศวกรรมสิ่งแวดล้อม ชั้นปีที่ 2</p>
+                        <span class="testi-badge">สตาฟฝ่ายวิชาการ ค่าย 12</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="timeline" class="section-padding timeline-section">
+        <h3 class="section-title">แผนการดำเนินงาน</h3>
+        <p class="section-subtitle">Roadmap โครงการค่ายวิศวพัฒน์ ประจำปีการศึกษา 2568</p>
+        <div class="timeline-container">
+            <div class="timeline-box">
+                <div class="timeline-date">ตุลาคม 2568</div>
+                <div class="timeline-event">สำรวจและออกแบบ</div>
+                <p class="stat-desc">ลงพื้นที่สำรวจ ออกแบบกิจกรรม และประเมินงบประมาณโครงสร้างพื้นฐาน</p>
+            </div>
+            <div class="timeline-box">
+                <div class="timeline-date">พฤศจิกายน 2568</div>
+                <div class="timeline-event">เปิดรับสมัคร</div>
+                <p class="stat-desc">ประชาสัมพันธ์และเปิดรับลงทะเบียนผู้เข้าร่วมโครงการในระบบ</p>
+            </div>
+            <div class="timeline-box">
+                <div class="timeline-date">16 - 27 ธ.ค. 2568</div>
+                <div class="timeline-event">ลงพื้นที่ปฏิบัติงาน</div>
+                <p class="stat-desc">ลงพื้นที่ก่อสร้างและบูรณาการระบบน้ำ ณ ชุมชนบ้านเชตวัน จ.น่าน</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="team" class="section-padding team-section">
+        <h3 class="section-title">คณะกรรมการดำเนินงาน</h3>
+        <p class="section-subtitle">บุคลากรผู้ร่วมขับเคลื่อนเจตนารมณ์ค่ายวิศวพัฒน์ 13</p>
+        
+        <div class="founder-card">
+            <div class="team-img-wrapper">
+                <img src="https://ui-avatars.com/api/?name=Advisor&background=E2E8F0&color=596A7A&size=200" alt="รูปอาจารย์ที่ปรึกษา" class="team-img">
+            </div>
+            <div>
+                <h4>รศ.ดร. สรรเพชญ ซื้อนิธิไพศาล</h4>
+                <p><strong>อาจารย์ที่ปรึกษาโครงการ / ผู้ริเริ่มโครงการ</strong><br>
+                ผู้คอยให้คำปรึกษา ชี้แนะแนวทาง และสนับสนุนการนำองค์ความรู้ทางวิศวกรรมมาประยุกต์ใช้เพื่อสร้างความยั่งยืนให้กับสังคม</p>
+            </div>
+        </div>
+
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-img-wrapper">
+                    <img src="https://ui-avatars.com/api/?name=P&background=8B1A1A&color=fff&size=150" alt="รูปประธานค่าย" class="team-img">
+                </div>
+                <h4 class="team-name">ณัฐวัฒน์ หงษ์เวียงจันทร์</h4>
+                <p class="team-role">ประธานโครงการ</p>
+            </div>
+
+            <div class="team-card">
+                <div class="team-img-wrapper">
+                    <img src="https://ui-avatars.com/api/?name=VP&background=C5A059&color=fff&size=150" alt="รูปรองประธาน" class="team-img">
+                </div>
+                <h4 class="team-name">ศิรสิทธิ์ รอดพ้น</h4>
+                <p class="team-role">รองประธานฝ่ายสถานที่</p>
+            </div>
+
+            <div class="team-card">
+                <div class="team-img-wrapper">
+                    <img src="https://ui-avatars.com/api/?name=VP&background=C5A059&color=fff&size=150" alt="รูปรองประธาน" class="team-img">
+                </div>
+                <h4 class="team-name">เพ็ชรบุรุษ ปุญสิริกิจจานนท์</h4>
+                <p class="team-role">รองประธานฝ่ายทะเบียน / ประเมินผล</p>
+            </div>
+
+            <div class="team-card">
+                <div class="team-img-wrapper">
+                    <img src="https://ui-avatars.com/api/?name=S&background=C5A059&color=fff&size=150" alt="รูปเลขานุการ" class="team-img">
+                </div>
+                <h4 class="team-name">อภิชัย เมืองแก้ว</h4>
+                <p class="team-role">เลขานุการ / เหรัญญิก</p>
+            </div>
+        </div>
+
+        <h4 style="text-align: center; color: var(--text-dark); margin-top: 80px; font-size: 1.5em;">คณะทำงานฝ่ายต่างๆ</h4>
+        
+        <div class="staff-departments">
+            <div class="dept-box">
+                <h5 class="dept-title">ฝ่ายสถานที่และสวัสดิการ</h5>
+                <ul class="dept-list">
+                    <li>นายวิศวะ ใจดี (หัวหน้าฝ่าย)</li>
+                    <li>นางสาวสายใจ รักงาน</li>
+                    <li>นายสมชาย ขยันทำ</li>
+                </ul>
+            </div>
+            <div class="dept-box">
+                <h5 class="dept-title">ฝ่ายวิชาการและโครงสร้าง</h5>
+                <ul class="dept-list">
+                    <li>นางสาวปัญญา เลิศล้ำ (หัวหน้าฝ่าย)</li>
+                    <li>นายความรู้ คู่ธรรม</li>
+                    <li>นายโครงสร้าง มั่นคง</li>
+                </ul>
+            </div>
+            <div class="dept-box">
+                <h5 class="dept-title">ฝ่ายทะเบียนและประสานงาน</h5>
+                <ul class="dept-list">
+                    <li>นายติดต่อ สื่อสาร (หัวหน้าฝ่าย)</li>
+                    <li>นางสาวข้อมูล ชัดเจน</li>
+                    <li>นายเอกสาร ครบถ้วน</li>
+                </ul>
+            </div>
+            <div class="dept-box">
+                <h5 class="dept-title">ฝ่ายประชาสัมพันธ์และสื่อ</h5>
+                <ul class="dept-list">
+                    <li>นายกล้อง ถ่ายภาพ (หัวหน้าฝ่าย)</li>
+                    <li>นางสาวคอนเทนต์ สร้างสรรค์</li>
+                    <li>นายกราฟิก สวยงาม</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="sponsors" class="section-padding sponsor-section" style="background-color: var(--glam-white);">
+        <h3 class="section-title">พันธมิตรและผู้สนับสนุน</h3>
+        <p class="section-subtitle">องค์กรที่ร่วมขับเคลื่อนการพัฒนาอย่างยั่งยืนในค่ายวิศวพัฒน์ที่ผ่านมา</p>
+        
+        <div class="sponsor-grid" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 40px; align-items: center;">
+            
+            <div style="width: 160px; height: 90px; background-color: var(--glam-white); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Prompt'; font-weight: 600; font-size: 1.2em; color: #8B1A1A; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                TPIPL
+            </div>
+            
+            <div style="width: 160px; height: 90px; background-color: var(--glam-white); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Prompt'; font-weight: 600; font-size: 1.1em; color: #005A9C; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                EXIM THAILAND
+            </div>
+
+            <div style="width: 160px; height: 90px; background-color: var(--glam-white); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Prompt'; font-weight: 600; font-size: 1.4em; color: #000000; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                BAM
+            </div>
+
+            <div style="width: 160px; height: 90px; background-color: var(--glam-white); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Prompt'; font-weight: 600; font-size: 1.4em; color: #333333; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                TAP
+            </div>
+
+            <div style="width: 160px; height: 90px; background-color: var(--glam-white); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Prompt'; font-weight: 600; font-size: 1.4em; color: #D04A02; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                PwC
+            </div>
+
+            <div style="width: 160px; height: 90px; background-color: var(--glam-white); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Prompt'; font-weight: 600; font-size: 1.1em; color: #4CAF50; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                มูลนิธิรากแก้ว
+            </div>
+
+        </div>
+        
+        <p style="text-align: center; color: var(--text-muted); margin-top: 40px; font-size: 1.1em; max-width: 800px; margin-left: auto; margin-right: auto;">
+            ขอขอบพระคุณทุกองค์กรที่เล็งเห็นถึงความสำคัญ และให้การสนับสนุนงบประมาณตลอดจนทรัพยากรต่างๆ เพื่อร่วมสร้างสรรค์สังคมที่ยั่งยืนไปพร้อมกับเรา
+        </p>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="#contact" style="background-color: var(--crimson-red); color: white; padding: 12px 30px; text-decoration: none; border-radius: 30px; font-family: 'Prompt'; font-weight: 500; font-size: 1em; display: inline-block; box-shadow: 0 4px 10px rgba(139, 26, 26, 0.3); transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#6A1212'" onmouseout="this.style.backgroundColor='var(--crimson-red)'">สนใจร่วมเป็นผู้สนับสนุนค่ายวิศวพัฒน์ 13</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-col">
+            <h4>ติดต่อโครงการ</h4>
+            <p><strong>คุณณัฐวัฒน์ หงษ์เวียงจันทร์ (ประธานโครงการ)</strong><br>โทร: 064-687-8579</p>
+            <p><strong>คุณอภิชัย เมืองแก้ว (เลขานุการ)</strong><br>โทร: 094-323-1184</p>
+        </div>
+        <div class="footer-col">
+            <h4>สถานที่ปฏิบัติงาน</h4>
+            <p>ชุมชนบ้านเชตวัน ตำบลสันทะ<br>อำเภอนาน้อย จังหวัดน่าน</p>
+        </div>
+        <div class="footer-col">
+            <h4>ดำเนินการโดย</h4>
+            <p>ชมรมนิสิตทุน คณะวิศวกรรมศาสตร์<br>จุฬาลงกรณ์มหาวิทยาลัย<br>254 ถนนพญาไท แขวงวังใหม่<br>เขตปทุมวัน กรุงเทพฯ 10330</p>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 โครงการค่ายวิศวพัฒน์ 13. All Rights Reserved.
+        </div>
+    </footer>
+
+</body>
+</html>

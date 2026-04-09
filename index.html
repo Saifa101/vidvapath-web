@@ -515,7 +515,6 @@
     </footer>
 
     <script>
-        // รหัส ID ของ Google Sheets ที่คุณสายฟ้าเพิ่งสร้าง
         const SHEET_ID = "1h9P_yb0THhvzB9cJYmdETGsK6i8NkVfoOXRWH9RKzAI";
         
         async function loadSheetData() {
@@ -523,16 +522,13 @@
             container.innerHTML = '<p style="color: var(--text-muted); font-size: 1.2em;">⏳ กำลังโหลดข้อมูลประวัติค่าย...</p>';
 
             try {
-                // ลิงก์ API พิเศษของ Google ที่ดึงข้อมูลออกมาเป็น JSON ได้ทันที
                 const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
                 const response = await fetch(url);
                 const text = await response.text();
                 
-                // ตัดข้อความส่วนเกินที่ Google หุ้มมาออก เพื่อให้เหลือแค่โครงสร้างข้อมูล
                 const jsonString = text.match(/google\.visualization\.Query\.setResponse\(([\s\S\w]+)\)/)[1];
                 const data = JSON.parse(jsonString);
 
-                // ถ้าตารางว่างเปล่า
                 if (!data.table || !data.table.rows || data.table.rows.length === 0) {
                     container.innerHTML = '<p style="color: var(--text-muted);">ยังไม่มีข้อมูลประวัติค่ายในฐานข้อมูล</p>';
                     return;
@@ -541,40 +537,77 @@
                 container.innerHTML = '';
                 let html = '<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 20px;">';
                 
-                // วนลูปสร้างการ์ดจาก Google Sheets ทีละแถว
-                data.table.rows.forEach(row => {
-                    // ป้องกัน Error กรณีทีมงานปล่อยช่องว่างไว้ (null)
+                data.table.rows.forEach((row) => {
+                    // 1. ดึงข้อมูลพื้นฐาน
                     const name = (row.c[0] && row.c[0].v) ? row.c[0].v : 'ไม่ระบุชื่อรุ่น';
                     const year = (row.c[1] && row.c[1].v) ? row.c[1].v : '-';
                     const location = (row.c[2] && row.c[2].v) ? row.c[2].v : 'ไม่ระบุสถานที่';
                     const desc = (row.c[3] && row.c[3].v) ? row.c[3].v : '';
-                    const imageUrl = (row.c[4] && row.c[4].v) ? row.c[4].v : 'images/logo.png';
+                    
+                    // 2. ดึงรูปภาพทั้งหมดมาหั่นเป็นชิ้นๆ (สร้างสไลด์)
+                    const imageStr = (row.c[4] && row.c[4].v) ? row.c[4].v : 'images/logo.png';
+                    const images = imageStr.split(',').map(img => img.trim());
+                    
+                    // 3. ดึงลิงก์หน้าเว็บจากคอลัมน์ F (คอลัมน์ที่ 6)
+                    const link = (row.c[5] && row.c[5].v) ? row.c[5].v : '#';
 
+                    // ประกอบร่าง HTML ส่วนของ "สไลด์รูปภาพ"
+                    let sliderHtml = `<div class="auto-slider" style="position: relative; width: 100%; height: 200px; border-radius: 8px; margin-bottom: 15px; overflow: hidden; background-color: var(--glam-gray);">`;
+                    images.forEach((img, imgIdx) => {
+                        const opacity = imgIdx === 0 ? 1 : 0; // รูปแรกสว่าง รูปอื่นซ่อนไว้
+                        const activeClass = imgIdx === 0 ? 'active' : '';
+                        sliderHtml += `<img src="${img}" class="${activeClass}" style="position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; opacity: ${opacity}; transition: opacity 0.8s ease-in-out;">`;
+                    });
+                    sliderHtml += `</div>`;
+
+                    // ประกอบร่างการ์ดทั้งใบ
                     html += `
-                        <div style="background-color: var(--glam-white); width: 320px; text-align: left; padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-bottom: 4px solid var(--crimson-red); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
-                            <img src="${imageUrl}" alt="ภาพค่าย ${name}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;">
+                        <div style="background-color: var(--glam-white); width: 320px; text-align: left; padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-bottom: 4px solid var(--crimson-red); transition: all 0.3s ease; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
+                            
+                            ${sliderHtml}
+                            
                             <h4 style="color: var(--crimson-red); margin: 0 0 5px 0; font-size: 1.4em; font-family: 'Prompt';">${name} (ปี ${year})</h4>
                             <p style="color: var(--gold-accent); font-weight: 600; margin: 0 0 10px 0; font-size: 0.95em;">📍 ${location}</p>
-                            <p style="color: var(--text-muted); font-size: 0.95em; line-height: 1.6;">${desc}</p>
+                            
+                            <p style="color: var(--text-muted); font-size: 0.95em; line-height: 1.6; flex-grow: 1;">${desc}</p>
+                            
+                            <a href="${link}" style="display: block; text-align: center; background-color: var(--glam-gray); color: var(--crimson-red); padding: 10px; border-radius: 8px; text-decoration: none; font-family: 'Prompt'; font-weight: 600; margin-top: 15px; transition: all 0.3s;" onmouseover="this.style.backgroundColor='var(--crimson-red)'; this.style.color='white';" onmouseout="this.style.backgroundColor='var(--glam-gray)'; this.style.color='var(--crimson-red)';">
+                                ดูรายละเอียดค่าย ➔
+                            </a>
                         </div>
                     `;
                 });
                 
                 html += '</div>';
-                container.innerHTML = html; // แปะการ์ดลงบนหน้าเว็บ
+                container.innerHTML = html;
+
+                // =====================================
+                // กลไกสั่งให้สไลด์เปลี่ยนรูปเองทุกๆ 3 วินาที
+                // =====================================
+                setInterval(() => {
+                    document.querySelectorAll('.auto-slider').forEach(slider => {
+                        const currentImg = slider.querySelector('img.active');
+                        if (!currentImg) return; // ถ้ารูปมีใบเดียว ไม่ต้องสไลด์
+                        
+                        let nextImg = currentImg.nextElementSibling;
+                        if (!nextImg) nextImg = slider.firstElementChild; // ถ้าหมดแล้ว วนกลับไปรูปแรกสุด
+                        
+                        // ซ่อนรูปเก่า
+                        currentImg.classList.remove('active');
+                        currentImg.style.opacity = 0;
+                        
+                        // โชว์รูปใหม่
+                        nextImg.classList.add('active');
+                        nextImg.style.opacity = 1;
+                    });
+                }, 3000); // 3000 มิลลิวินาที = 3 วินาที
 
             } catch (error) {
                 console.error("Error fetching Google Sheets:", error);
-                container.innerHTML = `
-                    <div style="background-color: #FFEBEB; border: 1px solid var(--crimson-red); padding: 20px; border-radius: 10px; display: inline-block; text-align: left;">
-                        <h4 style="color: var(--crimson-red); margin-top: 0;">พบข้อผิดพลาดในการดึงข้อมูล</h4>
-                        <p style="color: #333;">โปรดตรวจสอบว่าได้กด "เผยแพร่ไปยังเว็บ" ใน Google Sheets แล้ว</p>
-                    </div>
-                `;
+                container.innerHTML = `<p style="color: var(--crimson-red);">พบข้อผิดพลาดในการดึงข้อมูล โปรดตรวจสอบการตั้งค่า Sheets</p>`;
             }
         }
 
-        // สั่งให้ระบบทำงานทันที
         loadSheetData();
     </script>
 

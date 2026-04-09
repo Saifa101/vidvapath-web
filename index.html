@@ -517,63 +517,105 @@
     <script>
         const SHEET_ID = "1h9P_yb0THhvzB9cJYmdETGsK6i8NkVfoOXRWH9RKzAI";
         
+        // 1. นำเข้า CSS สำหรับ Roadmap (สร้างเส้นสีทองและจุดแวะพัก)
+        const style = document.createElement('style');
+        style.innerHTML = `
+            .roadmap-container { position: relative; width: 100%; max-width: 1000px; margin: 40px auto; padding: 20px 0; font-family: 'Sarabun', sans-serif; }
+            
+            /* เส้นแกนกลางสีทอง */
+            .roadmap-container::after { content: ''; position: absolute; width: 4px; background-color: var(--gold-accent); top: 0; bottom: 0; left: 50%; margin-left: -2px; border-radius: 2px; }
+            
+            /* กรอบหุ้มการ์ดแต่ละใบ */
+            .roadmap-item { padding: 10px 40px; position: relative; background-color: inherit; width: 50%; box-sizing: border-box; opacity: 0; transform: translateY(50px); transition: all 0.8s ease-out; }
+            .roadmap-item.show { opacity: 1; transform: translateY(0); } /* คลาสที่จะถูกเติมเมื่อเลื่อนจอมาถึง */
+            
+            /* แบ่งซ้ายขวา */
+            .roadmap-item.left { left: 0; }
+            .roadmap-item.right { left: 50%; }
+            
+            /* จุด Milestone สีแดงขอบทอง */
+            .roadmap-dot { width: 24px; height: 24px; background-color: var(--crimson-red); border: 4px solid var(--gold-accent); position: absolute; border-radius: 50%; z-index: 1; top: 30px; box-shadow: 0 0 10px rgba(197, 160, 89, 0.5); }
+            .roadmap-item.left .roadmap-dot { right: -16px; }
+            .roadmap-item.right .roadmap-dot { left: -16px; }
+
+            /* การ์ดข้อมูล */
+            .roadmap-card { background-color: var(--glam-white); width: 100%; text-align: left; padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-bottom: 4px solid var(--crimson-red); transition: all 0.3s ease; display: flex; flex-direction: column; }
+            .roadmap-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(139, 26, 26, 0.15); }
+
+            /* รองรับหน้าจอมือถือ (ปรับเส้นไปอยู่ซ้ายสุด) */
+            @media screen and (max-width: 768px) {
+                .roadmap-container::after { left: 31px; }
+                .roadmap-item { width: 100%; padding-left: 70px; padding-right: 20px; }
+                .roadmap-item.left, .roadmap-item.right { left: 0; }
+                .roadmap-item.left .roadmap-dot, .roadmap-item.right .roadmap-dot { left: 15px; right: auto; }
+            }
+        `;
+        document.head.appendChild(style);
+
         async function loadSheetData() {
             const container = document.getElementById('notion-history-container');
-            container.innerHTML = '<p style="color: var(--text-muted); font-size: 1.2em;">⏳ กำลังโหลดข้อมูลประวัติค่าย...</p>';
+            container.innerHTML = '<p style="color: var(--text-muted); font-size: 1.2em;">⏳ กำลังสร้าง Roadmap ประวัติค่าย...</p>';
 
             try {
                 const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json`;
                 const response = await fetch(url);
                 const text = await response.text();
-                
                 const jsonString = text.match(/google\.visualization\.Query\.setResponse\(([\s\S\w]+)\)/)[1];
                 const data = JSON.parse(jsonString);
 
                 if (!data.table || !data.table.rows || data.table.rows.length === 0) {
-                    container.innerHTML = '<p style="color: var(--text-muted);">ยังไม่มีข้อมูลประวัติค่ายในฐานข้อมูล</p>';
+                    container.innerHTML = '<p style="color: var(--text-muted);">ยังไม่มีข้อมูลประวัติค่ายในระบบ</p>';
                     return;
                 }
 
+                // ดึงข้อมูลและ "เรียงลำดับจากปีล่าสุดไปปีเก่าสุด" (ค่าย 12 -> 1)
+                let rows = data.table.rows;
+                rows.sort((a, b) => {
+                    const yearA = (a.c[1] && a.c[1].v) ? Number(a.c[1].v) : 0;
+                    const yearB = (b.c[1] && b.c[1].v) ? Number(b.c[1].v) : 0;
+                    return yearB - yearA; 
+                });
+
                 container.innerHTML = '';
-                let html = '<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-top: 20px;">';
+                let html = '<div class="roadmap-container">';
                 
-                data.table.rows.forEach((row) => {
+                rows.forEach((row, index) => {
+                    // กำหนดให้สลับซ้าย-ขวา
+                    const alignClass = (index % 2 === 0) ? 'left' : 'right';
+
                     // 1. ดึงข้อมูลพื้นฐาน
                     const name = (row.c[0] && row.c[0].v) ? row.c[0].v : 'ไม่ระบุชื่อรุ่น';
                     const year = (row.c[1] && row.c[1].v) ? row.c[1].v : '-';
                     const location = (row.c[2] && row.c[2].v) ? row.c[2].v : 'ไม่ระบุสถานที่';
                     const desc = (row.c[3] && row.c[3].v) ? row.c[3].v : '';
                     
-                    // 2. ดึงรูปภาพทั้งหมดมาหั่นเป็นชิ้นๆ (สร้างสไลด์)
+                    // 2. ดึงรูปภาพทั้งหมดมาหั่นเป็นชิ้นๆ (สไลด์)
                     const imageStr = (row.c[4] && row.c[4].v) ? row.c[4].v : 'images/logo.png';
                     const images = imageStr.split(',').map(img => img.trim());
                     
                     // 3. ดึงลิงก์หน้าเว็บจากคอลัมน์ F (คอลัมน์ที่ 6)
                     const link = (row.c[5] && row.c[5].v) ? row.c[5].v : '#';
 
-                    // ประกอบร่าง HTML ส่วนของ "สไลด์รูปภาพ"
-                    let sliderHtml = `<div class="auto-slider" style="position: relative; width: 100%; height: 200px; border-radius: 8px; margin-bottom: 15px; overflow: hidden; background-color: var(--glam-gray);">`;
+                    // ประกอบ HTML สไลด์รูป
+                    let sliderHtml = `<div class="auto-slider" style="position: relative; width: 100%; height: 220px; border-radius: 8px; margin-bottom: 15px; overflow: hidden; background-color: var(--glam-gray);">`;
                     images.forEach((img, imgIdx) => {
-                        const opacity = imgIdx === 0 ? 1 : 0; // รูปแรกสว่าง รูปอื่นซ่อนไว้
+                        const opacity = imgIdx === 0 ? 1 : 0;
                         const activeClass = imgIdx === 0 ? 'active' : '';
                         sliderHtml += `<img src="${img}" class="${activeClass}" style="position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; opacity: ${opacity}; transition: opacity 0.8s ease-in-out;">`;
                     });
                     sliderHtml += `</div>`;
 
-                    // ประกอบร่างการ์ดทั้งใบ
+                    // ประกอบการ์ดลงใน Roadmap
                     html += `
-                        <div style="background-color: var(--glam-white); width: 320px; text-align: left; padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-bottom: 4px solid var(--crimson-red); transition: all 0.3s ease; display: flex; flex-direction: column;" onmouseover="this.style.transform='translateY(-10px)'" onmouseout="this.style.transform='translateY(0)'">
-                            
-                            ${sliderHtml}
-                            
-                            <h4 style="color: var(--crimson-red); margin: 0 0 5px 0; font-size: 1.4em; font-family: 'Prompt';">${name} (ปี ${year})</h4>
-                            <p style="color: var(--gold-accent); font-weight: 600; margin: 0 0 10px 0; font-size: 0.95em;">📍 ${location}</p>
-                            
-                            <p style="color: var(--text-muted); font-size: 0.95em; line-height: 1.6; flex-grow: 1;">${desc}</p>
-                            
-                            <a href="${link}" style="display: block; text-align: center; background-color: var(--glam-gray); color: var(--crimson-red); padding: 10px; border-radius: 8px; text-decoration: none; font-family: 'Prompt'; font-weight: 600; margin-top: 15px; transition: all 0.3s;" onmouseover="this.style.backgroundColor='var(--crimson-red)'; this.style.color='white';" onmouseout="this.style.backgroundColor='var(--glam-gray)'; this.style.color='var(--crimson-red)';">
-                                ดูรายละเอียดค่าย ➔
-                            </a>
+                        <div class="roadmap-item ${alignClass}">
+                            <div class="roadmap-dot"></div>
+                            <div class="roadmap-card">
+                                ${sliderHtml}
+                                <h4 style="color: var(--crimson-red); margin: 0 0 5px 0; font-size: 1.4em; font-family: 'Prompt';">${name} (ปี ${year})</h4>
+                                <p style="color: var(--gold-accent); font-weight: 600; margin: 0 0 10px 0; font-size: 0.95em;">📍 ${location}</p>
+                                <p style="color: var(--text-muted); font-size: 0.95em; line-height: 1.6; flex-grow: 1;">${desc}</p>
+                                <a href="${link}" style="display: block; text-align: center; background-color: var(--glam-gray); color: var(--crimson-red); padding: 10px; border-radius: 8px; text-decoration: none; font-family: 'Prompt'; font-weight: 600; margin-top: 15px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='var(--crimson-red)'; this.style.color='white';" onmouseout="this.style.backgroundColor='var(--glam-gray)'; this.style.color='var(--crimson-red)';">ดูรายละเอียดค่าย ➔</a>
+                            </div>
                         </div>
                     `;
                 });
@@ -582,29 +624,38 @@
                 container.innerHTML = html;
 
                 // =====================================
-                // กลไกสั่งให้สไลด์เปลี่ยนรูปเองทุกๆ 3 วินาที
+                // กลไกสไลด์รูป (เหมือนเดิม)
                 // =====================================
                 setInterval(() => {
                     document.querySelectorAll('.auto-slider').forEach(slider => {
                         const currentImg = slider.querySelector('img.active');
-                        if (!currentImg) return; // ถ้ารูปมีใบเดียว ไม่ต้องสไลด์
-                        
-                        let nextImg = currentImg.nextElementSibling;
-                        if (!nextImg) nextImg = slider.firstElementChild; // ถ้าหมดแล้ว วนกลับไปรูปแรกสุด
-                        
-                        // ซ่อนรูปเก่า
+                        if (!currentImg) return;
+                        let nextImg = currentImg.nextElementSibling || slider.firstElementChild;
                         currentImg.classList.remove('active');
                         currentImg.style.opacity = 0;
-                        
-                        // โชว์รูปใหม่
                         nextImg.classList.add('active');
                         nextImg.style.opacity = 1;
                     });
-                }, 3000); // 3000 มิลลิวินาที = 3 วินาที
+                }, 3000);
+
+                // =====================================
+                // กลไกแอนิเมชันตอนเลื่อนจอ (Fade-in on Scroll)
+                // =====================================
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('show');
+                        }
+                    });
+                }, { threshold: 0.1 }); // โชว์เมื่อเห็นการ์ด 10% ของจอ
+
+                document.querySelectorAll('.roadmap-item').forEach(item => {
+                    observer.observe(item);
+                });
 
             } catch (error) {
                 console.error("Error fetching Google Sheets:", error);
-                container.innerHTML = `<p style="color: var(--crimson-red);">พบข้อผิดพลาดในการดึงข้อมูล โปรดตรวจสอบการตั้งค่า Sheets</p>`;
+                container.innerHTML = `<p style="color: var(--crimson-red);">พบข้อผิดพลาดในการดึงข้อมูล Roadmap</p>`;
             }
         }
 

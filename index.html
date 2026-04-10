@@ -264,22 +264,56 @@
         </div>
     </section>
 
-    <section id="history" class="section-padding" style="background-color: var(--glam-gray);">
-        <h3 class="section-title">ประวัติและผลงานค่ายวิศวพัฒน์</h3>
-        
-        <div id="about-camp-container" style="max-width: 900px; margin: 0 auto 60px auto; display: flex; flex-direction: column; gap: 40px; align-items: center;">
-            <img src="images/camp-history-12-1.JPG" alt="ประวัติค่าย" style="width: 100%; max-height: 450px; object-fit: cover; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-            
-            <div id="about-text-content" style="width: 100%;">
-                <p style="text-align: center; color: var(--text-muted);">⌛ กำลังโหลดประวัติการก่อตั้ง...</p>
-            </div>
-        </div>
+    <script>
+        async function loadAboutContent() {
+            // ⚠️ อย่าลืมใส่ ID ของ Google Sheets ของคุณตรงนี้ครับ
+            const SPREADSHEET_ID = '1h9P_yb0THhvzB9cJYmdETGsK6i8NkVfoOXRWH9RKzAI'; 
+            const SHEET_NAME = 'About'; 
+            const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
 
-        <h4 style="text-align: center; color: var(--crimson-red); font-size: 1.8em; margin-top: 20px;">Roadmap พัฒนาการเชิงพื้นที่</h4>
-        <div id="notion-history-container">
-            <p style="text-align: center; color: var(--text-muted);">⏳ กำลังสร้าง Roadmap...</p>
-        </div>
-    </section>
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+                const data = JSON.parse(text.substr(47).slice(0, -2));
+                
+                let aboutContent = "";
+                
+                // กลไกอัจฉริยะ: วนลูปหาช่องที่มีตัวอักษรเยอะที่สุด (เพื่อดึงเนื้อหาประวัติที่แท้จริง)
+                if (data.table && data.table.rows) {
+                    data.table.rows.forEach(row => {
+                        if (row.c) {
+                            row.c.forEach(cell => {
+                                if (cell && cell.v && typeof cell.v === 'string') {
+                                    if (cell.v.length > aboutContent.length) {
+                                        aboutContent = cell.v;
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+                
+                // เขียน HTML ใหม่เพื่อแสดงผลข้อความที่ดึงมาได้
+                if (aboutContent.length > 0) {
+                    document.getElementById('about-text-content').innerHTML = `
+                        <h4 style="color: var(--crimson-red); margin-top: 0; margin-bottom: 20px; font-size: 1.8em; text-align: center; font-family: 'Prompt';">จุดเริ่มต้นค่ายวิศวพัฒน์</h4>
+                        <div style="line-height: 1.9; color: var(--text-dark); font-size: 1.15em; text-align: justify;">
+                            ${aboutContent.replace(/\n/g, '<br><br>')}
+                        </div>
+                    `;
+                } else {
+                    throw new Error("ไม่พบเนื้อหาที่ยาวพอในหน้า About");
+                }
+                
+            } catch (error) {
+                console.error('Error loading about content:', error);
+                document.getElementById('about-text-content').innerHTML = '<p style="text-align: center; color: var(--crimson-red);">ไม่สามารถโหลดข้อมูลประวัติได้ในขณะนี้ โปรดตรวจสอบการตั้งค่า Sheet</p>';
+            }
+        }
+
+        // สั่งให้โหลดข้อมูลประวัติทันทีที่เปิดเว็บ
+        window.addEventListener('DOMContentLoaded', loadAboutContent);
+    </script>
 
     <script>
         async function loadAboutContent() {

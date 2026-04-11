@@ -548,77 +548,99 @@
             </div>
         </div>
 
-        <div class="team-grid">
-            <div class="team-card">
-                <div class="team-img-wrapper">
-                    <img src="https://ui-avatars.com/api/?name=P&background=8B1A1A&color=fff&size=150" alt="รูปประธานค่าย" class="team-img">
-                </div>
-                <h4 class="team-name">ณัฐวัฒน์ หงษ์เวียงจันทร์</h4>
-                <p class="team-role">ประธานโครงการ</p>
-            </div>
-
-            <div class="team-card">
-                <div class="team-img-wrapper">
-                    <img src="https://ui-avatars.com/api/?name=VP&background=C5A059&color=fff&size=150" alt="รูปรองประธาน" class="team-img">
-                </div>
-                <h4 class="team-name">ศิรสิทธิ์ รอดพ้น</h4>
-                <p class="team-role">รองประธานฝ่ายสถานที่</p>
-            </div>
-
-            <div class="team-card">
-                <div class="team-img-wrapper">
-                    <img src="https://ui-avatars.com/api/?name=VP&background=C5A059&color=fff&size=150" alt="รูปรองประธาน" class="team-img">
-                </div>
-                <h4 class="team-name">เพ็ชรบุรุษ ปุญสิริกิจจานนท์</h4>
-                <p class="team-role">รองประธานฝ่ายทะเบียน / ประเมินผล</p>
-            </div>
-
-            <div class="team-card">
-                <div class="team-img-wrapper">
-                    <img src="https://ui-avatars.com/api/?name=S&background=C5A059&color=fff&size=150" alt="รูปเลขานุการ" class="team-img">
-                </div>
-                <h4 class="team-name">อภิชัย เมืองแก้ว</h4>
-                <p class="team-role">เลขานุการ / เหรัญญิก</p>
-            </div>
+        <div id="board-container" class="team-grid">
+            <p style="text-align: center; color: var(--text-muted); width: 100%;">⏳ กำลังดึงรายชื่อคณะกรรมการจากฐานข้อมูล...</p>
         </div>
 
         <h4 style="text-align: center; color: var(--text-dark); margin-top: 80px; font-size: 1.5em;">คณะทำงานฝ่ายต่างๆ</h4>
         
-        <div class="staff-departments">
-            <div class="dept-box">
-                <h5 class="dept-title">ฝ่ายสถานที่และสวัสดิการ</h5>
-                <ul class="dept-list">
-                    <li>นายวิศวะ ใจดี (หัวหน้าฝ่าย)</li>
-                    <li>นางสาวสายใจ รักงาน</li>
-                    <li>นายสมชาย ขยันทำ</li>
-                </ul>
-            </div>
-            <div class="dept-box">
-                <h5 class="dept-title">ฝ่ายวิชาการและโครงสร้าง</h5>
-                <ul class="dept-list">
-                    <li>นางสาวปัญญา เลิศล้ำ (หัวหน้าฝ่าย)</li>
-                    <li>นายความรู้ คู่ธรรม</li>
-                    <li>นายโครงสร้าง มั่นคง</li>
-                </ul>
-            </div>
-            <div class="dept-box">
-                <h5 class="dept-title">ฝ่ายทะเบียนและประสานงาน</h5>
-                <ul class="dept-list">
-                    <li>นายติดต่อ สื่อสาร (หัวหน้าฝ่าย)</li>
-                    <li>นางสาวข้อมูล ชัดเจน</li>
-                    <li>นายเอกสาร ครบถ้วน</li>
-                </ul>
-            </div>
-            <div class="dept-box">
-                <h5 class="dept-title">ฝ่ายประชาสัมพันธ์และสื่อ</h5>
-                <ul class="dept-list">
-                    <li>นายกล้อง ถ่ายภาพ (หัวหน้าฝ่าย)</li>
-                    <li>นางสาวคอนเทนต์ สร้างสรรค์</li>
-                    <li>นายกราฟิก สวยงาม</li>
-                </ul>
-            </div>
+        <div id="staff-container" class="staff-departments">
+            <p style="text-align: center; color: var(--text-muted); width: 100%;">⏳ กำลังดึงรายชื่อสตาฟจากฐานข้อมูล...</p>
         </div>
     </section>
+
+    <script>
+        async function loadTeamData() {
+            // ⚠️ ใส่ ID ของไฟล์ Google Sheets ทะเบียนของคุณที่นี่ครับ (ID อยู่ใน URL ของไฟล์ Sheets)
+            const SPREADSHEET_ID = '1z6NUOCr6ITNIX9rp_rm_g4TAOuB_YdYAh3czMiepgDA';
+            const SHEET_NAME = 'STAFF'; 
+            const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
+
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+                const data = JSON.parse(text.substr(47).slice(0, -2));
+
+                let boardHtml = '';
+                let depts = {};
+
+                // วนลูปอ่านข้อมูลทีละบรรทัดจากตาราง
+                data.table.rows.forEach(row => {
+                    if (!row || !row.c) return;
+
+                    // กำหนดตำแหน่งคอลัมน์ (นับ A เป็น 0)
+                    // E(4)=ชื่อ, F(5)=ชื่อเล่น, L(11)=ฝ่าย, W(22)=Role, Y(24)=avatar_url
+                    const fullName = row.c[4] && row.c[4].v ? row.c[4].v.toString().trim() : '';
+                    const nickname = row.c[5] && row.c[5].v ? row.c[5].v.toString().trim() : '';
+                    const dept = row.c[11] && row.c[11].v ? row.c[11].v.toString().trim() : '';
+                    const role = row.c[22] && row.c[22].v ? row.c[22].v.toString().trim() : '';
+                    const avatar = row.c[24] && row.c[24].v ? row.c[24].v.toString().trim() : '';
+
+                    // ข้ามบรรทัดว่าง หรือบรรทัดที่เป็นหัวตาราง
+                    if (!fullName || fullName === 'ชื่อ - นามสกุล') return; 
+
+                    // 1. จัดการรูปโปรไฟล์ (ถ้ามีลิงก์ให้ใช้ลิงก์ ถ้าไม่มีให้สร้างรูปจากตัวอักษร)
+                    let avatarUrl = avatar;
+                    if (!avatarUrl || avatarUrl === '-') {
+                        const avatarLetter = nickname ? nickname.charAt(0) : fullName.charAt(0);
+                        avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(avatarLetter)}&background=random&color=fff&size=150&font-family=Prompt`;
+                    }
+
+                    // 2. คัดแยกคณะกรรมการ (เช็คจากคอลัมน์ Role)
+                    const isBoard = role.includes('ประธาน') || role.includes('เลขา') || role.includes('เหรัญญิก');
+
+                    if (isBoard) {
+                        boardHtml += `
+                        <div class="team-card">
+                            <div class="team-img-wrapper" style="overflow: hidden;">
+                                <img src="${avatarUrl}" alt="${nickname}" class="team-img" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <h4 class="team-name">${fullName}</h4>
+                            <p class="team-role" style="font-size: 0.9em; margin-top: 8px;">${role}</p>
+                        </div>`;
+                    } else if (dept && dept !== '-' && role === 'STAFF') {
+                        // 3. คัดแยกสตาฟลงกล่องฝ่ายต่างๆ
+                        if (!depts[dept]) depts[dept] = [];
+                        depts[dept].push(`${fullName} (${nickname})`);
+                    }
+                });
+
+                // แปะการ์ดคณะกรรมการลงเว็บ
+                document.getElementById('board-container').innerHTML = boardHtml || '<p style="color: var(--text-muted);">ยังไม่มีข้อมูลคณะกรรมการในระบบ</p>';
+
+                // ประกอบร่างกล่องรายชื่อฝ่ายต่างๆ
+                let staffHtml = '';
+                for (const [deptName, members] of Object.entries(depts)) {
+                    let lis = members.map(m => `<li>${m}</li>`).join('');
+                    staffHtml += `
+                    <div class="dept-box">
+                        <h5 class="dept-title">ฝ่าย${deptName}</h5>
+                        <ul class="dept-list">${lis}</ul>
+                    </div>`;
+                }
+                // แปะกล่องสตาฟลงเว็บ
+                document.getElementById('staff-container').innerHTML = staffHtml || '<p style="color: var(--text-muted);">ยังไม่มีข้อมูลคณะทำงานในระบบ</p>';
+
+            } catch (e) {
+                console.error('Error fetching team:', e);
+                document.getElementById('board-container').innerHTML = '<p style="color: var(--crimson-red);">ไม่สามารถเชื่อมต่อไฟล์ทะเบียนได้ โปรดตรวจสอบสิทธิ์การแชร์ไฟล์ Google Sheets</p>';
+                document.getElementById('staff-container').innerHTML = '';
+            }
+        }
+        
+        // สั่งทำงานทันทีที่โหลดหน้าเว็บ
+        window.addEventListener('DOMContentLoaded', loadTeamData);
+    </script>
 
     <section id="sponsors" class="section-padding sponsor-section" style="background-color: var(--glam-white);">
         <h3 class="section-title">พันธมิตรและผู้สนับสนุน</h3>

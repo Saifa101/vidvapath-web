@@ -561,6 +561,78 @@
 
     <script>
         async function loadTeamData() {
+            // รหัส ID ที่ถูกต้องจากคุณสายฟ้า
+            const SPREADSHEET_ID = '1z6NUOCr6lTNIX9rp_rm_g4TAOuB_YdYAh3czMiepgDA';
+            const SHEET_NAME = 'STAFF'; 
+            const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
+
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+                const data = JSON.parse(text.substr(47).slice(0, -2));
+
+                let boardHtml = '';
+                let depts = {};
+
+                data.table.rows.forEach(row => {
+                    if (!row || !row.c) return;
+
+                    const fullName = row.c[4] && row.c[4].v ? row.c[4].v.toString().trim() : '';
+                    const nickname = row.c[5] && row.c[5].v ? row.c[5].v.toString().trim() : '';
+                    const dept = row.c[11] && row.c[11].v ? row.c[11].v.toString().trim() : '';
+                    const role = row.c[22] && row.c[22].v ? row.c[22].v.toString().trim() : '';
+                    const avatar = row.c[24] && row.c[24].v ? row.c[24].v.toString().trim() : '';
+
+                    if (!fullName || fullName === 'ชื่อ - นามสกุล') return; 
+
+                    let avatarUrl = avatar;
+                    if (!avatarUrl || avatarUrl === '-') {
+                        const avatarLetter = nickname ? nickname.charAt(0) : fullName.charAt(0);
+                        avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(avatarLetter)}&background=random&color=fff&size=150&font-family=Prompt`;
+                    }
+
+                    const isBoard = role.includes('ประธาน') || role.includes('เลขา') || role.includes('เหรัญญิก');
+
+                    if (isBoard) {
+                        boardHtml += `
+                        <div class="team-card">
+                            <div class="team-img-wrapper" style="overflow: hidden;">
+                                <img src="${avatarUrl}" alt="${nickname}" class="team-img" style="width: 100%; height: 100%; object-fit: cover;">
+                            </div>
+                            <h4 class="team-name">${fullName}</h4>
+                            <p class="team-role" style="font-size: 0.9em; margin-top: 8px;">${role}</p>
+                        </div>`;
+                    } else if (dept && dept !== '-' && role === 'STAFF') {
+                        if (!depts[dept]) depts[dept] = [];
+                        depts[dept].push(`${fullName} (${nickname})`);
+                    }
+                });
+
+                document.getElementById('board-container').innerHTML = boardHtml || '<p style="color: var(--text-muted);">ยังไม่มีข้อมูลคณะกรรมการในระบบ</p>';
+
+                let staffHtml = '';
+                for (const [deptName, members] of Object.entries(depts)) {
+                    let lis = members.map(m => `<li>${m}</li>`).join('');
+                    staffHtml += `
+                    <div class="dept-box">
+                        <h5 class="dept-title">ฝ่าย${deptName}</h5>
+                        <ul class="dept-list">${lis}</ul>
+                    </div>`;
+                }
+                document.getElementById('staff-container').innerHTML = staffHtml || '<p style="color: var(--text-muted);">ยังไม่มีข้อมูลคณะทำงานในระบบ</p>';
+
+            } catch (e) {
+                console.error('Error fetching team:', e);
+                document.getElementById('board-container').innerHTML = '<p style="color: var(--crimson-red);">ไม่สามารถเชื่อมต่อไฟล์ทะเบียนได้ โปรดตรวจสอบสิทธิ์การแชร์ไฟล์ Google Sheets</p>';
+                document.getElementById('staff-container').innerHTML = '';
+            }
+        }
+        
+        window.addEventListener('DOMContentLoaded', loadTeamData);
+    </script>
+
+    <script>
+        async function loadTeamData() {
             // ⚠️ ใส่ ID ของไฟล์ Google Sheets ทะเบียนของคุณที่นี่ครับ (ID อยู่ใน URL ของไฟล์ Sheets)
             const SPREADSHEET_ID = '1z6NUOCr6ITNIX9rp_rm_g4TAOuB_YdYAh3czMiepgDA';
             const SHEET_NAME = 'STAFF'; 

@@ -7,107 +7,96 @@
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         /* =========================================
-           1. DESIGN SYSTEM
+           1. DESIGN SYSTEM & CORE CSS
            ========================================= */
-        :root {
-            --crimson-red: #8B1A1A; --glam-white: #FFFFFF; --glam-gray: #F5F7FA;
-            --text-dark: #2C3E50; --text-muted: #596A7A; --gold-accent: #C5A059; --footer-bg: #1A1A1A;
-        }
-
-        body { font-family: 'Sarabun', sans-serif; margin: 0; padding: 0; background-color: var(--glam-gray); color: var(--text-dark); -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+        :root { --crimson-red: #8B1A1A; --glam-white: #FFFFFF; --glam-gray: #F5F7FA; --text-dark: #2C3E50; --text-muted: #596A7A; --gold-accent: #C5A059; --footer-bg: #1A1A1A; }
+        body { font-family: 'Sarabun', sans-serif; margin: 0; padding: 0; background-color: var(--glam-gray); color: var(--text-dark); -webkit-font-smoothing: antialiased; scroll-behavior: smooth;}
         h1, h2, h3, h4, h5 { font-family: 'Prompt', sans-serif; }
-
+        
         /* Navigation */
         nav { display: flex; justify-content: space-between; align-items: center; padding: 1em 4em; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0,0,0,0.05); }
         .nav-brand img { height: 45px; width: auto; }
         .nav-links { display: flex; align-items: center; }
-        .nav-links a { color: var(--text-dark); text-decoration: none; margin: 0 15px; font-family: 'Prompt', sans-serif; font-weight: 500; transition: 0.3s; font-size: 1.05em; }
+        .nav-links a { color: var(--text-dark); text-decoration: none; margin: 0 15px; font-family: 'Prompt', sans-serif; font-weight: 500; transition: color 0.3s; position: relative; }
         .nav-links a:hover { color: var(--crimson-red); }
-
-        /* Dropdown */
-        .dropdown { position: relative; }
-        .dropdown-content { display: none; position: absolute; background: white; min-width: 220px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); top: 100%; border-top: 3px solid var(--crimson-red); border-radius: 4px; overflow: hidden; }
+        
+        /* Dropdown Menu */
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; background-color: white; min-width: 200px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); z-index: 1; border-top: 3px solid var(--crimson-red); border-radius: 4px; }
         .dropdown:hover .dropdown-content { display: block; }
-        .dropdown-content a { display: block; padding: 12px 18px; font-size: 0.9em; border-bottom: 1px solid #f5f5f5; margin: 0; }
-        .dropdown-content a:hover { background: var(--glam-gray); }
+        .dropdown-content a { color: var(--text-dark); padding: 12px 16px; text-decoration: none; display: block; margin: 0; font-size: 0.9em; border-bottom: 1px solid #f0f0f0; }
+        .dropdown-content a:hover { background-color: var(--glam-gray); color: var(--crimson-red); }
 
-        .staff-btn { background: var(--crimson-red); color: white !important; padding: 8px 22px; border-radius: 30px; font-weight: 600; box-shadow: 0 4px 15px rgba(139, 26, 26, 0.2); }
-        .staff-btn:hover { transform: translateY(-2px); filter: brightness(1.2); }
+        .staff-btn { background-color: var(--crimson-red); color: white !important; padding: 8px 20px; border-radius: 30px; font-family: 'Prompt', sans-serif; font-weight: 600; cursor: pointer; transition: all 0.3s; text-decoration: none; font-size: 0.9em; box-shadow: 0 4px 10px rgba(139, 26, 26, 0.2); }
+        .staff-btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
 
-        /* Sections Styling */
-        .section-padding { padding: 100px 10%; }
-        .section-title { text-align: center; font-size: 2.8em; color: var(--crimson-red); margin-bottom: 10px; }
-        .section-subtitle { text-align: center; font-size: 1.2em; color: var(--text-muted); margin-bottom: 60px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        /* Sections */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; background: linear-gradient(rgba(139, 26, 26, 0.75), rgba(44, 62, 80, 0.85)), url('images/ออกไซต์หน้าอบต.เก่า.JPG'); background-size: cover; background-position: center; background-attachment: fixed; }
+        .hero h1 { font-size: 4.5em; margin: 0; text-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .hero h2 { color: var(--gold-accent); font-size: 1.6em; letter-spacing: 2px; margin-top: 10px;}
+        .hero p { max-width: 750px; font-size: 1.15em; line-height: 1.7; color: #eee; margin-top: 25px;}
 
-        /* Hero Section */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('images/ออกไซต์หน้าอบต.เก่า.JPG'); background-size: cover; background-position: center; background-attachment: fixed; }
-        .hero h1 { font-size: 5em; margin: 0; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-        .hero h2 { color: var(--gold-accent); font-size: 1.8em; margin: 15px 0; letter-spacing: 3px; }
-        .hero p { max-width: 800px; font-size: 1.2em; line-height: 1.8; opacity: 0.9; }
+        .section-padding { padding: 80px 10%; }
+        .section-title { text-align: center; font-size: 2.5em; color: var(--crimson-red); margin-bottom: 15px; }
+        .section-subtitle { text-align: center; font-size: 1.1em; color: var(--text-muted); margin-bottom: 50px; }
 
-        /* Stats Cards */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; }
-        .stat-card { background: white; padding: 40px; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-bottom: 5px solid var(--gold-accent); transition: 0.3s; }
-        .stat-card:hover { transform: translateY(-10px); }
-        .stat-number { font-size: 3.5em; color: var(--crimson-red); font-weight: 600; margin: 0; }
-        .stat-desc { color: var(--text-muted); margin-top: 10px; font-size: 1.1em; line-height: 1.5; }
+        /* Stats & Impact */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 40px; }
+        .stat-card { background: white; padding: 30px; border-radius: 12px; text-align: center; border-bottom: 4px solid var(--gold-accent); box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.3s;}
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-number { font-size: 3em; color: var(--crimson-red); font-weight: 600; margin: 0; font-family: 'Prompt'; }
 
-        /* Timeline Horizontal */
-        .timeline-minimal { display: flex; justify-content: space-between; position: relative; max-width: 1100px; margin: 40px auto; overflow-x: auto; padding-bottom: 30px; }
-        .timeline-minimal::before { content: ''; position: absolute; top: 40px; left: 5%; right: 5%; height: 2px; background: #E2E8F0; }
-        .timeline-step { flex: 1; min-width: 250px; text-align: center; position: relative; z-index: 2; padding: 0 20px; }
-        .timeline-dot { width: 18px; height: 18px; background: white; border: 4px solid var(--gold-accent); border-radius: 50%; margin: 15px auto 25px auto; box-shadow: 0 0 0 6px white; transition: 0.3s; }
-        .timeline-step.active .timeline-dot { background: var(--crimson-red); border-color: var(--crimson-red); transform: scale(1.3); box-shadow: 0 0 20px rgba(139, 26, 26, 0.3), 0 0 0 6px white; }
-        .timeline-event { font-weight: 600; font-size: 1.2em; margin-bottom: 8px; color: var(--text-dark); }
-        .timeline-date { color: var(--crimson-red); font-weight: 600; font-size: 1em; margin-bottom: 5px; }
+        /* Timeline */
+        .timeline-minimal { display: flex; justify-content: space-between; position: relative; max-width: 1000px; margin: 40px auto; overflow-x: auto; padding-bottom: 20px; }
+        .timeline-minimal::before { content: ''; position: absolute; top: 40px; left: 5%; right: 5%; height: 2px; background-color: #E2E8F0; }
+        .timeline-step { flex: 1; min-width: 200px; text-align: center; position: relative; z-index: 2; padding: 0 15px;}
+        .timeline-dot { width: 16px; height: 16px; background: white; border: 4px solid var(--gold-accent); border-radius: 50%; margin: 15px auto; box-shadow: 0 0 0 5px var(--glam-gray);}
+        .timeline-step.active .timeline-dot { background: var(--crimson-red); border-color: var(--crimson-red); transform: scale(1.3); }
 
-        /* Sponsors */
-        .sponsor-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; align-items: center; margin-top: 20px; }
-        .sponsor-box { width: 180px; height: 100px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid #f0f0f0; box-shadow: 0 4px 15px rgba(0,0,0,0.02); transition: 0.3s; padding: 15px; text-align: center; font-weight: 600; }
-        .sponsor-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .sponsor-box:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+        /* Testimonials */
+        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .testi-card { background: white; padding: 35px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.04); border-bottom: 4px solid var(--gold-accent); position: relative; transition: 0.3s; }
+        .testi-card:hover { transform: translateY(-8px); }
+        .quote-icon { font-family: 'Prompt', sans-serif; font-size: 4em; color: rgba(197, 160, 89, 0.15); position: absolute; top: 10px; right: 20px; line-height: 1; }
+        .testi-text { font-size: 1.05em; color: var(--text-muted); line-height: 1.7; font-style: italic; margin-bottom: 20px; position: relative; z-index: 2; }
+        .testi-profile { display: flex; align-items: center; gap: 15px; border-top: 1px solid #f0f0f0; padding-top: 15px; }
+        .testi-img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; border: 2px solid var(--crimson-red); }
+        .testi-badge { display: inline-block; background-color: var(--crimson-red); color: white; font-size: 0.75em; padding: 4px 10px; border-radius: 12px; margin-top: 5px; }
 
         /* Roadmap */
-        .roadmap-container { position: relative; max-width: 1000px; margin: auto; }
+        .roadmap-container { position: relative; max-width: 1000px; margin: auto; padding: 20px 0;}
         .roadmap-container::after { content: ''; position: absolute; width: 4px; background: var(--gold-accent); top: 0; bottom: 0; left: 50%; margin-left: -2px; }
-        .roadmap-item { width: 50%; padding: 25px 50px; box-sizing: border-box; position: relative; opacity: 0; transform: translateY(30px); transition: 0.8s ease; }
+        .roadmap-item { width: 50%; padding: 20px 40px; box-sizing: border-box; position: relative; opacity: 0; transform: translateY(30px); transition: 0.6s; }
         .roadmap-item.show { opacity: 1; transform: translateY(0); }
         .roadmap-item.left { left: 0; text-align: right; }
         .roadmap-item.right { left: 50%; text-align: left; }
-        .roadmap-dot { width: 20px; height: 20px; background: var(--crimson-red); border: 4px solid var(--gold-accent); position: absolute; border-radius: 50%; top: 35px; z-index: 5; }
+        .roadmap-dot { width: 20px; height: 20px; background: var(--crimson-red); border: 4px solid var(--gold-accent); position: absolute; border-radius: 50%; top: 40px; z-index: 5; }
         .roadmap-item.left .roadmap-dot { right: -12px; }
         .roadmap-item.right .roadmap-dot { left: -12px; }
-        .roadmap-card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-bottom: 4px solid var(--crimson-red); }
+        .roadmap-card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border-bottom: 4px solid var(--crimson-red); }
 
-        /* Team */
-        .team-grid-container { display: flex; flex-direction: column; align-items: center; gap: 40px; }
-        .team-row { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; width: 100%; }
-        .team-card { background: white; width: 220px; padding: 30px 20px; border-radius: 15px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border-bottom: 4px solid var(--crimson-red); transition: 0.3s; }
-        .team-img-wrapper { width: 100px; height: 100px; margin: 0 auto 20px auto; border-radius: 50%; overflow: hidden; border: 3px solid var(--gold-accent); }
-        .team-img { width: 100%; height: 100%; object-fit: cover; }
-        .team-name { font-weight: 600; font-size: 1.1em; margin: 5px 0; }
-        .team-role { color: var(--crimson-red); font-size: 0.9em; font-weight: 500; }
+        /* Team & Sponsors */
+        .sponsor-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; align-items: center; }
+        .sponsor-box { width: 160px; height: 90px; background: white; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 1px solid #eee; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.03); transition: 0.3s; padding: 10px;}
+        .sponsor-box:hover { transform: scale(1.05); }
+        .team-card { background: white; width: 220px; padding: 25px 15px; border-radius: 12px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-bottom: 4px solid var(--crimson-red); }
+        .team-img-wrapper { width: 90px; height: 90px; margin: 0 auto 15px; border-radius: 50%; overflow: hidden; border: 3px solid var(--gold-accent); }
         
-        .staff-departments { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 50px; }
-        .dept-box { background: white; padding: 25px; border-radius: 12px; border-top: 4px solid var(--gold-accent); box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
-        .dept-title { color: var(--crimson-red); margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
-        .dept-list { list-style: none; padding: 0; margin: 0; font-size: 0.95em; line-height: 1.8; color: var(--text-dark); }
-
-        /* Footer */
-        footer { background: var(--footer-bg); color: white; padding: 80px 10% 40px 10%; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 50px; }
-        .footer-col { flex: 1; min-width: 280px; }
-        .footer-col h4 { color: var(--gold-accent); font-size: 1.4em; border-bottom: 2px solid var(--crimson-red); padding-bottom: 10px; display: inline-block; margin-top: 0; }
-        .footer-bottom { text-align: center; width: 100%; border-top: 1px solid #333; padding-top: 30px; margin-top: 50px; color: #777; font-size: 0.9em; }
+        footer { background: var(--footer-bg); color: white; padding: 60px 10%; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 40px; }
+        .footer-col h4 { color: var(--gold-accent); margin-top: 0; border-bottom: 2px solid var(--crimson-red); padding-bottom: 10px; display: inline-block; }
 
         @media (max-width: 768px) {
             nav { padding: 1em 1.5em; }
             .nav-links a:not(.staff-btn) { display: none; }
-            .hero h1 { font-size: 3em; }
-            .section-padding { padding: 60px 5%; }
             .roadmap-container::after { left: 20px; }
             .roadmap-item { width: 100%; padding-left: 50px; text-align: left !important; }
             .roadmap-item.right { left: 0; }
-            .roadmap-dot { left: 8px !important; right: auto !important; }
+            .roadmap-item.left .roadmap-dot { right: auto; left: 8px; }
+            .roadmap-item.right .roadmap-dot { left: 8px; }
+            .timeline-minimal { flex-direction: column; }
+            .timeline-minimal::before { left: 23px; top: 0; bottom: 0; width: 2px; height: 100%; }
+            .timeline-step { display: flex; text-align: left; margin-bottom: 20px; }
+            .timeline-dot { margin: 0 20px 0 0; }
         }
     </style>
 </head>
@@ -119,8 +108,7 @@
             <a href="#about">เกี่ยวกับ</a>
             <div class="dropdown">
                 <a href="#history">ประวัติค่าย ▾</a>
-                <div id="nav-dropdown-items" class="dropdown-content">
-                    </div>
+                <div id="nav-dropdown-items" class="dropdown-content"></div>
             </div>
             <a href="#timeline">แผนงาน</a>
             <a href="#team">ทีมงาน</a>
@@ -136,39 +124,44 @@
 
     <section id="about" class="section-padding" style="background: white;">
         <h3 class="section-title">หลักการและเหตุผล</h3>
-        <div id="about-text-content" style="max-width: 900px; margin: 40px auto; text-align: justify; line-height: 2; font-size: 1.15em;">⏳...</div>
+        <div id="about-text-content" style="max-width: 900px; margin: auto; text-align: justify; line-height: 1.9; font-size: 1.1em;">⌛...</div>
     </section>
 
     <section id="impact" class="section-padding">
-        <h3 class="section-title">ผลลัพธ์และความสำเร็จ</h3>
-        <p class="section-subtitle">ความสำเร็จที่เป็นรูปธรรมจากการลงพื้นที่อย่างต่อเนื่อง</p>
-        <div id="impact-grid" class="stats-grid">⏳...</div>
+        <h3 class="section-title">ผลลัพธ์เพื่อความยั่งยืน</h3>
+        <p class="section-subtitle">ความสำเร็จจากโมเดลการพัฒนาเชิงพื้นที่</p>
+        <div id="impact-grid" class="stats-grid">⌛...</div>
     </section>
 
     <section id="timeline" class="section-padding" style="background: white;">
         <h3 class="section-title">แผนการดำเนินงาน</h3>
-        <p id="timeline-subtitle" class="section-subtitle">Roadmap กิจกรรมโครงการ</p>
-        <div id="timeline-dynamic-container" class="timeline-minimal">⏳...</div>
+        <p id="timeline-subtitle" class="section-subtitle">Roadmap กิจกรรม</p>
+        <div id="timeline-dynamic-container" class="timeline-minimal">⌛...</div>
     </section>
 
-    <section id="team" class="section-padding">
+    <section id="testimonials" class="section-padding">
+        <h3 class="section-title">เสียงจากชาวค่าย</h3>
+        <p class="section-subtitle">ประสบการณ์และความประทับใจจากผู้ร่วมอุดมการณ์</p>
+        <div id="testimonials-grid" class="testimonial-grid">⌛...</div>
+    </section>
+
+    <section id="team" class="section-padding" style="background: white;">
         <h3 class="section-title">คณะกรรมการดำเนินงาน</h3>
-        <p class="section-subtitle">บุคลากรผู้ขับเคลื่อนเจตนารมณ์ค่ายวิศวพัฒน์</p>
-        <div id="board-container" class="team-grid-container"></div>
-        <h4 style="text-align:center; margin-top:80px; font-size: 1.8em;">คณะทำงานฝ่ายต่างๆ</h4>
-        <div id="staff-container" class="staff-departments"></div>
+        <div id="board-container" style="display: flex; flex-direction: column; align-items: center; gap: 20px;"></div>
+        <h4 style="text-align:center; margin-top:60px; font-size: 1.6em; color: var(--text-dark);">คณะทำงานฝ่ายต่างๆ</h4>
+        <div id="staff-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 30px;"></div>
+    </section>
+
+    <section id="history" class="section-padding">
+        <h3 class="section-title">ประวัติผลงานที่ผ่านมา</h3>
+        <p class="section-subtitle">ก้าวเดินของเราจากอดีตจนถึงปัจจุบัน</p>
+        <div id="notion-history-container"></div>
     </section>
 
     <section id="sponsors" class="section-padding" style="background: white;">
         <h3 class="section-title">พันธมิตรและผู้สนับสนุน</h3>
-        <p class="section-subtitle">องค์กรที่ร่วมสร้างความเปลี่ยนแปลงอย่างยั่งยืน</p>
-        <div id="sponsors-grid" class="sponsor-grid">⏳...</div>
-    </section>
-
-    <section id="history" class="section-padding">
-        <h3 class="section-title">ประวัติผลงานย้อนหลัง</h3>
-        <p class="section-subtitle">ก้าวเดินของเราจากอดีตจนถึงปัจจุบัน</p>
-        <div id="notion-history-container" class="roadmap-container"></div>
+        <p class="section-subtitle">องค์กรที่ร่วมสนับสนุนการพัฒนาอย่างยั่งยืน</p>
+        <div id="sponsors-grid" class="sponsor-grid">⌛...</div>
     </section>
 
     <footer>
@@ -176,19 +169,16 @@
             <h4>ติดต่อโครงการ</h4>
             <p id="footer-pres-name">ประธานโครงการ</p>
             <p id="footer-pres-phone">โทร: -</p>
-            <p id="footer-sec-name" style="margin-top:15px; font-weight:600;">เลขานุการ</p>
+            <p id="footer-sec-name" style="margin-top:15px; font-weight: 600;">เลขานุการ</p>
             <p id="footer-sec-phone">โทร: -</p>
         </div>
         <div class="footer-col">
             <h4>สถานที่ปฏิบัติงาน</h4>
-            <p id="footer-camp-addr">กำลังโหลดข้อมูลที่อยู่...</p>
+            <p id="footer-camp-addr">บ้านเชตวัน ต.สันทะ อ.นาน้อย จ.น่าน</p>
         </div>
         <div class="footer-col">
             <h4>ดำเนินการโดย</h4>
-            <p id="footer-uni-addr">กำลังโหลดข้อมูลองค์กร...</p>
-        </div>
-        <div class="footer-bottom">
-            &copy; 2026 WisawaPat Camp. All Rights Reserved.
+            <p id="footer-uni-addr">ชมรมนิสิตทุน วิศวฯ จุฬาฯ</p>
         </div>
     </footer>
 
@@ -197,95 +187,111 @@
 
         async function fetchSheet(name) {
             const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(name)}`;
-            const response = await fetch(url);
-            const text = await response.text();
-            return JSON.parse(text.substr(47).slice(0, -2));
+            const r = await fetch(url); const t = await r.text();
+            return JSON.parse(t.substr(47).slice(0, -2));
         }
 
         async function init() {
             try {
-                // 1. Settings & Footer
-                const setData = await fetchSheet('Settings');
-                setData.table.rows.forEach(r => {
+                // 1. Settings
+                const settings = await fetchSheet('Settings');
+                settings.table.rows.forEach(r => {
                     const k = r.c[0]?.v; const v = r.c[1]?.v; if(!v) return;
                     if(k==='HeroTitle') document.getElementById('hero-title').innerText = v;
                     if(k==='HeroSubtitle') document.getElementById('hero-subtitle').innerText = v;
                     if(k==='HeroDesc') document.getElementById('hero-desc').innerText = v;
                     if(k==='StaffPortalURL') { document.getElementById('nav-staff-link').href = v; }
                     if(k==='PresidentName') document.getElementById('footer-pres-name').innerText = v;
-                    if(k==='PresidentPhone') document.getElementById('footer-pres-phone').innerText = 'โทร: ' + v;
+                    if(k==='PresidentPhone') document.getElementById('footer-pres-phone').innerText = 'โทร: '+v;
                     if(k==='SecretaryName') document.getElementById('footer-sec-name').innerText = v;
-                    if(k==='SecretaryPhone') document.getElementById('footer-sec-phone').innerText = 'โทร: ' + v;
+                    if(k==='SecretaryPhone') document.getElementById('footer-sec-phone').innerText = 'โทร: '+v;
                     if(k==='CampAddress') document.getElementById('footer-camp-addr').innerText = v;
                     if(k==='UniAddress') document.getElementById('footer-uni-addr').innerText = v;
                 });
 
                 // 2. About
-                const aboutData = await fetchSheet('About');
-                let bodyText = ""; aboutData.table.rows.forEach(r => { if(r.c[1]?.v?.length > bodyText.length) bodyText = r.c[1].v; });
-                document.getElementById('about-text-content').innerHTML = bodyText.replace(/\n/g, '<br>');
+                const about = await fetchSheet('About');
+                let abText = ""; about.table.rows.forEach(r => { if(r.c[1]?.v?.length > abText.length) abText = r.c[1].v; });
+                document.getElementById('about-text-content').innerHTML = abText.replace(/\n/g, '<br><br>');
 
                 // 3. Impact
-                const impData = await fetchSheet('Impact');
-                let impH = ''; impData.table.rows.forEach((r, i) => { if(i>0) impH += `<div class="stat-card"><p class="stat-number">${r.c[0]?.v}</p><p class="stat-desc">${r.c[1]?.v}</p></div>`; });
+                const impact = await fetchSheet('Impact');
+                let impH = ''; impact.table.rows.forEach((r,i) => { if(i>0) impH += `<div class="stat-card"><p class="stat-number">${r.c[0]?.v}</p><p style="color:var(--text-muted); font-size:1.1em; margin-top:10px;">${r.c[1]?.v}</p></div>`; });
                 document.getElementById('impact-grid').innerHTML = impH;
 
                 // 4. Timeline
-                const timeData = await fetchSheet('Timeline');
-                let timeH = ''; timeData.table.rows.forEach(r => {
-                    const d = r.c[0]?.v; const t = r.c[1]?.v; if(!t) return;
+                const time = await fetchSheet('Timeline');
+                let timeH = ''; time.table.rows.forEach(r => {
+                    const d = r.c[0]?.v; const t = r.c[1]?.v;
                     if(d?.toLowerCase()==='subtitle') { document.getElementById('timeline-subtitle').innerText = t; return; }
-                    if(d.includes('วันที่') || d.includes('ช่วงเวลา')) return;
+                    if(!t || d.includes('วันที่')) return;
                     const act = r.c[3]?.v === 'ใช่' ? 'active' : '';
-                    timeH += `<div class="timeline-step ${act}"><div class="timeline-date">${d}</div><div class="timeline-dot"></div><div class="timeline-event">${t}</div><p style="font-size:0.85em; color:var(--text-muted);">${r.c[2]?.v||''}</p></div>`;
+                    timeH += `<div class="timeline-step ${act}"><div class="timeline-date">${d}</div><div class="timeline-dot"></div><div class="timeline-event">${t}</div><p style="font-size:0.9em; color:var(--text-muted); line-height:1.6;">${r.c[2]?.v||''}</p></div>`;
                 });
                 document.getElementById('timeline-dynamic-container').innerHTML = timeH;
 
-                // 5. Sponsors
-                const sponData = await fetchSheet('Sponsors');
-                let sponH = ''; sponData.table.rows.forEach((r, i) => {
+                // 5. Testimonials (กู้คืนมาแล้ว!)
+                const testi = await fetchSheet('Testimonials');
+                let testiH = ''; testi.table.rows.forEach((r,i) => {
                     if(i===0) return;
-                    const n = r.c[0]?.v; const img = r.c[1]?.v; const col = r.c[2]?.v || 'var(--crimson-red)';
-                    const content = img ? `<img src="${img}" alt="${n}">` : n;
-                    sponH += `<div class="sponsor-box" style="color:${col};">${content}</div>`;
+                    const msg = r.c[0]?.v; const name = r.c[1]?.v; const role = r.c[2]?.v; const badge = r.c[3]?.v;
+                    const img = r.c[4]?.v || `https://ui-avatars.com/api/?name=${name}&background=random&color=fff`;
+                    if(!msg) return;
+                    testiH += `<div class="testi-card"><div class="quote-icon">"</div><p class="testi-text">"${msg}"</p><div class="testi-profile"><img src="${img}" class="testi-img"><div class="testi-info"><h4 style="margin:0; color:var(--crimson-red);">${name}</h4><p style="margin:0; font-size:0.9em; color:var(--text-muted);">${role}</p><span class="testi-badge">${badge}</span></div></div></div>`;
+                });
+                document.getElementById('testimonials-grid').innerHTML = testiH;
+
+                // 6. Sponsors
+                const spon = await fetchSheet('Sponsors');
+                let sponH = ''; spon.table.rows.forEach((r,i) => {
+                    if(i===0) return;
+                    const name = r.c[0]?.v; const img = r.c[1]?.v; const color = r.c[2]?.v || 'var(--text-dark)';
+                    const content = img ? `<img src="${img}" style="max-width:80%; max-height:80%; object-fit:contain;">` : name;
+                    sponH += `<div class="sponsor-box" style="color:${color};">${content}</div>`;
                 });
                 document.getElementById('sponsors-grid').innerHTML = sponH;
 
-                // 6. Roadmap & Dropdown
-                const roadData = await fetchSheet('Roadmap');
-                let roadH = ''; let navH = '';
-                roadData.table.rows.forEach((r, i) => {
+                // 7. Roadmap & Dropdown (กู้คืนรูประบบ Slider/Image)
+                const road = await fetchSheet('Roadmap');
+                let roadH = '<div class="roadmap-container">'; let navH = '';
+                road.table.rows.forEach((r, i) => {
                     if(i===0) return;
-                    const side = i % 2 !== 0 ? 'left' : 'right';
-                    const n = r.c[0]?.v; const y = r.c[1]?.v;
-                    roadH += `<div class="roadmap-item ${side}"><div class="roadmap-dot"></div><div class="roadmap-card"><h4>${n} (${y})</h4><p style="color:var(--gold-accent); font-weight:600;">📍 ${r.c[2]?.v}</p><p style="font-size:0.9em; line-height:1.6;">${r.c[3]?.v}</p></div></div>`;
-                    navH += `<a href="${r.c[5]?.v || '#'}">${n} (${y})</a>`;
+                    const side = i%2!==0 ? 'left' : 'right';
+                    const name = r.c[0]?.v; const year = r.c[1]?.v; const loc = r.c[2]?.v; const imgStr = r.c[4]?.v;
+                    let imgHtml = '';
+                    if (imgStr && imgStr !== '-') {
+                        const firstImg = imgStr.split(',')[0].trim();
+                        imgHtml = `<img src="${firstImg}" style="width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:15px;">`;
+                    }
+                    roadH += `<div class="roadmap-item ${side}"><div class="roadmap-dot"></div><div class="roadmap-card">${imgHtml}<h4 style="margin:0 0 5px; color:var(--crimson-red); font-size:1.3em;">${name} (${year})</h4><p style="color:var(--gold-accent); margin:0 0 10px; font-weight:600;">📍 ${loc}</p><p style="color:var(--text-muted); line-height:1.6; font-size:0.95em;">${r.c[3]?.v}</p></div></div>`;
+                    navH += `<a href="${r.c[5]?.v || '#'}">${name} (${year})</a>`;
                 });
-                document.getElementById('notion-history-container').innerHTML = roadH;
+                document.getElementById('notion-history-container').innerHTML = roadH + '</div>';
                 document.getElementById('nav-dropdown-items').innerHTML = navH;
 
-                // 7. Team (Sorting Logic)
-                const teamData = await fetchSheet('Team');
-                let p_html = ''; let vp_html = ''; let other_html = ''; let depts = {};
-                teamData.table.rows.forEach((r, i) => {
+                // 8. Team (แก้บั๊กชื่อเล่นแล้ว)
+                const team = await fetchSheet('Team');
+                let presH = ''; let vpH = ''; let stD = {};
+                team.table.rows.forEach((r,i) => {
                     if(i===0) return;
-                    const d = r.c[0]?.v; const n = r.c[1]?.v; const nk = r.c[2]?.v; const rl = r.c[3]?.v; const img = r.c[4]?.v;
-                    const av = img || `https://ui-avatars.com/api/?name=${n}&background=random&color=fff`;
-                    const card = `<div class="team-card"><div class="team-img-wrapper"><img src="${av}" class="team-img"></div><h4 class="team-name">${n} (${nk})</h4><p class="team-role">${rl}</p></div>`;
-                    if(rl.includes('ประธานฯ')) p_html += card;
-                    else if(rl.includes('รองประธาน')) vp_html += card;
-                    else if(rl.toUpperCase()!=='STAFF') other_html += card;
-                    else { if(!depts[d]) depts[d] = []; depts[d].push(`${n} (${nk})`); }
+                    const dept = r.c[0]?.v; const name = r.c[1]?.v; const nickname = r.c[2]?.v; const role = r.c[3]?.v;
+                    const displayNick = nickname ? `(${nickname})` : '';
+                    const avatar = r.c[4]?.v && r.c[4]?.v !== '-' ? r.c[4]?.v : `https://ui-avatars.com/api/?name=${nickname || name}&background=random&color=fff`;
+                    const card = `<div class="team-card" style="display:inline-block; margin:10px;"><div class="team-img-wrapper"><img src="${avatar}" class="team-img" style="width:100%; height:100%; object-fit:cover;"></div><h4 style="margin:5px 0; font-size:1.1em; color:var(--text-dark);">${name} <span style="color:var(--text-muted); font-weight:normal;">${displayNick}</span></h4><p style="font-size:0.85em; color:var(--crimson-red); margin:0; font-weight:500;">${role}</p></div>`;
+                    
+                    if(role.includes('ประธาน') && !role.includes('รอง')) presH += card;
+                    else if(role.includes('รองประธาน') || role.toUpperCase() !== 'STAFF') vpH += card;
+                    else { if(!stD[dept]) stD[dept] = []; stD[dept].push(`${name} ${displayNick}`); }
                 });
-                document.getElementById('board-container').innerHTML = `<div class="team-row">${p_html}</div><div class="team-row">${vp_html}</div><div class="team-row">${other_html}</div>`;
-                let stH = ''; for(let dp in depts) { stH += `<div class="dept-box"><h5 class="dept-title">ฝ่าย${dp}</h5><ul class="dept-list">${depts[dp].map(m=>`<li>• ${m}</li>`).join('')}</ul></div>`; }
+                document.getElementById('board-container').innerHTML = `<div style="text-align:center; width:100%;">${presH}</div><div style="text-align:center; width:100%;">${vpH}</div>`;
+                let stH = ''; for(let d in stD) { stH += `<div style="background:white; padding:20px; border-radius:10px; border-top:3px solid var(--gold-accent); box-shadow:0 4px 15px rgba(0,0,0,0.03);"><h5 style="margin-top:0; color:var(--crimson-red); font-size:1.1em; border-bottom:1px solid #eee; padding-bottom:8px;">ฝ่าย${d}</h5><ul style="padding-left:15px; font-size:0.9em; line-height:1.8; color:var(--text-dark); list-style-type:circle;">${stD[d].map(m=>`<li>${m}</li>`).join('')}</ul></div>`; }
                 document.getElementById('staff-container').innerHTML = stH;
 
-                // Scroll Animation
+                // Roadmap Scroll Animation
                 const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('show'); }), {threshold: 0.1});
-                document.querySelectorAll('.roadmap-item').forEach(it => obs.observe(it));
+                document.querySelectorAll('.roadmap-item').forEach(i => obs.observe(i));
 
-            } catch (e) { console.error('CMS Error:', e); }
+            } catch (e) { console.error(e); }
         }
         window.addEventListener('DOMContentLoaded', init);
     </script>

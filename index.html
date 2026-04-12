@@ -3,748 +3,291 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ค่ายวิศวพัฒน์ 13 | WisawaPat Camp</title>
+    <title>ค่ายวิศวพัฒน์ | WisawaPat Camp</title>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         /* =========================================
-           1. DESIGN SYSTEM & VARIABLES
+           1. DESIGN SYSTEM
            ========================================= */
         :root {
-            --crimson-red: #8B1A1A; 
-            --glam-white: #FFFFFF;
-            --glam-gray: #F5F7FA; 
-            --text-dark: #2C3E50;
-            --text-muted: #596A7A;
-            --gold-accent: #C5A059; 
-            --footer-bg: #1A1A1A;
+            --crimson-red: #8B1A1A; --glam-white: #FFFFFF; --glam-gray: #F5F7FA;
+            --text-dark: #2C3E50; --text-muted: #596A7A; --gold-accent: #C5A059; --footer-bg: #1A1A1A;
         }
 
-        body { 
-            font-family: 'Sarabun', sans-serif; 
-            margin: 0; 
-            padding: 0; 
-            background-color: var(--glam-gray); 
-            color: var(--text-dark);
-            -webkit-font-smoothing: antialiased;
-        }
-
+        body { font-family: 'Sarabun', sans-serif; margin: 0; padding: 0; background-color: var(--glam-gray); color: var(--text-dark); -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
         h1, h2, h3, h4, h5 { font-family: 'Prompt', sans-serif; }
 
-        /* =========================================
-           2. NAVIGATION BAR
-           ========================================= */
-        nav { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 1em 4em; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; 
-            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); 
-            box-shadow: 0 2px 20px rgba(0,0,0,0.05); 
-        }
-
+        /* Navigation */
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 1em 4em; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0,0,0,0.05); }
         .nav-brand img { height: 45px; width: auto; }
-        
         .nav-links { display: flex; align-items: center; }
-        .nav-links > a, .dropdown > a { 
-            color: var(--text-dark); text-decoration: none; margin: 0 20px; 
-            font-family: 'Prompt', sans-serif; font-weight: 500; font-size: 1.05em; 
-            position: relative; transition: color 0.3s ease; cursor: pointer;
-        }
+        .nav-links a { color: var(--text-dark); text-decoration: none; margin: 0 15px; font-family: 'Prompt', sans-serif; font-weight: 500; transition: 0.3s; font-size: 1.05em; }
+        .nav-links a:hover { color: var(--crimson-red); }
 
-        .nav-links > a::after, .dropdown > a::after {
-            content: ''; position: absolute; width: 0; height: 2px;
-            bottom: -5px; left: 0; background-color: var(--crimson-red);
-            transition: width 0.3s ease;
-        }
+        /* Dropdown */
+        .dropdown { position: relative; }
+        .dropdown-content { display: none; position: absolute; background: white; min-width: 220px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); top: 100%; border-top: 3px solid var(--crimson-red); border-radius: 4px; overflow: hidden; }
+        .dropdown:hover .dropdown-content { display: block; }
+        .dropdown-content a { display: block; padding: 12px 18px; font-size: 0.9em; border-bottom: 1px solid #f5f5f5; margin: 0; }
+        .dropdown-content a:hover { background: var(--glam-gray); }
 
-        .nav-links > a:hover, .dropdown:hover > a { color: var(--crimson-red); }
-        .nav-links > a:hover::after, .dropdown:hover > a::after { width: 100%; }
+        .staff-btn { background: var(--crimson-red); color: white !important; padding: 8px 22px; border-radius: 30px; font-weight: 600; box-shadow: 0 4px 15px rgba(139, 26, 26, 0.2); }
+        .staff-btn:hover { transform: translateY(-2px); filter: brightness(1.2); }
 
-        .dropdown { position: relative; display: inline-block; }
-        .dropdown-content { 
-            display: none; position: absolute; background-color: var(--glam-white); 
-            min-width: 240px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
-            z-index: 1; border-radius: 8px; top: 150%; left: 50%; transform: translateX(-50%);
-            border-top: 3px solid var(--crimson-red); overflow: hidden;
-        }
-        
-        .dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.3s ease; }
-        
-        .dropdown-content a { 
-            color: var(--text-dark); padding: 15px 20px; text-decoration: none; 
-            display: block; margin: 0; font-size: 0.95em; border-bottom: 1px solid #f0f0f0; 
-            transition: all 0.2s ease;
-        }
-        
-        .dropdown-content a:hover { 
-            background-color: var(--glam-gray); color: var(--crimson-red); padding-left: 25px; 
-        }
-
-        @keyframes fadeIn { 
-            from { opacity: 0; transform: translate(-50%, 10px); } 
-            to { opacity: 1; transform: translate(-50%, 0); } 
-        }
-
-        .staff-btn { 
-            background-color: var(--glam-white); color: var(--crimson-red); 
-            padding: 8px 25px; border: 1px solid var(--crimson-red); border-radius: 30px; 
-            font-family: 'Prompt', sans-serif; font-weight: 600; cursor: pointer; transition: all 0.3s ease; 
-        }
-        .staff-btn:hover { background-color: var(--crimson-red); color: var(--glam-white); box-shadow: 0 4px 15px rgba(139, 26, 26, 0.2); }
-
-        /* =========================================
-           3. HERO & GENERAL SECTIONS
-           ========================================= */
-        .hero {
-            position: relative; height: 100vh; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; text-align: center; color: var(--glam-white);
-            background: linear-gradient(rgba(139, 26, 26, 0.75), rgba(44, 62, 80, 0.85)), url('images/ออกไซต์หน้าอบต.เก่า.JPG');
-            background-size: cover; background-position: center; background-attachment: fixed; padding-top: 60px; 
-        }
-
-        .hero h1 { font-size: 4.5em; margin: 0; letter-spacing: 2px; font-weight: 600; text-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .hero h2 { font-size: 1.5em; font-weight: 300; margin: 10px 0 25px 0; color: var(--gold-accent); letter-spacing: 2px; text-transform: uppercase; }
-        .hero p { font-size: 1.2em; font-weight: 300; max-width: 800px; line-height: 1.8; color: #E0E0E0; margin-bottom: 40px; }
-        .hero-btn { background-color: var(--glam-white); color: var(--crimson-red); padding: 15px 45px; text-decoration: none; font-family: 'Prompt', sans-serif; font-size: 1.1em; font-weight: 600; border-radius: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: all 0.3s ease; }
-        .hero-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,0,0,0.3); background-color: var(--glam-gray); }
-
+        /* Sections Styling */
         .section-padding { padding: 100px 10%; }
-        .section-title { text-align: center; font-size: 2.5em; color: var(--crimson-red); margin-bottom: 15px; }
-        .section-subtitle { text-align: center; font-size: 1.2em; color: var(--text-muted); margin-bottom: 50px; font-family: 'Prompt', sans-serif; }
+        .section-title { text-align: center; font-size: 2.8em; color: var(--crimson-red); margin-bottom: 10px; }
+        .section-subtitle { text-align: center; font-size: 1.2em; color: var(--text-muted); margin-bottom: 60px; max-width: 800px; margin-left: auto; margin-right: auto; }
 
-        /* =========================================
-           4. ABOUT & IMPACT
-           ========================================= */
-        .about-section { background-color: var(--glam-white); }
-        .about-content {
-            max-width: 900px; margin: 0 auto; text-align: justify; font-size: 1.15em; line-height: 1.8; 
-            color: var(--text-dark); background-color: var(--glam-gray); padding: 50px; 
-            border-radius: 12px; border-left: 6px solid var(--crimson-red); box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-        }
+        /* Hero Section */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('images/ออกไซต์หน้าอบต.เก่า.JPG'); background-size: cover; background-position: center; background-attachment: fixed; }
+        .hero h1 { font-size: 5em; margin: 0; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .hero h2 { color: var(--gold-accent); font-size: 1.8em; margin: 15px 0; letter-spacing: 3px; }
+        .hero p { max-width: 800px; font-size: 1.2em; line-height: 1.8; opacity: 0.9; }
 
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 30px; margin-top: 40px; }
-        .stat-card { background-color: var(--glam-white); padding: 40px 20px; border-radius: 12px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.04); border-bottom: 4px solid var(--gold-accent); transition: transform 0.3s ease; }
+        /* Stats Cards */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; }
+        .stat-card { background: white; padding: 40px; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-bottom: 5px solid var(--gold-accent); transition: 0.3s; }
         .stat-card:hover { transform: translateY(-10px); }
-        .stat-number { font-size: 3.5em; font-weight: 600; color: var(--crimson-red); margin: 0 0 10px 0; font-family: 'Prompt', sans-serif; line-height: 1; }
-        .stat-desc { color: var(--text-muted); font-size: 1.1em; margin: 0; }
-        .philosophy-text { text-align: center; max-width: 800px; margin: 0 auto 50px auto; font-size: 1.25em; line-height: 1.8; color: var(--text-dark); }
-        .philosophy-text strong { color: var(--crimson-red); }
+        .stat-number { font-size: 3.5em; color: var(--crimson-red); font-weight: 600; margin: 0; }
+        .stat-desc { color: var(--text-muted); margin-top: 10px; font-size: 1.1em; line-height: 1.5; }
 
-        /* =========================================
-           5. TESTIMONIALS
-           ========================================= */
-        .testimonial-section { background-color: var(--glam-gray); }
-        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
-        .testi-card { background-color: var(--glam-white); padding: 40px 30px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.04); position: relative; border-bottom: 4px solid var(--gold-accent); transition: transform 0.3s ease; }
-        .testi-card:hover { transform: translateY(-10px); }
-        .quote-icon { font-family: 'Prompt', sans-serif; font-size: 4em; color: rgba(197, 160, 89, 0.2); position: absolute; top: 10px; right: 20px; line-height: 1; }
-        .testi-text { font-size: 1.1em; color: var(--text-muted); line-height: 1.7; font-style: italic; margin-bottom: 25px; position: relative; z-index: 2; }
-        .testi-profile { display: flex; align-items: center; gap: 15px; border-top: 1px solid #eee; padding-top: 20px; }
-        .testi-img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid var(--crimson-red); }
-        .testi-info h4 { margin: 0; color: var(--crimson-red); font-size: 1.1em; }
-        .testi-info p { margin: 0; font-size: 0.9em; color: var(--text-muted); }
-        .testi-badge { display: inline-block; background-color: var(--crimson-red); color: white; font-size: 0.75em; padding: 3px 8px; border-radius: 12px; margin-top: 5px; font-family: 'Prompt'; font-weight: 400;}
+        /* Timeline Horizontal */
+        .timeline-minimal { display: flex; justify-content: space-between; position: relative; max-width: 1100px; margin: 40px auto; overflow-x: auto; padding-bottom: 30px; }
+        .timeline-minimal::before { content: ''; position: absolute; top: 40px; left: 5%; right: 5%; height: 2px; background: #E2E8F0; }
+        .timeline-step { flex: 1; min-width: 250px; text-align: center; position: relative; z-index: 2; padding: 0 20px; }
+        .timeline-dot { width: 18px; height: 18px; background: white; border: 4px solid var(--gold-accent); border-radius: 50%; margin: 15px auto 25px auto; box-shadow: 0 0 0 6px white; transition: 0.3s; }
+        .timeline-step.active .timeline-dot { background: var(--crimson-red); border-color: var(--crimson-red); transform: scale(1.3); box-shadow: 0 0 20px rgba(139, 26, 26, 0.3), 0 0 0 6px white; }
+        .timeline-event { font-weight: 600; font-size: 1.2em; margin-bottom: 8px; color: var(--text-dark); }
+        .timeline-date { color: var(--crimson-red); font-weight: 600; font-size: 1em; margin-bottom: 5px; }
 
-        /* =========================================
-           6. TIMELINE (MINIMAL DESIGN)
-           ========================================= */
-        .timeline-minimal {
-            display: flex; justify-content: space-between; align-items: flex-start;
-            position: relative; max-width: 1000px; margin: 60px auto 20px auto;
-        }
-        .timeline-minimal::before {
-            content: ''; position: absolute; top: 40px; left: 10%; right: 10%;
-            height: 2px; background-color: #E2E8F0; z-index: 1;
-        }
-        .timeline-step { flex: 1; text-align: center; position: relative; z-index: 2; padding: 0 15px; }
-        .timeline-dot {
-            width: 18px; height: 18px; background-color: var(--glam-white);
-            border: 4px solid var(--gold-accent); border-radius: 50%;
-            margin: 15px auto 25px auto; transition: all 0.3s ease;
-            box-shadow: 0 0 0 6px var(--glam-white);
-        }
-        .timeline-step:hover .timeline-dot { background-color: var(--crimson-red); border-color: var(--crimson-red); transform: scale(1.3); }
-        .timeline-step.active .timeline-dot {
-            background-color: var(--crimson-red); border-color: var(--crimson-red); transform: scale(1.3);
-            box-shadow: 0 0 0 6px var(--glam-white), 0 0 20px rgba(139, 26, 26, 0.3);
-        }
-        .timeline-date { font-family: 'Prompt', sans-serif; color: var(--text-muted); font-weight: 500; font-size: 1.05em; margin-bottom: 5px; min-height: 24px; }
-        .timeline-step.active .timeline-date, .timeline-step.active .timeline-event { color: var(--crimson-red); font-weight: 600; }
-        .timeline-step.active .timeline-date { font-size: 1.15em; }
-        .timeline-event { font-family: 'Prompt', sans-serif; font-weight: 600; font-size: 1.25em; color: var(--text-dark); margin-bottom: 10px; }
-        .timeline-desc { color: var(--text-muted); font-size: 0.95em; line-height: 1.7; }
+        /* Sponsors */
+        .sponsor-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; align-items: center; margin-top: 20px; }
+        .sponsor-box { width: 180px; height: 100px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid #f0f0f0; box-shadow: 0 4px 15px rgba(0,0,0,0.02); transition: 0.3s; padding: 15px; text-align: center; font-weight: 600; }
+        .sponsor-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .sponsor-box:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+
+        /* Roadmap */
+        .roadmap-container { position: relative; max-width: 1000px; margin: auto; }
+        .roadmap-container::after { content: ''; position: absolute; width: 4px; background: var(--gold-accent); top: 0; bottom: 0; left: 50%; margin-left: -2px; }
+        .roadmap-item { width: 50%; padding: 25px 50px; box-sizing: border-box; position: relative; opacity: 0; transform: translateY(30px); transition: 0.8s ease; }
+        .roadmap-item.show { opacity: 1; transform: translateY(0); }
+        .roadmap-item.left { left: 0; text-align: right; }
+        .roadmap-item.right { left: 50%; text-align: left; }
+        .roadmap-dot { width: 20px; height: 20px; background: var(--crimson-red); border: 4px solid var(--gold-accent); position: absolute; border-radius: 50%; top: 35px; z-index: 5; }
+        .roadmap-item.left .roadmap-dot { right: -12px; }
+        .roadmap-item.right .roadmap-dot { left: -12px; }
+        .roadmap-card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-bottom: 4px solid var(--crimson-red); }
+
+        /* Team */
+        .team-grid-container { display: flex; flex-direction: column; align-items: center; gap: 40px; }
+        .team-row { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; width: 100%; }
+        .team-card { background: white; width: 220px; padding: 30px 20px; border-radius: 15px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border-bottom: 4px solid var(--crimson-red); transition: 0.3s; }
+        .team-img-wrapper { width: 100px; height: 100px; margin: 0 auto 20px auto; border-radius: 50%; overflow: hidden; border: 3px solid var(--gold-accent); }
+        .team-img { width: 100%; height: 100%; object-fit: cover; }
+        .team-name { font-weight: 600; font-size: 1.1em; margin: 5px 0; }
+        .team-role { color: var(--crimson-red); font-size: 0.9em; font-weight: 500; }
+        
+        .staff-departments { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 50px; }
+        .dept-box { background: white; padding: 25px; border-radius: 12px; border-top: 4px solid var(--gold-accent); box-shadow: 0 5px 15px rgba(0,0,0,0.03); }
+        .dept-title { color: var(--crimson-red); margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
+        .dept-list { list-style: none; padding: 0; margin: 0; font-size: 0.95em; line-height: 1.8; color: var(--text-dark); }
+
+        /* Footer */
+        footer { background: var(--footer-bg); color: white; padding: 80px 10% 40px 10%; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 50px; }
+        .footer-col { flex: 1; min-width: 280px; }
+        .footer-col h4 { color: var(--gold-accent); font-size: 1.4em; border-bottom: 2px solid var(--crimson-red); padding-bottom: 10px; display: inline-block; margin-top: 0; }
+        .footer-bottom { text-align: center; width: 100%; border-top: 1px solid #333; padding-top: 30px; margin-top: 50px; color: #777; font-size: 0.9em; }
+
         @media (max-width: 768px) {
-            .timeline-minimal { flex-direction: column; margin-top: 40px; gap: 30px;}
-            .timeline-minimal::before { top: 0; bottom: 0; left: 28px; width: 2px; height: 100%; right: auto; }
-            .timeline-step { display: flex; text-align: left; }
-            .timeline-dot { margin: 0 25px 0 0; flex-shrink: 0; position: relative; top: 5px; }
-            .timeline-date { margin-bottom: 5px; min-height: auto;}
+            nav { padding: 1em 1.5em; }
+            .nav-links a:not(.staff-btn) { display: none; }
+            .hero h1 { font-size: 3em; }
+            .section-padding { padding: 60px 5%; }
+            .roadmap-container::after { left: 20px; }
+            .roadmap-item { width: 100%; padding-left: 50px; text-align: left !important; }
+            .roadmap-item.right { left: 0; }
+            .roadmap-dot { left: 8px !important; right: auto !important; }
         }
-
-        /* =========================================
-           7. TEAM SECTION
-           ========================================= */
-        .team-section { background-color: var(--glam-gray); }
-        .founder-card {
-            background: linear-gradient(135deg, var(--crimson-red), #4A0E0E); color: var(--glam-white);
-            width: 100%; max-width: 700px; margin: 0 auto 60px auto; padding: 40px; border-radius: 16px;
-            display: flex; align-items: center; gap: 35px; box-shadow: 0 15px 35px rgba(139, 26, 26, 0.25);
-            border: 2px solid var(--gold-accent); text-align: left;
-        }
-        .founder-card .team-img-wrapper { margin: 0; width: 150px; height: 150px; flex-shrink: 0; border-color: var(--gold-accent); background-color: var(--glam-white); }
-        .founder-card h4 { color: var(--gold-accent); font-size: 1.8em; margin: 0 0 10px 0; }
-        .founder-card p { color: #E0E0E0; font-size: 1.1em; margin: 0; line-height: 1.6; }
-        .team-grid { display: flex; flex-direction: column; align-items: center; margin-top: 40px; width: 100%; }
-        .team-card {
-            background-color: var(--glam-white); width: 200px; padding: 25px 15px; border-radius: 12px;
-            text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: all 0.3s ease;
-            border-bottom: 4px solid var(--crimson-red);
-        }
-        .team-card:hover { transform: translateY(-8px); box-shadow: 0 10px 25px rgba(139, 26, 26, 0.15); }
-        .team-img-wrapper {
-            width: 90px; height: 90px; margin: 0 auto 15px auto; border-radius: 50%; padding: 4px;
-            border: 2px dashed var(--gold-accent); background-color: var(--glam-gray);
-        }
-        .team-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-        .team-name { font-family: 'Prompt', sans-serif; font-size: 1.1em; font-weight: 600; color: var(--text-dark); margin: 0 0 5px 0; }
-        .team-role { font-size: 0.85em; color: var(--crimson-red); font-weight: 500; margin: 0; }
-        .staff-departments { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 40px; text-align: left; }
-        .dept-box { background-color: var(--glam-white); padding: 15px 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); border-top: 3px solid var(--gold-accent); }
-        .dept-title { color: var(--crimson-red); font-family: 'Prompt', sans-serif; font-size: 1em; font-weight: 600; border-bottom: 1px solid #EEEEEE; padding-bottom: 8px; margin-bottom: 10px; margin-top: 0; }
-        .dept-list { list-style: none; padding: 0; margin: 0; color: var(--text-dark); line-height: 1.6; font-size: 0.9em; }
-        .dept-list li { position: relative; padding-left: 15px; }
-        .dept-list li::before { content: "•"; color: var(--gold-accent); font-weight: bold; position: absolute; left: 0; }
-
-        /* =========================================
-           8. ROADMAP & FOOTER
-           ========================================= */
-        .roadmap-container { position: relative; width: 100%; max-width: 1000px; margin: 40px auto; padding: 20px 0; font-family: 'Sarabun', sans-serif; }
-        .roadmap-container::after { content: ''; position: absolute; width: 4px; background-color: var(--gold-accent); top: 0; bottom: 0; left: 50%; margin-left: -2px; border-radius: 2px; }
-        .roadmap-item { padding: 10px 40px; position: relative; background-color: inherit; width: 50%; box-sizing: border-box; opacity: 0; transform: translateY(50px); transition: all 0.8s ease-out; }
-        .roadmap-item.show { opacity: 1; transform: translateY(0); } 
-        .roadmap-item.left { left: 0; }
-        .roadmap-item.right { left: 50%; }
-        .roadmap-dot { width: 24px; height: 24px; background-color: var(--crimson-red); border: 4px solid var(--gold-accent); position: absolute; border-radius: 50%; z-index: 1; top: 30px; box-shadow: 0 0 10px rgba(197, 160, 89, 0.5); }
-        .roadmap-item.left .roadmap-dot { right: -16px; }
-        .roadmap-item.right .roadmap-dot { left: -16px; }
-        .roadmap-card { background-color: var(--glam-white); width: 100%; text-align: left; padding: 20px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-bottom: 4px solid var(--crimson-red); transition: all 0.3s ease; display: flex; flex-direction: column; }
-        .roadmap-card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(139, 26, 26, 0.15); }
-        @media screen and (max-width: 768px) {
-            .roadmap-container::after { left: 31px; }
-            .roadmap-item { width: 100%; padding-left: 70px; padding-right: 20px; }
-            .roadmap-item.left, .roadmap-item.right { left: 0; }
-            .roadmap-item.left .roadmap-dot, .roadmap-item.right .roadmap-dot { left: 15px; right: auto; }
-        }
-
-        footer { background-color: var(--footer-bg); color: var(--glam-gray); padding: 60px 10%; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 30px; }
-        .footer-col { flex: 1; min-width: 250px; }
-        .footer-col h4 { color: var(--gold-accent); font-size: 1.3em; border-bottom: 2px solid var(--crimson-red); padding-bottom: 10px; display: inline-block; margin-top: 0; }
-        .footer-col p, .footer-col a { color: #CCCCCC; text-decoration: none; line-height: 1.8; display: block; margin-bottom: 5px; }
-        .footer-col a:hover { color: var(--glam-white); }
-        .footer-bottom { text-align: center; width: 100%; border-top: 1px solid #333; padding-top: 20px; margin-top: 40px; color: #888; font-size: 0.9em; }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="nav-brand">
-            <img src="images/logo.png" alt="โลโก้ค่ายวิศวพัฒน์">
-        </div>
+        <div class="nav-brand"><img src="images/logo.png" alt="VVP Logo"></div>
         <div class="nav-links">
-            <a href="#about">เกี่ยวกับค่าย</a>
+            <a href="#about">เกี่ยวกับ</a>
             <div class="dropdown">
                 <a href="#history">ประวัติค่าย ▾</a>
-                <div class="dropdown-content">
-                    <a href="history/camp12.html">วิศวพัฒน์ 12 (จ.น่าน)</a>
-                    <a href="history/camp11.html">วิศวพัฒน์ 11 (จ.สระแก้ว)</a>
-                    <a href="history/camp10.html">วิศวพัฒน์ 10 (จ.กาญจนบุรี)</a>
-                    <a href="history/camp9.html">วิศวพัฒน์ 9</a>
-                    <a href="history/camp8.html">วิศวพัฒน์ 8</a>
-                </div>
+                <div id="nav-dropdown-items" class="dropdown-content">
+                    </div>
             </div>
-            <a href="#testimonials">ความในใจ</a>
-            <a href="#timeline">แผนดำเนินงาน</a>
+            <a href="#timeline">แผนงาน</a>
             <a href="#team">ทีมงาน</a>
+            <a id="nav-staff-link" href="#" class="staff-btn">STAFF PORTAL</a>
         </div>
-        <button class="staff-btn">STAFF PORTAL</button>
     </nav>
 
     <section class="hero" id="home">
-        <h1>วิศวพัฒน์ ๑๓</h1>
-        <h2>Understanding • Engaging • Developing</h2>
-        <p>เข้าใจความต้องการของชุมชน เข้าถึงเพื่อร่วมมือกัน และพัฒนาทางออกที่ยั่งยืน<br>ร่วมเป็นส่วนหนึ่งกับชมรมนิสิตทุน คณะวิศวกรรมศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย ในการยกระดับคุณภาพชีวิตชุมชน ผ่านการประยุกต์ใช้องค์ความรู้ทางวิศวกรรมอย่างเต็มรูปแบบ</p>
-        <a href="#timeline" class="hero-btn">ดูรายละเอียดกิจกรรม</a>
+        <h1 id="hero-title">ค่ายวิศวพัฒน์</h1>
+        <h2 id="hero-subtitle">Understanding • Engaging • Developing</h2>
+        <p id="hero-desc">กำลังโหลดข้อมูล...</p>
     </section>
 
-    <section id="about" class="section-padding about-section">
+    <section id="about" class="section-padding" style="background: white;">
         <h3 class="section-title">หลักการและเหตุผล</h3>
-        <p class="section-subtitle">จุดมุ่งหมายของการสร้างสรรค์ประโยชน์เพื่อชุมชน</p>
-        <div class="about-content">
-            <p>โครงการค่ายวิศวพัฒน์ถือกำเนิดขึ้นจากเจตนารมณ์ร่วมของนิสิตทุนและคณะทำงาน ซึ่งมีจุดมุ่งหมายในการนำองค์ความรู้ทางวิศวกรรมมาประยุกต์ใช้เพื่อสร้างประโยชน์อย่างเป็นรูปธรรมแก่ชุมชนและสังคม นับตั้งแต่การริเริ่มโครงการในปีการศึกษา 2559 โครงการได้ดำเนินงานสืบเนื่อง และขยายความร่วมมือกับชุมชน โดยมุ่งสร้างการพัฒนาที่ยั่งยืนในพื้นที่ พร้อมปลูกฝังจิตสาธารณะ ความรับผิดชอบต่อสังคมและเสริมสร้างภาวะผู้นำแก่นิสิตผู้เข้าร่วมโครงการ</p>
-            <p>โครงการในปีนี้จึงมุ่งเน้น <strong>"การบูรณาการระบบน้ำให้เกิดความสมบูรณ์"</strong> เพื่อให้ชุมชนสามารถใช้งานระบบได้จริงอย่างมีประสิทธิภาพเต็มศักยภาพ ควบคู่กับการก่อสร้างฐานรากวิศวกรรมและโครงสร้างรองรับแผงโซลาร์เซลล์ เพื่อเตรียมความพร้อมพื้นที่สำหรับการติดตั้งและใช้งานระบบพลังงานแสงอาทิตย์อย่างยั่งยืน ณ ชุมชนบ้านเชตวัน ตำบลสันทะ อำเภอนาน้อย จังหวัดน่าน</p>
-        </div>
+        <div id="about-text-content" style="max-width: 900px; margin: 40px auto; text-align: justify; line-height: 2; font-size: 1.15em;">⏳...</div>
     </section>
 
-    <section id="history" class="section-padding" style="background-color: var(--glam-gray);">
-        <h3 class="section-title">ประวัติและผลงานค่ายวิศวพัฒน์</h3>
-        
-        <div id="about-camp-container" style="max-width: 900px; margin: 0 auto 60px auto; display: flex; flex-direction: column; gap: 40px; align-items: center;">
-            <img src="images/camp-history-12-1.JPG" alt="ประวัติค่าย" style="width: 100%; max-height: 450px; object-fit: cover; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-            
-            <div id="about-text-content" style="width: 100%;">
-                <p style="text-align: center; color: var(--text-muted);">⌛ กำลังโหลดประวัติการก่อตั้ง...</p>
-            </div>
-        </div>
-
-        <h4 style="text-align: center; color: var(--crimson-red); font-size: 1.8em; margin-top: 20px;">Roadmap พัฒนาการเชิงพื้นที่</h4>
-        <div id="notion-history-container">
-            <p style="text-align: center; color: var(--text-muted);">⏳ กำลังสร้าง Roadmap...</p>
-        </div>
+    <section id="impact" class="section-padding">
+        <h3 class="section-title">ผลลัพธ์และความสำเร็จ</h3>
+        <p class="section-subtitle">ความสำเร็จที่เป็นรูปธรรมจากการลงพื้นที่อย่างต่อเนื่อง</p>
+        <div id="impact-grid" class="stats-grid">⏳...</div>
     </section>
 
-    <script>
-        // -----------------------------------------
-        // 1. ดึงข้อมูลประวัติการก่อตั้ง (Sheet: About)
-        // -----------------------------------------
-        async function loadAboutContent() {
-            const SPREADSHEET_ID = '1h9P_yb0THhvzB9cJYmdETGsK6i8NkVfoOXRWH9RKzAI'; 
-            const SHEET_NAME = 'About'; 
-            const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
-
-            try {
-                const response = await fetch(url);
-                const text = await response.text();
-                const data = JSON.parse(text.substr(47).slice(0, -2));
-                
-                let aboutContent = "";
-                
-                if (data.table && data.table.rows) {
-                    data.table.rows.forEach(row => {
-                        if (row.c) {
-                            row.c.forEach(cell => {
-                                if (cell && cell.v && typeof cell.v === 'string') {
-                                    if (cell.v.length > aboutContent.length) {
-                                        aboutContent = cell.v;
-                                    }
-                                }
-                            });
-                        }
-                    });
-                }
-                
-                if (aboutContent.length > 0) {
-                    document.getElementById('about-text-content').innerHTML = `
-                        <h4 style="color: var(--crimson-red); margin-top: 0; margin-bottom: 20px; font-size: 1.8em; text-align: center; font-family: 'Prompt';">จุดเริ่มต้นค่ายวิศวพัฒน์</h4>
-                        <div style="line-height: 1.9; color: var(--text-dark); font-size: 1.15em; text-align: justify;">
-                            ${aboutContent.replace(/\n/g, '<br><br>')}
-                        </div>
-                    `;
-                } else {
-                    throw new Error("ไม่พบเนื้อหาใน Sheets");
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('about-text-content').innerHTML = '<p style="text-align: center; color: var(--crimson-red);">ไม่สามารถโหลดข้อมูลประวัติได้</p>';
-            }
-        }
-        window.addEventListener('DOMContentLoaded', loadAboutContent);
-    </script>
-
-    <section id="impact" class="section-padding" style="background-color: var(--glam-white);">
-        <h3 class="section-title">ผลลัพธ์เพื่อความยั่งยืน</h3>
-        <p class="section-subtitle">ความสำเร็จจากโมเดลห้วยน้ำเพี้ย (สิงหาคม 2567 - พฤษภาคม 2568)</p>
-        <p class="philosophy-text">เราไม่ได้เพียงแค่เข้าไปสร้างสิ่งปลูกสร้าง แต่เรา <strong>"ร่วมออกแบบ ร่วมสร้าง และร่วมเรียนรู้"</strong> ไปพร้อมกับชุมชน เพื่อให้มั่นใจว่าทุกการพัฒนา คือสิ่งที่ชุมชนเป็นเจ้าของและสามารถดูแลรักษาต่อไปได้อย่างยั่งยืน</p>
-        <div class="stats-grid">
-            <div class="stat-card">
-                <p class="stat-number">400</p>
-                <p class="stat-desc">ไร่ของพื้นที่การเกษตร<br>ที่เข้าถึงระบบบริหารจัดการน้ำ</p>
-            </div>
-            <div class="stat-card">
-                <p class="stat-number">6,711</p>
-                <p class="stat-desc">ต้นไม้ที่ถูกปลูกเพื่อฟื้นฟูพื้นที่ป่า<br>ลดการทำไร่เลื่อนลอย</p>
-            </div>
-            <div class="stat-card">
-                <p class="stat-number">300</p>
-                <p class="stat-desc">ตัน/ปี ของปริมาณคาร์บอน<br>ที่คาดว่าจะลดลงได้จากการฟื้นฟู</p>
-            </div>
-            <div class="stat-card">
-                <p class="stat-number">12%</p>
-                <p class="stat-desc">อัตราการเติบโตของรายได้เฉลี่ย<br>ของครัวเรือนที่เข้าร่วมโครงการ</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="testimonials" class="section-padding testimonial-section">
-        <h3 class="section-title">เสียงจากชาวค่าย</h3>
-        <p class="section-subtitle">ประสบการณ์และความประทับใจจากผู้ร่วมอุดมการณ์ในรุ่นที่ผ่านมา</p>
-
-        <div class="testimonial-grid">
-            <div class="testi-card">
-                <div class="quote-icon">"</div>
-                <p class="testi-text">"การได้ลงพื้นที่จริงทำให้เห็นว่า ความรู้ที่เราเรียนมาในห้องเรียนมันสามารถสร้างความเปลี่ยนแปลงให้ชีวิตคนอื่นได้จริงๆ ค่ายนี้สอนให้เราโตขึ้น ทั้งความคิดและการทำงานร่วมกับผู้อื่น"</p>
-                <div class="testi-profile">
-                    <img src="https://ui-avatars.com/api/?name=F&background=8B1A1A&color=fff" alt="รูปผู้เข้าร่วม" class="testi-img">
-                    <div class="testi-info">
-                        <h4>นายใจดี รักเรียน (ฟลุ๊ค)</h4>
-                        <p>ภาควิชาวิศวกรรมเหมืองแร่และปิโตรเลียม ชั้นปีที่ 3</p>
-                        <span class="testi-badge">ผู้เข้าร่วม ค่ายวิศวพัฒน์ 12</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testi-card">
-                <div class="quote-icon">"</div>
-                <p class="testi-text">"เหนื่อยแต่คุ้มค่ามากค่ะ ได้เห็นรอยยิ้มของชาวบ้านตอนที่ระบบน้ำใช้งานได้ มันเป็นความภูมิใจที่อธิบายไม่ถูกเลย แถมยังได้เพื่อนใหม่ต่างภาควิชาที่สนิทกันมาจนถึงทุกวันนี้"</p>
-                <div class="testi-profile">
-                    <img src="https://ui-avatars.com/api/?name=Y&background=C5A059&color=fff" alt="รูปผู้เข้าร่วม" class="testi-img">
-                    <div class="testi-info">
-                        <h4>นางสาวสมหญิง จริงใจ (หญิง)</h4>
-                        <p>ภาควิชาวิศวกรรมโยธา ชั้นปีที่ 4</p>
-                        <span class="testi-badge">ประธานค่ายวิศวพัฒน์ 11</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="testi-card">
-                <div class="quote-icon">"</div>
-                <p class="testi-text">"ประทับใจกระบวนการทำงานที่เป็นระบบของค่าย เราไม่ได้แค่ไปสร้างแล้วจบ แต่เรามีกระบวนการ Co-design กับชาวบ้าน ทำให้สิ่งที่สร้างไปเกิดความยั่งยืนจริงๆ"</p>
-                <div class="testi-profile">
-                    <img src="https://ui-avatars.com/api/?name=K&background=2C3E50&color=fff" alt="รูปผู้เข้าร่วม" class="testi-img">
-                    <div class="testi-info">
-                        <h4>นายกล้าหาญ ชาญชัย (กล้า)</h4>
-                        <p>ภาควิชาวิศวกรรมสิ่งแวดล้อม ชั้นปีที่ 2</p>
-                        <span class="testi-badge">สตาฟฝ่ายวิชาการ ค่าย 12</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="timeline" class="section-padding" style="background-color: var(--glam-white);">
+    <section id="timeline" class="section-padding" style="background: white;">
         <h3 class="section-title">แผนการดำเนินงาน</h3>
-        <p class="section-subtitle" id="timeline-subtitle">Roadmap โครงการจัดทำแผนที่และสำรวจค่ายวิศวพัฒน์</p>
-        
-        <div id="timeline-dynamic-container" class="timeline-minimal">
-            <p style="text-align: center; width: 100%; color: var(--text-muted);">⏳ กำลังโหลดแผนการดำเนินงาน...</p>
-        </div>
+        <p id="timeline-subtitle" class="section-subtitle">Roadmap กิจกรรมโครงการ</p>
+        <div id="timeline-dynamic-container" class="timeline-minimal">⏳...</div>
     </section>
 
-    <script>
-        // -----------------------------------------
-        // 2. ดึงข้อมูลแผนดำเนินงาน (Sheet: Timeline)
-        // -----------------------------------------
-        async function loadTimelineData() {
-            const SPREADSHEET_ID = '1h9P_yb0THhvzB9cJYmdETGsK6i8NkVfoOXRWH9RKzAI'; 
-            const SHEET_NAME = 'Timeline'; 
-            const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
-
-            const container = document.getElementById('timeline-dynamic-container');
-            const subtitleEl = document.getElementById('timeline-subtitle');
-
-            try {
-                const response = await fetch(url);
-                const text = await response.text();
-                const jsonString = text.substr(47).slice(0, -2);
-                const data = JSON.parse(jsonString);
-
-                let timelineHtml = '';
-                let foundSubtitle = false;
-
-                data.table.rows.forEach((row) => {
-                    if (!row || !row.c) return;
-
-                    const date = row.c[0] && row.c[0].v ? String(row.c[0].v).trim() : '';
-                    const title = row.c[1] && row.c[1].v ? String(row.c[1].v).trim() : '';
-                    const desc = row.c[2] && row.c[2].v ? String(row.c[2].v).trim() : '';
-                    const highlight = row.c[3] && row.c[3].v ? String(row.c[3].v).trim() : '';
-
-                    if (date.toLowerCase() === 'subtitle' || date === 'ซับไตเติ้ล') {
-                        if (subtitleEl && title) { subtitleEl.innerText = title; foundSubtitle = true; }
-                        return; 
-                    }
-
-                    // 👉 จุดที่อัปเดต: เพิ่มการดักจับคำว่า "วันที่" และ "กิจกรรม" ทิ้งไปเลย
-                    if (date.includes('ช่วงเวลา') || title.includes('หัวข้อ') || date.includes('วันที่') || title.includes('กิจกรรม') || (!date && !title)) return;
-                    if (!title) return; 
-
-                    const activeClass = (highlight === 'ใช่' || highlight.toLowerCase() === 'highlight' || highlight.toUpperCase() === 'YES') ? 'active' : '';
-
-                    timelineHtml += `
-                        <div class="timeline-step ${activeClass}">
-                            <div class="timeline-date">${date}</div>
-                            <div class="timeline-dot"></div>
-                            <div class="timeline-content">
-                                <div class="timeline-event">${title}</div>
-                                <p class="timeline-desc">${desc}</p>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                container.innerHTML = timelineHtml || '<p style="text-align: center; width: 100%;">ยังไม่มีแผนการดำเนินงานในระบบ</p>';
-                if (!foundSubtitle && subtitleEl) { subtitleEl.style.display = 'none'; }
-
-            } catch (e) {
-                console.error('Error fetching timeline:', e);
-                container.innerHTML = `<p style="text-align: center; width: 100%; color: var(--crimson-red);">ไม่สามารถดึงข้อมูลแผนการดำเนินงานได้</p>`;
-            }
-        }
-        window.addEventListener('DOMContentLoaded', loadTimelineData);
-    </script>
-
-    <section id="team" class="section-padding team-section">
+    <section id="team" class="section-padding">
         <h3 class="section-title">คณะกรรมการดำเนินงาน</h3>
-        <p class="section-subtitle">บุคลากรผู้ร่วมขับเคลื่อนเจตนารมณ์ค่ายวิศวพัฒน์ 13</p>
-        
-        <div class="founder-card">
-            <div class="team-img-wrapper">
-                <img src="https://ui-avatars.com/api/?name=Advisor&background=E2E8F0&color=596A7A&size=200" alt="รูปอาจารย์ที่ปรึกษา" class="team-img">
-            </div>
-            <div>
-                <h4>รศ.ดร. สรรเพชญ ซื้อนิธิไพศาล</h4>
-                <p><strong>อาจารย์ที่ปรึกษาโครงการ / ผู้ริเริ่มโครงการ</strong><br>
-                ผู้คอยให้คำปรึกษา ชี้แนะแนวทาง และสนับสนุนการนำองค์ความรู้ทางวิศวกรรมมาประยุกต์ใช้เพื่อสร้างความยั่งยืนให้กับสังคม</p>
-            </div>
-        </div>
-
-        <div id="board-container" class="team-grid">
-            <p style="text-align: center; color: var(--text-muted); width: 100%;">⏳ กำลังดึงรายชื่อคณะกรรมการ...</p>
-        </div>
-
-        <h4 style="text-align: center; color: var(--text-dark); margin-top: 80px; font-size: 1.5em;">คณะทำงานฝ่ายต่างๆ</h4>
-        
-        <div id="staff-container" class="staff-departments">
-            <p style="text-align: center; color: var(--text-muted); width: 100%;">⏳ กำลังดึงรายชื่อสตาฟ...</p>
-        </div>
+        <p class="section-subtitle">บุคลากรผู้ขับเคลื่อนเจตนารมณ์ค่ายวิศวพัฒน์</p>
+        <div id="board-container" class="team-grid-container"></div>
+        <h4 style="text-align:center; margin-top:80px; font-size: 1.8em;">คณะทำงานฝ่ายต่างๆ</h4>
+        <div id="staff-container" class="staff-departments"></div>
     </section>
 
-    <script>
-        // -----------------------------------------
-        // 3. ดึงข้อมูลทีมงาน (Sheet: Team)
-        // -----------------------------------------
-        async function loadTeamData() {
-            const SPREADSHEET_ID = '1h9P_yb0THhvzB9cJYmdETGsK6i8NkVfoOXRWH9RKzAI'; 
-            const SHEET_NAME = 'Team'; 
-            const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
-
-            const boardContainer = document.getElementById('board-container');
-            const staffContainer = document.getElementById('staff-container');
-
-            try {
-                const response = await fetch(url);
-                const text = await response.text();
-                const jsonString = text.substr(47).slice(0, -2);
-                const data = JSON.parse(jsonString);
-
-                let presidentHtml = '';
-                let vpHtml = '';
-                let otherBoardHtml = '';
-                let depts = {};
-
-                data.table.rows.forEach(row => {
-                    if (!row || !row.c) return;
-
-                    const dept = row.c[0] && row.c[0].v ? String(row.c[0].v).trim() : '';
-                    const fullName = row.c[1] && row.c[1].v ? String(row.c[1].v).trim() : '';
-                    const nickname = row.c[2] && row.c[2].v ? String(row.c[2].v).trim() : '';
-                    const role = row.c[3] && row.c[3].v ? String(row.c[3].v).trim() : '';
-                    const avatar = row.c[4] && row.c[4].v ? String(row.c[4].v).trim() : '';
-
-                    if (!fullName || fullName === 'ชื่อ-นามสกุล') return; 
-
-                    let avatarUrl = avatar;
-                    if (!avatarUrl || avatarUrl === '-' || avatarUrl === '') {
-                        const avatarLetter = nickname ? nickname.charAt(0) : fullName.charAt(0);
-                        avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(avatarLetter)}&background=random&color=fff&size=150&font-family=Prompt`;
-                    }
-
-                    if (role.toUpperCase() !== 'STAFF') {
-                        const cardHtml = `
-                        <div class="team-card">
-                            <div class="team-img-wrapper" style="overflow: hidden;">
-                                <img src="${avatarUrl}" alt="${nickname}" class="team-img" style="width: 100%; height: 100%; object-fit: cover;">
-                            </div>
-                            <h4 class="team-name">${fullName}</h4>
-                            <p class="team-role" style="margin-top: 5px;">${role}</p>
-                        </div>`;
-
-                        if (role.includes('รองประธาน')) {
-                            vpHtml += cardHtml; 
-                        } else if (role.includes('ประธาน')) {
-                            presidentHtml += cardHtml; 
-                        } else {
-                            otherBoardHtml += cardHtml; 
-                        }
-                    } else {
-                        if (!depts[dept]) depts[dept] = [];
-                        depts[dept].push(`${fullName} (${nickname})`);
-                    }
-                });
-
-                let finalBoardHtml = '';
-                if (presidentHtml) { finalBoardHtml += `<div style="display: flex; justify-content: center; width: 100%; margin-bottom: 20px;">${presidentHtml}</div>`; }
-                if (vpHtml) { finalBoardHtml += `<div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; width: 100%; margin-bottom: 20px;">${vpHtml}</div>`; }
-                if (otherBoardHtml) { finalBoardHtml += `<div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; width: 100%;">${otherBoardHtml}</div>`; }
-
-                boardContainer.innerHTML = finalBoardHtml || '<p>ยังไม่มีข้อมูลคณะกรรมการ</p>';
-
-                let staffHtml = '';
-                for (const [deptName, members] of Object.entries(depts)) {
-                    let lis = members.map(m => `<li>${m}</li>`).join('');
-                    staffHtml += `
-                    <div class="dept-box">
-                        <h5 class="dept-title">ฝ่าย${deptName}</h5>
-                        <ul class="dept-list">${lis}</ul>
-                    </div>`;
-                }
-                staffContainer.innerHTML = staffHtml || '<p>ยังไม่มีข้อมูลสตาฟ</p>';
-
-            } catch (e) {
-                console.error('Error:', e);
-                boardContainer.innerHTML = `<p style="color: red;">ดึงข้อมูลทีมงานไม่สำเร็จ</p>`;
-            }
-        }
-        window.addEventListener('DOMContentLoaded', loadTeamData);
-    </script>
-
-    <section id="sponsors" class="section-padding sponsor-section" style="background-color: var(--glam-white);">
+    <section id="sponsors" class="section-padding" style="background: white;">
         <h3 class="section-title">พันธมิตรและผู้สนับสนุน</h3>
-        <p class="section-subtitle">องค์กรที่ร่วมขับเคลื่อนการพัฒนาอย่างยั่งยืนในค่ายวิศวพัฒน์ที่ผ่านมา</p>
-        
-        <div class="sponsor-grid" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 40px; align-items: center;">
-            <div style="width: 160px; height: 90px; background-color: var(--glam-white); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Prompt'; font-weight: 600; font-size: 1.2em; color: #8B1A1A; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">TPIPL</div>
-            <div style="width: 160px; height: 90px; background-color: var(--glam-white); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Prompt'; font-weight: 600; font-size: 1.1em; color: #005A9C; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">EXIM THAILAND</div>
-            <div style="width: 160px; height: 90px; background-color: var(--glam-white); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Prompt'; font-weight: 600; font-size: 1.4em; color: #000000; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">BAM</div>
-            <div style="width: 160px; height: 90px; background-color: var(--glam-white); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Prompt'; font-weight: 600; font-size: 1.4em; color: #333333; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">TAP</div>
-            <div style="width: 160px; height: 90px; background-color: var(--glam-white); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Prompt'; font-weight: 600; font-size: 1.4em; color: #D04A02; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">PwC</div>
-            <div style="width: 160px; height: 90px; background-color: var(--glam-white); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-family: 'Prompt'; font-weight: 600; font-size: 1.1em; color: #4CAF50; border: 1px solid #E2E8F0; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">มูลนิธิรากแก้ว</div>
-        </div>
-        
-        <p style="text-align: center; color: var(--text-muted); margin-top: 40px; font-size: 1.1em; max-width: 800px; margin-left: auto; margin-right: auto;">
-            ขอขอบพระคุณทุกองค์กรที่เล็งเห็นถึงความสำคัญ และให้การสนับสนุนงบประมาณตลอดจนทรัพยากรต่างๆ เพื่อร่วมสร้างสรรค์สังคมที่ยั่งยืนไปพร้อมกับเรา
-        </p>
-        
-        <div style="text-align: center; margin-top: 30px;">
-            <a href="#contact" style="background-color: var(--crimson-red); color: white; padding: 12px 30px; text-decoration: none; border-radius: 30px; font-family: 'Prompt'; font-weight: 500; font-size: 1em; display: inline-block; box-shadow: 0 4px 10px rgba(139, 26, 26, 0.3); transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#6A1212'" onmouseout="this.style.backgroundColor='var(--crimson-red)'">สนใจร่วมเป็นผู้สนับสนุนค่ายวิศวพัฒน์ 13</a>
-        </div>
+        <p class="section-subtitle">องค์กรที่ร่วมสร้างความเปลี่ยนแปลงอย่างยั่งยืน</p>
+        <div id="sponsors-grid" class="sponsor-grid">⏳...</div>
+    </section>
+
+    <section id="history" class="section-padding">
+        <h3 class="section-title">ประวัติผลงานย้อนหลัง</h3>
+        <p class="section-subtitle">ก้าวเดินของเราจากอดีตจนถึงปัจจุบัน</p>
+        <div id="notion-history-container" class="roadmap-container"></div>
     </section>
 
     <footer>
         <div class="footer-col">
             <h4>ติดต่อโครงการ</h4>
-            <p><strong>คุณณัฐวัฒน์ หงษ์เวียงจันทร์ (ประธานโครงการ)</strong><br>โทร: 064-687-8579</p>
-            <p><strong>คุณอภิชัย เมืองแก้ว (เลขานุการ)</strong><br>โทร: 094-323-1184</p>
+            <p id="footer-pres-name">ประธานโครงการ</p>
+            <p id="footer-pres-phone">โทร: -</p>
+            <p id="footer-sec-name" style="margin-top:15px; font-weight:600;">เลขานุการ</p>
+            <p id="footer-sec-phone">โทร: -</p>
         </div>
         <div class="footer-col">
             <h4>สถานที่ปฏิบัติงาน</h4>
-            <p>ชุมชนบ้านเชตวัน ตำบลสันทะ<br>อำเภอนาน้อย จังหวัดน่าน</p>
+            <p id="footer-camp-addr">กำลังโหลดข้อมูลที่อยู่...</p>
         </div>
         <div class="footer-col">
             <h4>ดำเนินการโดย</h4>
-            <p>ชมรมนิสิตทุน คณะวิศวกรรมศาสตร์<br>จุฬาลงกรณ์มหาวิทยาลัย<br>254 ถนนพญาไท แขวงวังใหม่<br>เขตปทุมวัน กรุงเทพฯ 10330</p>
+            <p id="footer-uni-addr">กำลังโหลดข้อมูลองค์กร...</p>
         </div>
         <div class="footer-bottom">
-            &copy; 2026 โครงการค่ายวิศวพัฒน์ 13. All Rights Reserved.
+            &copy; 2026 WisawaPat Camp. All Rights Reserved.
         </div>
     </footer>
 
     <script>
-        // -----------------------------------------
-        // 4. ดึงข้อมูลประวัติผลงาน (Sheet: Roadmap)
-        // -----------------------------------------
-        async function loadSheetData() {
-            const SHEET_ID = "1h9P_yb0THhvzB9cJYmdETGsK6i8NkVfoOXRWH9RKzAI";
-            const SHEET_NAME = 'Roadmap'; // <-- นี่คือจุดที่เพิ่มเข้าไปเพื่อล็อกเป้าหมายครับ
-            const container = document.getElementById('notion-history-container');
-            container.innerHTML = '<p style="color: var(--text-muted); font-size: 1.2em;">⏳ กำลังสร้าง Roadmap ประวัติค่าย...</p>';
+        const SHEET_ID = '1h9P_yb0THhvzB9cJYmdETGsK6i8NkVfoOXRWH9RKzAI';
 
-            try {
-                // ระบุชื่อ Sheet ป้องกันการไปดึงข้อมูลแผ่นแรกสุดมั่วๆ
-                const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
-                const response = await fetch(url);
-                const text = await response.text();
-                const jsonString = text.match(/google\.visualization\.Query\.setResponse\(([\s\S\w]+)\)/)[1];
-                const data = JSON.parse(jsonString);
-
-                if (!data.table || !data.table.rows || data.table.rows.length === 0) {
-                    container.innerHTML = '<p style="color: var(--text-muted);">ยังไม่มีข้อมูลประวัติค่ายในระบบ</p>';
-                    return;
-                }
-
-                let rows = data.table.rows;
-                rows.sort((a, b) => {
-                    const yearA = (a.c[1] && a.c[1].v) ? Number(a.c[1].v) : 0;
-                    const yearB = (b.c[1] && b.c[1].v) ? Number(b.c[1].v) : 0;
-                    return yearB - yearA; 
-                });
-
-                container.innerHTML = '';
-                let html = '<div class="roadmap-container">';
-                
-                rows.forEach((row, index) => {
-                    const alignClass = (index % 2 === 0) ? 'left' : 'right';
-                    const name = (row.c[0] && row.c[0].v) ? row.c[0].v : 'ไม่ระบุชื่อรุ่น';
-                    const year = (row.c[1] && row.c[1].v) ? row.c[1].v : '-';
-                    const location = (row.c[2] && row.c[2].v) ? row.c[2].v : 'ไม่ระบุสถานที่';
-                    const desc = (row.c[3] && row.c[3].v) ? row.c[3].v : '';
-                    const imageStr = (row.c[4] && row.c[4].v) ? row.c[4].v : 'images/logo.png';
-                    const images = imageStr.split(',').map(img => img.trim());
-                    const link = (row.c[5] && row.c[5].v) ? row.c[5].v : '#';
-
-                    let sliderHtml = `<div class="auto-slider" style="position: relative; width: 100%; height: 220px; border-radius: 8px; margin-bottom: 15px; overflow: hidden; background-color: var(--glam-gray);">`;
-                    images.forEach((img, imgIdx) => {
-                        const opacity = imgIdx === 0 ? 1 : 0;
-                        const activeClass = imgIdx === 0 ? 'active' : '';
-                        sliderHtml += `<img src="${img}" class="${activeClass}" style="position: absolute; top:0; left:0; width: 100%; height: 100%; object-fit: cover; opacity: ${opacity}; transition: opacity 0.8s ease-in-out;">`;
-                    });
-                    sliderHtml += `</div>`;
-
-                    html += `
-                        <div class="roadmap-item ${alignClass}">
-                            <div class="roadmap-dot"></div>
-                            <div class="roadmap-card">
-                                ${sliderHtml}
-                                <h4 style="color: var(--crimson-red); margin: 0 0 5px 0; font-size: 1.4em; font-family: 'Prompt';">${name} (ปี ${year})</h4>
-                                <p style="color: var(--gold-accent); font-weight: 600; margin: 0 0 10px 0; font-size: 0.95em;">📍 ${location}</p>
-                                <p style="color: var(--text-muted); font-size: 0.95em; line-height: 1.6; flex-grow: 1;">${desc}</p>
-                                <a href="${link}" style="display: block; text-align: center; background-color: var(--glam-gray); color: var(--crimson-red); padding: 10px; border-radius: 8px; text-decoration: none; font-family: 'Prompt'; font-weight: 600; margin-top: 15px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='var(--crimson-red)'; this.style.color='white';" onmouseout="this.style.backgroundColor='var(--glam-gray)'; this.style.color='var(--crimson-red)';">ดูรายละเอียดค่าย ➔</a>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                html += '</div>';
-                container.innerHTML = html;
-
-                setInterval(() => {
-                    document.querySelectorAll('.auto-slider').forEach(slider => {
-                        const currentImg = slider.querySelector('img.active');
-                        if (!currentImg) return;
-                        let nextImg = currentImg.nextElementSibling || slider.firstElementChild;
-                        currentImg.classList.remove('active');
-                        currentImg.style.opacity = 0;
-                        nextImg.classList.add('active');
-                        nextImg.style.opacity = 1;
-                    });
-                }, 3000);
-
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('show');
-                        }
-                    });
-                }, { threshold: 0.1 });
-
-                document.querySelectorAll('.roadmap-item').forEach(item => {
-                    observer.observe(item);
-                });
-
-            } catch (error) {
-                console.error("Error fetching Google Sheets:", error);
-                container.innerHTML = `<p style="color: var(--crimson-red);">พบข้อผิดพลาดในการดึงข้อมูล Roadmap</p>`;
-            }
+        async function fetchSheet(name) {
+            const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(name)}`;
+            const response = await fetch(url);
+            const text = await response.text();
+            return JSON.parse(text.substr(47).slice(0, -2));
         }
-        loadSheetData();
-    </script>
 
+        async function init() {
+            try {
+                // 1. Settings & Footer
+                const setData = await fetchSheet('Settings');
+                setData.table.rows.forEach(r => {
+                    const k = r.c[0]?.v; const v = r.c[1]?.v; if(!v) return;
+                    if(k==='HeroTitle') document.getElementById('hero-title').innerText = v;
+                    if(k==='HeroSubtitle') document.getElementById('hero-subtitle').innerText = v;
+                    if(k==='HeroDesc') document.getElementById('hero-desc').innerText = v;
+                    if(k==='StaffPortalURL') { document.getElementById('nav-staff-link').href = v; }
+                    if(k==='PresidentName') document.getElementById('footer-pres-name').innerText = v;
+                    if(k==='PresidentPhone') document.getElementById('footer-pres-phone').innerText = 'โทร: ' + v;
+                    if(k==='SecretaryName') document.getElementById('footer-sec-name').innerText = v;
+                    if(k==='SecretaryPhone') document.getElementById('footer-sec-phone').innerText = 'โทร: ' + v;
+                    if(k==='CampAddress') document.getElementById('footer-camp-addr').innerText = v;
+                    if(k==='UniAddress') document.getElementById('footer-uni-addr').innerText = v;
+                });
+
+                // 2. About
+                const aboutData = await fetchSheet('About');
+                let bodyText = ""; aboutData.table.rows.forEach(r => { if(r.c[1]?.v?.length > bodyText.length) bodyText = r.c[1].v; });
+                document.getElementById('about-text-content').innerHTML = bodyText.replace(/\n/g, '<br>');
+
+                // 3. Impact
+                const impData = await fetchSheet('Impact');
+                let impH = ''; impData.table.rows.forEach((r, i) => { if(i>0) impH += `<div class="stat-card"><p class="stat-number">${r.c[0]?.v}</p><p class="stat-desc">${r.c[1]?.v}</p></div>`; });
+                document.getElementById('impact-grid').innerHTML = impH;
+
+                // 4. Timeline
+                const timeData = await fetchSheet('Timeline');
+                let timeH = ''; timeData.table.rows.forEach(r => {
+                    const d = r.c[0]?.v; const t = r.c[1]?.v; if(!t) return;
+                    if(d?.toLowerCase()==='subtitle') { document.getElementById('timeline-subtitle').innerText = t; return; }
+                    if(d.includes('วันที่') || d.includes('ช่วงเวลา')) return;
+                    const act = r.c[3]?.v === 'ใช่' ? 'active' : '';
+                    timeH += `<div class="timeline-step ${act}"><div class="timeline-date">${d}</div><div class="timeline-dot"></div><div class="timeline-event">${t}</div><p style="font-size:0.85em; color:var(--text-muted);">${r.c[2]?.v||''}</p></div>`;
+                });
+                document.getElementById('timeline-dynamic-container').innerHTML = timeH;
+
+                // 5. Sponsors
+                const sponData = await fetchSheet('Sponsors');
+                let sponH = ''; sponData.table.rows.forEach((r, i) => {
+                    if(i===0) return;
+                    const n = r.c[0]?.v; const img = r.c[1]?.v; const col = r.c[2]?.v || 'var(--crimson-red)';
+                    const content = img ? `<img src="${img}" alt="${n}">` : n;
+                    sponH += `<div class="sponsor-box" style="color:${col};">${content}</div>`;
+                });
+                document.getElementById('sponsors-grid').innerHTML = sponH;
+
+                // 6. Roadmap & Dropdown
+                const roadData = await fetchSheet('Roadmap');
+                let roadH = ''; let navH = '';
+                roadData.table.rows.forEach((r, i) => {
+                    if(i===0) return;
+                    const side = i % 2 !== 0 ? 'left' : 'right';
+                    const n = r.c[0]?.v; const y = r.c[1]?.v;
+                    roadH += `<div class="roadmap-item ${side}"><div class="roadmap-dot"></div><div class="roadmap-card"><h4>${n} (${y})</h4><p style="color:var(--gold-accent); font-weight:600;">📍 ${r.c[2]?.v}</p><p style="font-size:0.9em; line-height:1.6;">${r.c[3]?.v}</p></div></div>`;
+                    navH += `<a href="${r.c[5]?.v || '#'}">${n} (${y})</a>`;
+                });
+                document.getElementById('notion-history-container').innerHTML = roadH;
+                document.getElementById('nav-dropdown-items').innerHTML = navH;
+
+                // 7. Team (Sorting Logic)
+                const teamData = await fetchSheet('Team');
+                let p_html = ''; let vp_html = ''; let other_html = ''; let depts = {};
+                teamData.table.rows.forEach((r, i) => {
+                    if(i===0) return;
+                    const d = r.c[0]?.v; const n = r.c[1]?.v; const nk = r.c[2]?.v; const rl = r.c[3]?.v; const img = r.c[4]?.v;
+                    const av = img || `https://ui-avatars.com/api/?name=${n}&background=random&color=fff`;
+                    const card = `<div class="team-card"><div class="team-img-wrapper"><img src="${av}" class="team-img"></div><h4 class="team-name">${n} (${nk})</h4><p class="team-role">${rl}</p></div>`;
+                    if(rl.includes('ประธานฯ')) p_html += card;
+                    else if(rl.includes('รองประธาน')) vp_html += card;
+                    else if(rl.toUpperCase()!=='STAFF') other_html += card;
+                    else { if(!depts[d]) depts[d] = []; depts[d].push(`${n} (${nk})`); }
+                });
+                document.getElementById('board-container').innerHTML = `<div class="team-row">${p_html}</div><div class="team-row">${vp_html}</div><div class="team-row">${other_html}</div>`;
+                let stH = ''; for(let dp in depts) { stH += `<div class="dept-box"><h5 class="dept-title">ฝ่าย${dp}</h5><ul class="dept-list">${depts[dp].map(m=>`<li>• ${m}</li>`).join('')}</ul></div>`; }
+                document.getElementById('staff-container').innerHTML = stH;
+
+                // Scroll Animation
+                const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('show'); }), {threshold: 0.1});
+                document.querySelectorAll('.roadmap-item').forEach(it => obs.observe(it));
+
+            } catch (e) { console.error('CMS Error:', e); }
+        }
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
 </body>
 </html>

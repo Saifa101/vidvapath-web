@@ -438,6 +438,7 @@
             const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
 
             const container = document.getElementById('timeline-dynamic-container');
+            const subtitleEl = document.getElementById('timeline-subtitle'); // เล็งเป้าไปที่ซับไตเติ้ล
 
             try {
                 const response = await fetch(url);
@@ -446,8 +447,9 @@
                 const data = JSON.parse(jsonString);
 
                 let timelineHtml = '';
+                let foundSubtitle = false;
 
-                data.table.rows.forEach(row => {
+                data.table.rows.forEach((row, index) => {
                     if (!row || !row.c) return;
 
                     const date = row.c[0] && row.c[0].v ? String(row.c[0].v).trim() : '';
@@ -455,9 +457,21 @@
                     const desc = row.c[2] && row.c[2].v ? String(row.c[2].v).trim() : '';
                     const highlight = row.c[3] && row.c[3].v ? String(row.c[3].v).trim() : '';
 
-                    if (!title || title === 'หัวข้อกิจกรรม') return; 
+                    // 1. ระบบจัดการ Subtitle อัตโนมัติ
+                    if (date.toLowerCase() === 'subtitle' || date === 'ซับไตเติ้ล') {
+                        if (subtitleEl && title) {
+                            subtitleEl.innerText = title;
+                            foundSubtitle = true;
+                        }
+                        return; // ข้ามไป ไม่ต้องวาดเส้น
+                    }
 
-                    // เช็คว่าต้องเน้นสีแดงไหม (คอลัมน์ D พิมพ์คำว่า "ใช่" หรือ "highlight")
+                    // 2. ระบบคัดกรองหัวตารางขยะ (ป้องกันหัวตารางหลุดมาแสดงบนเว็บ)
+                    if (date.includes('ช่วงเวลา') || title.includes('หัวข้อ') || (!date && !title)) return;
+
+                    if (!title) return; 
+
+                    // เช็คเน้นสีแดง
                     const activeClass = (highlight === 'ใช่' || highlight.toLowerCase() === 'highlight' || highlight.toUpperCase() === 'YES') ? 'active' : '';
 
                     timelineHtml += `
@@ -473,6 +487,11 @@
                 });
 
                 container.innerHTML = timelineHtml || '<p style="text-align: center; width: 100%;">ยังไม่มีแผนการดำเนินงานในระบบ</p>';
+
+                // ถ้าใน Sheets ไม่ได้ใส่ Subtitle ไว้ ให้ซ่อนตัวหนังสือทิ้งไปเลย จะได้ดูมินิมอล
+                if (!foundSubtitle && subtitleEl) {
+                    subtitleEl.style.display = 'none';
+                }
 
             } catch (e) {
                 console.error('Error fetching timeline:', e);

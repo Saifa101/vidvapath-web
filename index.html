@@ -372,25 +372,57 @@
 
     <section id="timeline" class="section-padding timeline-section">
         <h3 class="section-title">แผนการดำเนินงาน</h3>
-        <p class="section-subtitle">Roadmap โครงการค่ายวิศวพัฒน์ ประจำปีการศึกษา 2568</p>
-        <div class="timeline-container">
-            <div class="timeline-box">
-                <div class="timeline-date">ตุลาคม 2568</div>
-                <div class="timeline-event">สำรวจและออกแบบ</div>
-                <p class="stat-desc">ลงพื้นที่สำรวจ ออกแบบกิจกรรม และประเมินงบประมาณโครงสร้างพื้นฐาน</p>
+        <p id="timeline-subtitle" class="section-subtitle">⌛ กำลังโหลดแผนการดำเนินงานจากฐานข้อมูล...</p>
+        
+        <div id="timeline-content-container" class="timeline-container">
             </div>
-            <div class="timeline-box">
-                <div class="timeline-date">พฤศจิกายน 2568</div>
-                <div class="timeline-event">เปิดรับสมัคร</div>
-                <p class="stat-desc">ประชาสัมพันธ์และเปิดรับลงทะเบียนผู้เข้าร่วมโครงการในระบบ</p>
-            </div>
-            <div class="timeline-box">
-                <div class="timeline-date">16 - 27 ธ.ค. 2568</div>
-                <div class="timeline-event">ลงพื้นที่ปฏิบัติงาน</div>
-                <p class="stat-desc">ลงพื้นที่ก่อสร้างและบูรณาการระบบน้ำ ณ ชุมชนบ้านเชตวัน จ.น่าน</p>
-            </div>
-        </div>
     </section>
+
+    <script>
+        async function loadTimelineData() {
+            const SPREADSHEET_ID = '1h9P_yb0THhvzB9cJYmdETGsK6i8NkVfoOXRWH9RKzAI'; 
+            const SHEET_NAME = 'Timeline'; 
+            const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
+
+            try {
+                const response = await fetch(url);
+                const text = await response.text();
+                const data = JSON.parse(text.substr(47).slice(0, -2));
+                
+                let timelineHtml = '';
+                
+                data.table.rows.forEach(row => {
+                    if (!row.c || !row.c[0]) return;
+
+                    const date = row.c[0] ? row.c[0].v : '';
+                    const event = row.c[1] ? row.c[1].v : '';
+                    const desc = row.c[2] ? row.c[2].v : '';
+                    const status = row.c[3] ? row.c[3].v : '';
+
+                    // ถ้าในช่องสถานะพิมพ์ว่า highlight จะทำให้กล่องเด่นขึ้น
+                    const isHighlight = status === 'highlight';
+                    const styleAttr = isHighlight ? 'style="border-top: 4px solid var(--gold-accent); transform: scale(1.05); box-shadow: 0 10px 25px rgba(0,0,0,0.08);"' : '';
+                    const textStyle = isHighlight ? 'style="color: var(--crimson-red);"' : '';
+
+                    timelineHtml += `
+                        <div class="timeline-box" ${styleAttr}>
+                            <div class="timeline-date" ${textStyle}>${date}</div>
+                            <div class="timeline-event" ${textStyle}>${event}</div>
+                            <p class="stat-desc">${desc}</p>
+                        </div>
+                    `;
+                });
+
+                document.getElementById('timeline-content-container').innerHTML = timelineHtml;
+                document.getElementById('timeline-subtitle').innerText = "Roadmap การดำเนินงานค่ายวิศวพัฒน์ ประจำปีการศึกษา 2568";
+
+            } catch (error) {
+                console.error('Error:', error);
+                document.getElementById('timeline-subtitle').innerText = "ไม่สามารถโหลดข้อมูลแผนงานได้";
+            }
+        }
+        window.addEventListener('DOMContentLoaded', loadTimelineData);
+    </script>
 
     <section id="team" class="section-padding team-section">
         <h3 class="section-title">คณะกรรมการดำเนินงาน</h3>

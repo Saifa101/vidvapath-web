@@ -424,35 +424,10 @@
 
     <section id="timeline" class="section-padding" style="background-color: var(--glam-white);">
         <h3 class="section-title">แผนการดำเนินงาน</h3>
-        <p class="section-subtitle">Roadmap โครงการจัดทำแผนที่และสำรวจค่ายวิศวพัฒน์ 12 ปีการศึกษา 2568</p>
+        <p class="section-subtitle" id="timeline-subtitle">Roadmap โครงการจัดทำแผนที่และสำรวจค่ายวิศวพัฒน์ 12 ปีการศึกษา 2568</p>
         
-        <div class="timeline-minimal">
-            <div class="timeline-step">
-                <div class="timeline-date">1 - 22 ต.ค. 68</div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-event">เตรียมงานและประสานงาน</div>
-                    <p class="timeline-desc">วางแผนงาน ประสานงาน อบต.สันทะ จัดซื้ออุปกรณ์ และฝึกทักษะการใช้เครื่องมือ</p>
-                </div>
-            </div>
-
-            <div class="timeline-step active">
-                <div class="timeline-date">23 - 26 ต.ค. 68</div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-event" style="color: var(--crimson-red);">ลงพื้นที่ปฏิบัติงานจริง</div>
-                    <p class="timeline-desc">รังวัดด้วยเทคนิค RTK GNSS ทำแผนที่ (Drone) และติดตั้งระบบโซลาร์เซลล์ ณ จ.น่าน</p>
-                </div>
-            </div>
-
-            <div class="timeline-step">
-                <div class="timeline-date">26 ต.ค. - 9 พ.ย. 68</div>
-                <div class="timeline-dot"></div>
-                <div class="timeline-content">
-                    <div class="timeline-event">สรุปผลโครงการ</div>
-                    <p class="timeline-desc">ประเมินและสรุปผลกิจกรรมการสำรวจ เพื่อนำข้อมูลไปใช้วางแผนในลำดับต่อไป</p>
-                </div>
-            </div>
+        <div id="timeline-dynamic-container" class="timeline-minimal">
+            <p style="text-align: center; width: 100%; color: var(--text-muted);">⏳ กำลังโหลดแผนการดำเนินงาน...</p>
         </div>
     </section>
 
@@ -462,43 +437,49 @@
             const SHEET_NAME = 'Timeline'; 
             const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&sheet=${SHEET_NAME}`;
 
+            const container = document.getElementById('timeline-dynamic-container');
+
             try {
                 const response = await fetch(url);
                 const text = await response.text();
-                const data = JSON.parse(text.substr(47).slice(0, -2));
-                
+                const jsonString = text.substr(47).slice(0, -2);
+                const data = JSON.parse(jsonString);
+
                 let timelineHtml = '';
-                
+
                 data.table.rows.forEach(row => {
-                    if (!row.c || !row.c[0]) return;
+                    if (!row || !row.c) return;
 
-                    const date = row.c[0] ? row.c[0].v : '';
-                    const event = row.c[1] ? row.c[1].v : '';
-                    const desc = row.c[2] ? row.c[2].v : '';
-                    const status = row.c[3] ? row.c[3].v : '';
+                    const date = row.c[0] && row.c[0].v ? String(row.c[0].v).trim() : '';
+                    const title = row.c[1] && row.c[1].v ? String(row.c[1].v).trim() : '';
+                    const desc = row.c[2] && row.c[2].v ? String(row.c[2].v).trim() : '';
+                    const highlight = row.c[3] && row.c[3].v ? String(row.c[3].v).trim() : '';
 
-                    // ถ้าในช่องสถานะพิมพ์ว่า highlight จะทำให้กล่องเด่นขึ้น
-                    const isHighlight = status === 'highlight';
-                    const styleAttr = isHighlight ? 'style="border-top: 4px solid var(--gold-accent); transform: scale(1.05); box-shadow: 0 10px 25px rgba(0,0,0,0.08);"' : '';
-                    const textStyle = isHighlight ? 'style="color: var(--crimson-red);"' : '';
+                    if (!title || title === 'หัวข้อกิจกรรม') return; 
+
+                    // เช็คว่าต้องเน้นสีแดงไหม (คอลัมน์ D พิมพ์คำว่า "ใช่" หรือ "highlight")
+                    const activeClass = (highlight === 'ใช่' || highlight.toLowerCase() === 'highlight' || highlight.toUpperCase() === 'YES') ? 'active' : '';
 
                     timelineHtml += `
-                        <div class="timeline-box" ${styleAttr}>
-                            <div class="timeline-date" ${textStyle}>${date}</div>
-                            <div class="timeline-event" ${textStyle}>${event}</div>
-                            <p class="stat-desc">${desc}</p>
+                        <div class="timeline-step ${activeClass}">
+                            <div class="timeline-date">${date}</div>
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <div class="timeline-event">${title}</div>
+                                <p class="timeline-desc">${desc}</p>
+                            </div>
                         </div>
                     `;
                 });
 
-                document.getElementById('timeline-content-container').innerHTML = timelineHtml;
-                document.getElementById('timeline-subtitle').innerText = "Roadmap การดำเนินงานค่ายวิศวพัฒน์ ประจำปีการศึกษา 2568";
+                container.innerHTML = timelineHtml || '<p style="text-align: center; width: 100%;">ยังไม่มีแผนการดำเนินงานในระบบ</p>';
 
-            } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('timeline-subtitle').innerText = "ไม่สามารถโหลดข้อมูลแผนงานได้";
+            } catch (e) {
+                console.error('Error fetching timeline:', e);
+                container.innerHTML = `<p style="text-align: center; width: 100%; color: var(--crimson-red);">ไม่สามารถดึงข้อมูลแผนการดำเนินงานได้</p>`;
             }
         }
+        
         window.addEventListener('DOMContentLoaded', loadTimelineData);
     </script>
 

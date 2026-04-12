@@ -148,6 +148,9 @@
         .timeline-date { font-family: 'Prompt', sans-serif; color: var(--gold-accent); font-weight: 600; font-size: 1.1em; margin-bottom: 10px; transition: color 0.3s ease; }
         .timeline-event { font-weight: bold; font-size: 1.2em; color: var(--text-dark); margin-bottom: 10px; transition: color 0.3s ease; }
 
+        /* =========================================
+           4. TEAM SECTION (UPDATED FOR SMALLER CARDS)
+           ========================================= */
         .team-section { background-color: var(--glam-gray); }
         .founder-card {
             background: linear-gradient(135deg, var(--crimson-red), #4A0E0E); color: var(--glam-white);
@@ -159,28 +162,33 @@
         .founder-card h4 { color: var(--gold-accent); font-size: 1.8em; margin: 0 0 10px 0; }
         .founder-card p { color: #E0E0E0; font-size: 1.1em; margin: 0; line-height: 1.6; }
         
-        .team-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; margin-top: 50px; }
+        .team-grid { display: flex; flex-direction: column; align-items: center; margin-top: 40px; width: 100%; }
+        
         .team-card {
-            background-color: var(--glam-white); width: 260px; padding: 40px 20px; border-radius: 16px;
-            text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: all 0.3s ease;
+            background-color: var(--glam-white); width: 200px; padding: 25px 15px; border-radius: 12px;
+            text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.05); transition: all 0.3s ease;
             border-bottom: 4px solid var(--crimson-red);
         }
-        .team-card:hover { transform: translateY(-10px); box-shadow: 0 15px 35px rgba(139, 26, 26, 0.15); }
+        .team-card:hover { transform: translateY(-8px); box-shadow: 0 10px 25px rgba(139, 26, 26, 0.15); }
+        
         .team-img-wrapper {
-            width: 120px; height: 120px; margin: 0 auto 20px auto; border-radius: 50%; padding: 5px;
+            width: 90px; height: 90px; margin: 0 auto 15px auto; border-radius: 50%; padding: 4px;
             border: 2px dashed var(--gold-accent); background-color: var(--glam-gray);
         }
         .team-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
-        .team-name { font-family: 'Prompt', sans-serif; font-size: 1.3em; font-weight: 600; color: var(--text-dark); margin: 0 0 5px 0; }
-        .team-role { font-size: 1.05em; color: var(--crimson-red); font-weight: 500; margin: 0; }
+        .team-name { font-family: 'Prompt', sans-serif; font-size: 1.1em; font-weight: 600; color: var(--text-dark); margin: 0 0 5px 0; }
+        .team-role { font-size: 0.85em; color: var(--crimson-red); font-weight: 500; margin: 0; }
 
-        .staff-departments { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 60px; text-align: left; }
-        .dept-box { background-color: var(--glam-white); padding: 25px 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.03); border-top: 4px solid var(--gold-accent); }
-        .dept-title { color: var(--crimson-red); font-family: 'Prompt', sans-serif; font-size: 1.2em; font-weight: 600; border-bottom: 1px solid #EEEEEE; padding-bottom: 10px; margin-bottom: 15px; margin-top: 0; }
-        .dept-list { list-style: none; padding: 0; margin: 0; color: var(--text-dark); line-height: 1.9; }
-        .dept-list li { position: relative; padding-left: 20px; }
-        .dept-list li::before { content: "•"; color: var(--gold-accent); font-weight: bold; position: absolute; left: 0; font-size: 1.2em; }
+        .staff-departments { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 40px; text-align: left; }
+        .dept-box { background-color: var(--glam-white); padding: 15px 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.03); border-top: 3px solid var(--gold-accent); }
+        .dept-title { color: var(--crimson-red); font-family: 'Prompt', sans-serif; font-size: 1em; font-weight: 600; border-bottom: 1px solid #EEEEEE; padding-bottom: 8px; margin-bottom: 10px; margin-top: 0; }
+        .dept-list { list-style: none; padding: 0; margin: 0; color: var(--text-dark); line-height: 1.6; font-size: 0.9em; }
+        .dept-list li { position: relative; padding-left: 15px; }
+        .dept-list li::before { content: "•"; color: var(--gold-accent); font-weight: bold; position: absolute; left: 0; }
 
+        /* =========================================
+           5. FOOTER
+           ========================================= */
         footer { background-color: var(--footer-bg); color: var(--glam-gray); padding: 60px 10%; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 30px; }
         .footer-col { flex: 1; min-width: 250px; }
         .footer-col h4 { color: var(--gold-accent); font-size: 1.3em; border-bottom: 2px solid var(--crimson-red); padding-bottom: 10px; display: inline-block; margin-top: 0; }
@@ -425,7 +433,9 @@
                 const jsonString = text.substr(47).slice(0, -2);
                 const data = JSON.parse(jsonString);
 
-                let boardHtml = '';
+                let presidentHtml = '';
+                let vpHtml = '';
+                let otherBoardHtml = '';
                 let depts = {};
 
                 data.table.rows.forEach(row => {
@@ -445,22 +455,42 @@
                         avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(avatarLetter)}&background=random&color=fff&size=150&font-family=Prompt`;
                     }
 
-                    if (role !== 'STAFF') {
-                        boardHtml += `
+                    if (role.toUpperCase() !== 'STAFF') {
+                        const cardHtml = `
                         <div class="team-card">
                             <div class="team-img-wrapper" style="overflow: hidden;">
                                 <img src="${avatarUrl}" alt="${nickname}" class="team-img" style="width: 100%; height: 100%; object-fit: cover;">
                             </div>
                             <h4 class="team-name">${fullName}</h4>
-                            <p class="team-role" style="font-size: 0.9em; margin-top: 8px;">${role}</p>
+                            <p class="team-role" style="margin-top: 5px;">${role}</p>
                         </div>`;
+
+                        if (role.includes('รองประธาน')) {
+                            vpHtml += cardHtml; // แถวที่ 2
+                        } else if (role.includes('ประธาน')) {
+                            presidentHtml += cardHtml; // แถวที่ 1
+                        } else {
+                            otherBoardHtml += cardHtml; // แถวที่ 3 (เช่น เลขา)
+                        }
                     } else {
                         if (!depts[dept]) depts[dept] = [];
                         depts[dept].push(`${fullName} (${nickname})`);
                     }
                 });
 
-                boardContainer.innerHTML = boardHtml || '<p>ยังไม่มีข้อมูลคณะกรรมการ</p>';
+                let finalBoardHtml = '';
+                
+                if (presidentHtml) {
+                    finalBoardHtml += `<div style="display: flex; justify-content: center; width: 100%; margin-bottom: 20px;">${presidentHtml}</div>`;
+                }
+                if (vpHtml) {
+                    finalBoardHtml += `<div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; width: 100%; margin-bottom: 20px;">${vpHtml}</div>`;
+                }
+                if (otherBoardHtml) {
+                    finalBoardHtml += `<div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; width: 100%;">${otherBoardHtml}</div>`;
+                }
+
+                boardContainer.innerHTML = finalBoardHtml || '<p>ยังไม่มีข้อมูลคณะกรรมการ</p>';
 
                 let staffHtml = '';
                 for (const [deptName, members] of Object.entries(depts)) {

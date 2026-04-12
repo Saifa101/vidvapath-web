@@ -461,7 +461,8 @@
                         return; 
                     }
 
-                    if (date.includes('ช่วงเวลา') || title.includes('หัวข้อ') || (!date && !title)) return;
+                    // 👉 จุดที่อัปเดต: เพิ่มการดักจับคำว่า "วันที่" และ "กิจกรรม" ทิ้งไปเลย
+                    if (date.includes('ช่วงเวลา') || title.includes('หัวข้อ') || date.includes('วันที่') || title.includes('กิจกรรม') || (!date && !title)) return;
                     if (!title) return; 
 
                     const activeClass = (highlight === 'ใช่' || highlight.toLowerCase() === 'highlight' || highlight.toUpperCase() === 'YES') ? 'active' : '';

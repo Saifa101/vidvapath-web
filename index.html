@@ -39,13 +39,8 @@
         .section-title { text-align: center; font-size: 2.8em; color: var(--crimson-red); margin-bottom: 10px; }
         .section-subtitle { text-align: center; font-size: 1.2em; color: var(--text-muted); margin-bottom: 60px; max-width: 800px; margin-left: auto; margin-right: auto; }
 
-        /* Hero Section (เอาเฉดสีแดง-กรมท่า กลับมาแล้ว!) */
-        .hero { 
-            height: 100vh; display: flex; flex-direction: column; justify-content: center; 
-            align-items: center; text-align: center; color: white; 
-            background: linear-gradient(rgba(139, 26, 26, 0.75), rgba(44, 62, 80, 0.85)), url('images/ออกไซต์หน้าอบต.เก่า.JPG'); 
-            background-size: cover; background-position: center; background-attachment: fixed; 
-        }
+        /* Hero Section */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; background: linear-gradient(rgba(139, 26, 26, 0.75), rgba(44, 62, 80, 0.85)), url('images/ออกไซต์หน้าอบต.เก่า.JPG'); background-size: cover; background-position: center; background-attachment: fixed; }
         .hero h1 { font-size: 5em; margin: 0; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
         .hero h2 { color: var(--gold-accent); font-size: 1.8em; margin: 15px 0; letter-spacing: 3px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         .hero p { max-width: 800px; font-size: 1.2em; line-height: 1.8; opacity: 0.95; }
@@ -122,7 +117,8 @@
             .roadmap-container::after { left: 20px; }
             .roadmap-item { width: 100%; padding-left: 50px; text-align: left !important; }
             .roadmap-item.right { left: 0; }
-            .roadmap-dot { left: 8px !important; right: auto !important; }
+            .roadmap-item.left .roadmap-dot { right: auto; left: 8px; }
+            .roadmap-item.right .roadmap-dot { left: 8px; }
             .timeline-minimal { flex-direction: column; }
             .timeline-minimal::before { left: 23px; top: 0; bottom: 0; width: 2px; height: 100%; }
             .timeline-step { display: flex; text-align: left; margin-bottom: 20px; }
@@ -210,11 +206,11 @@
         </div>
         <div class="footer-col">
             <h4>สถานที่ปฏิบัติงาน</h4>
-            <p id="footer-camp-addr">กำลังโหลดข้อมูลที่อยู่...</p>
+            <p id="footer-camp-addr">บ้านเชตวัน ต.สันทะ อ.นาน้อย จ.น่าน</p>
         </div>
         <div class="footer-col">
             <h4>ดำเนินการโดย</h4>
-            <p id="footer-uni-addr">กำลังโหลดข้อมูลองค์กร...</p>
+            <p id="footer-uni-addr">ชมรมนิสิตทุน วิศวฯ จุฬาฯ</p>
         </div>
         <div class="footer-bottom">
             &copy; 2026 WisawaPat Camp. All Rights Reserved.
@@ -223,6 +219,16 @@
 
     <script>
         const SHEET_ID = '1h9P_yb0THhvzB9cJYmdETGsK6i8NkVfoOXRWH9RKzAI';
+
+        // ฟังก์ชันอัจฉริยะ: ช่วยแปลงลิงก์ Google Drive ธรรมดา ให้กลายเป็นลิงก์รูปภาพ
+        function convertDriveLinkToImage(url) {
+            if (!url) return '';
+            const driveMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+            if (driveMatch && driveMatch[1]) {
+                return `https://drive.google.com/thumbnail?id=${driveMatch[1]}&sz=w1024`;
+            }
+            return url;
+        }
 
         async function fetchSheet(name) {
             const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(name)}`;
@@ -248,9 +254,8 @@
                     if(k==='CampAddress') document.getElementById('footer-camp-addr').innerText = v;
                     if(k==='UniAddress') document.getElementById('footer-uni-addr').innerText = v;
                     
-                    // ดึงรูปลงส่วนประวัติค่าย (ถ้าใส่ข้อมูลมาใน Settings)
                     if(k==='HistoryMainImage') { 
-                        document.getElementById('history-main-image').src = v;
+                        document.getElementById('history-main-image').src = convertDriveLinkToImage(v);
                         document.getElementById('history-main-image-container').style.display = 'block';
                     }
                 });
@@ -281,18 +286,22 @@
                 let testiH = ''; testi.table.rows.forEach((r,i) => {
                     if(i===0) return;
                     const msg = r.c[0]?.v; const name = r.c[1]?.v; const role = r.c[2]?.v; const badge = r.c[3]?.v;
-                    const img = r.c[4]?.v || `https://ui-avatars.com/api/?name=${name}&background=random&color=fff`;
+                    const img = convertDriveLinkToImage(r.c[4]?.v) || `https://ui-avatars.com/api/?name=${name}&background=random&color=fff`;
                     if(!msg) return;
                     testiH += `<div class="testi-card"><div class="quote-icon">"</div><p class="testi-text">"${msg}"</p><div class="testi-profile"><img src="${img}" class="testi-img"><div class="testi-info"><h4 style="margin:0; color:var(--crimson-red);">${name}</h4><p style="margin:0; font-size:0.9em; color:var(--text-muted);">${role}</p><span class="testi-badge">${badge}</span></div></div></div>`;
                 });
                 document.getElementById('testimonials-grid').innerHTML = testiH;
 
-                // 6. Sponsors
+                // 6. Sponsors (เพิ่มระบบแปลงลิงก์ Google Drive)
                 const sponData = await fetchSheet('Sponsors');
                 let sponH = ''; sponData.table.rows.forEach((r, i) => {
                     if(i===0) return;
-                    const n = r.c[0]?.v; const img = r.c[1]?.v; const col = r.c[2]?.v || 'var(--crimson-red)';
-                    const content = img ? `<img src="${img}" alt="${n}">` : n;
+                    const n = r.c[0]?.v; let img = r.c[1]?.v; const col = r.c[2]?.v || 'var(--crimson-red)';
+                    
+                    // แปลงลิงก์ Drive อัตโนมัติ
+                    img = convertDriveLinkToImage(img);
+
+                    const content = img ? `<img src="${img}" alt="${n}" style="max-width:80%; max-height:80%; object-fit:contain;">` : n;
                     sponH += `<div class="sponsor-box" style="color:${col};">${content}</div>`;
                 });
                 document.getElementById('sponsors-grid').innerHTML = sponH;
@@ -306,7 +315,7 @@
                     const n = r.c[0]?.v; const y = r.c[1]?.v; const loc = r.c[2]?.v; const imgStr = r.c[4]?.v;
                     let imgHtml = '';
                     if (imgStr && imgStr !== '-') {
-                        const firstImg = imgStr.split(',')[0].trim();
+                        const firstImg = convertDriveLinkToImage(imgStr.split(',')[0].trim());
                         imgHtml = `<img src="${firstImg}" style="width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:15px;">`;
                     }
                     roadH += `<div class="roadmap-item ${side}"><div class="roadmap-dot"></div><div class="roadmap-card">${imgHtml}<h4 style="margin:0 0 5px; color:var(--crimson-red); font-size:1.3em;">${n} (${y})</h4><p style="color:var(--gold-accent); margin:0 0 10px; font-weight:600;">📍 ${loc}</p><p style="color:var(--text-muted); line-height:1.6; font-size:0.95em;">${r.c[3]?.v}</p></div></div>`;
@@ -322,7 +331,7 @@
                     if(i===0) return;
                     const d = r.c[0]?.v; const n = r.c[1]?.v; const nk = r.c[2]?.v; const rl = r.c[3]?.v; const img = r.c[4]?.v;
                     const displayNick = nk ? `(${nk})` : '';
-                    const av = img && img !== '-' ? img : `https://ui-avatars.com/api/?name=${nk || n}&background=random&color=fff`;
+                    let av = img && img !== '-' ? convertDriveLinkToImage(img) : `https://ui-avatars.com/api/?name=${nk || n}&background=random&color=fff`;
                     const card = `<div class="team-card"><div class="team-img-wrapper"><img src="${av}" class="team-img"></div><h4 class="team-name">${n} <span style="color:var(--text-muted); font-weight:normal; font-size:0.9em;">${displayNick}</span></h4><p class="team-role">${rl}</p></div>`;
                     if(rl.includes('ประธาน') && !rl.includes('รอง')) p_html += card;
                     else if(rl.includes('รองประธาน') || rl.toUpperCase() !== 'STAFF') vp_html += card;

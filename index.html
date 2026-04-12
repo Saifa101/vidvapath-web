@@ -220,12 +220,13 @@
     <script>
         const SHEET_ID = '1h9P_yb0THhvzB9cJYmdETGsK6i8NkVfoOXRWH9RKzAI';
 
-        // ฟังก์ชันอัจฉริยะ: ช่วยแปลงลิงก์ Google Drive ธรรมดา ให้กลายเป็นลิงก์รูปภาพ
+        // ฟังก์ชันอัจฉริยะ: ช่วยแปลงลิงก์ Google Drive ธรรมดา ให้กลายเป็นลิงก์รูปภาพ (แบบเสถียรที่สุด)
         function convertDriveLinkToImage(url) {
             if (!url) return '';
+            // ตรวจจับลิงก์ Drive และเปลี่ยนเป็นลิงก์ Direct View
             const driveMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
             if (driveMatch && driveMatch[1]) {
-                return `https://drive.google.com/thumbnail?id=${driveMatch[1]}&sz=w1024`;
+                return `https://drive.google.com/uc?export=view&id=${driveMatch[1]}`;
             }
             return url;
         }

@@ -10,54 +10,116 @@
            1. DESIGN SYSTEM
            ========================================= */
         :root {
-            --crimson-red: #8B1A1A; --glam-white: #FFFFFF; --glam-gray: #F5F7FA;
-            --text-dark: #2C3E50; --text-muted: #596A7A; --gold-accent: #C5A059; --footer-bg: #1A1A1A;
+            --crimson-red: #8B1A1A; 
+            --glam-white: #FFFFFF; 
+            --glam-gray: #F5F7FA;
+            --text-dark: #2C3E50; 
+            --text-muted: #596A7A; 
+            --gold-accent: #C5A059; 
+            --footer-bg: #1A1A1A;
         }
 
-        body { font-family: 'Sarabun', sans-serif; margin: 0; padding: 0; background-color: var(--glam-gray); color: var(--text-dark); -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+        body { 
+            font-family: 'Sarabun', sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            background-color: var(--glam-gray); 
+            color: var(--text-dark); 
+            -webkit-font-smoothing: antialiased; 
+            scroll-behavior: smooth; 
+        }
         h1, h2, h3, h4, h5 { font-family: 'Prompt', sans-serif; }
 
         /* Navigation */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 1em 4em; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0,0,0,0.05); }
+        nav { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 1em 4em; position: fixed; top: 0; left: 0; right: 0; 
+            z-index: 1000; background: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px); box-shadow: 0 2px 20px rgba(0,0,0,0.05); 
+        }
         .nav-brand img { height: 45px; width: auto; }
         .nav-links { display: flex; align-items: center; }
-        .nav-links a { color: var(--text-dark); text-decoration: none; margin: 0 15px; font-family: 'Prompt', sans-serif; font-weight: 500; transition: 0.3s; font-size: 1.05em; }
+        .nav-links a { 
+            color: var(--text-dark); text-decoration: none; margin: 0 15px; 
+            font-family: 'Prompt', sans-serif; font-weight: 500; 
+            transition: 0.3s; font-size: 1.05em; 
+        }
         .nav-links a:hover { color: var(--crimson-red); }
 
         /* Dropdown */
         .dropdown { position: relative; }
-        .dropdown-content { display: none; position: absolute; background: white; min-width: 220px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); top: 100%; border-top: 3px solid var(--crimson-red); border-radius: 4px; overflow: hidden; }
+        .dropdown-content { 
+            display: none; position: absolute; background: white; 
+            min-width: 220px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); 
+            top: 100%; border-top: 3px solid var(--crimson-red); 
+            border-radius: 4px; overflow: hidden; 
+        }
         .dropdown:hover .dropdown-content { display: block; }
-        .dropdown-content a { display: block; padding: 12px 18px; font-size: 0.9em; border-bottom: 1px solid #f5f5f5; margin: 0; }
+        .dropdown-content a { 
+            display: block; padding: 12px 18px; font-size: 0.9em; 
+            border-bottom: 1px solid #f5f5f5; margin: 0; 
+        }
         .dropdown-content a:hover { background: var(--glam-gray); }
 
-        .staff-btn { background: var(--crimson-red); color: white !important; padding: 8px 22px; border-radius: 30px; font-weight: 600; box-shadow: 0 4px 15px rgba(139, 26, 26, 0.2); }
+        .staff-btn { 
+            background: var(--crimson-red); color: white !important; 
+            padding: 8px 22px; border-radius: 30px; font-weight: 600; 
+            box-shadow: 0 4px 15px rgba(139, 26, 26, 0.2); 
+        }
         .staff-btn:hover { transform: translateY(-2px); filter: brightness(1.2); }
 
         /* Sections Styling */
         .section-padding { padding: 100px 10%; }
-        .section-title { text-align: center; font-size: 2.8em; color: var(--crimson-red); margin-bottom: 10px; }
-        .section-subtitle { text-align: center; font-size: 1.2em; color: var(--text-muted); margin-bottom: 60px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .section-title { 
+            text-align: center; font-size: 2.8em; color: var(--crimson-red); 
+            margin-bottom: 10px; 
+        }
+        .section-subtitle { 
+            text-align: center; font-size: 1.2em; color: var(--text-muted); 
+            margin-bottom: 60px; max-width: 800px; margin-left: auto; margin-right: auto; 
+        }
 
         /* Hero Section */
-        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; color: white; background: linear-gradient(rgba(139, 26, 26, 0.75), rgba(44, 62, 80, 0.85)), url('images/ออกไซต์หน้าอบต.เก่า.JPG'); background-size: cover; background-position: center; background-attachment: fixed; }
+        .hero { 
+            height: 100vh; display: flex; flex-direction: column; 
+            justify-content: center; align-items: center; text-align: center; 
+            color: white; 
+            background: linear-gradient(rgba(139, 26, 26, 0.75), rgba(44, 62, 80, 0.85)), url('images/ออกไซต์หน้าอบต.เก่า.JPG'); 
+            background-size: cover; background-position: center; background-attachment: fixed; 
+        }
         .hero h1 { font-size: 5em; margin: 0; text-shadow: 0 4px 20px rgba(0,0,0,0.3); }
         .hero h2 { color: var(--gold-accent); font-size: 1.8em; margin: 15px 0; letter-spacing: 3px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         .hero p { max-width: 800px; font-size: 1.2em; line-height: 1.8; opacity: 0.95; }
 
         /* Stats Cards */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 30px; }
-        .stat-card { background: white; padding: 40px; border-radius: 15px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border-bottom: 5px solid var(--gold-accent); transition: 0.3s; }
+        .stat-card { 
+            background: white; padding: 40px; border-radius: 15px; 
+            text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            border-bottom: 5px solid var(--gold-accent); transition: 0.3s; 
+        }
         .stat-card:hover { transform: translateY(-10px); }
         .stat-number { font-size: 3.5em; color: var(--crimson-red); font-weight: 600; margin: 0; }
         .stat-desc { color: var(--text-muted); margin-top: 10px; font-size: 1.1em; line-height: 1.5; }
 
         /* Timeline Horizontal */
-        .timeline-minimal { display: flex; justify-content: space-between; position: relative; max-width: 1100px; margin: 40px auto; overflow-x: auto; padding-bottom: 30px; }
-        .timeline-minimal::before { content: ''; position: absolute; top: 40px; left: 5%; right: 5%; height: 2px; background: #E2E8F0; }
+        .timeline-minimal { 
+            display: flex; justify-content: space-between; position: relative; 
+            max-width: 1100px; margin: 40px auto; overflow-x: auto; padding-bottom: 30px; 
+        }
+        .timeline-minimal::before { 
+            content: ''; position: absolute; top: 40px; left: 5%; right: 5%; 
+            height: 2px; background: #E2E8F0; 
+        }
         .timeline-step { flex: 1; min-width: 250px; text-align: center; position: relative; z-index: 2; padding: 0 20px; }
-        .timeline-dot { width: 18px; height: 18px; background: white; border: 4px solid var(--gold-accent); border-radius: 50%; margin: 15px auto 25px auto; box-shadow: 0 0 0 6px white; transition: 0.3s; }
-        .timeline-step.active .timeline-dot { background: var(--crimson-red); border-color: var(--crimson-red); transform: scale(1.3); box-shadow: 0 0 20px rgba(139, 26, 26, 0.3), 0 0 0 6px white; }
+        .timeline-dot { 
+            width: 18px; height: 18px; background: white; border: 4px solid var(--gold-accent); 
+            border-radius: 50%; margin: 15px auto 25px auto; box-shadow: 0 0 0 6px white; transition: 0.3s; 
+        }
+        .timeline-step.active .timeline-dot { 
+            background: var(--crimson-red); border-color: var(--crimson-red); 
+            transform: scale(1.3); box-shadow: 0 0 20px rgba(139, 26, 26, 0.3), 0 0 0 6px white; 
+        }
         .timeline-event { font-weight: 600; font-size: 1.2em; margin-bottom: 8px; color: var(--text-dark); }
         .timeline-date { color: var(--crimson-red); font-weight: 600; font-size: 1em; margin-bottom: 5px; }
 
@@ -76,7 +138,11 @@
         /* Team */
         .team-grid-container { display: flex; flex-direction: column; align-items: center; gap: 40px; }
         .team-row { display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; width: 100%; }
-        .team-card { background: white; width: 220px; padding: 30px 20px; border-radius: 15px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border-bottom: 4px solid var(--crimson-red); transition: 0.3s; }
+        .team-card { 
+            background: white; width: 220px; padding: 30px 20px; border-radius: 15px; 
+            text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.05); 
+            border-bottom: 4px solid var(--crimson-red); transition: 0.3s; 
+        }
         .team-img-wrapper { width: 100px; height: 100px; margin: 0 auto 20px auto; border-radius: 50%; overflow: hidden; border: 3px solid var(--gold-accent); }
         .team-img { width: 100%; height: 100%; object-fit: cover; }
         .team-name { font-weight: 600; font-size: 1.1em; margin: 5px 0; }
@@ -89,13 +155,21 @@
 
         /* Sponsors */
         .sponsor-grid { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; align-items: center; margin-top: 20px; }
-        .sponsor-box { width: 180px; height: 100px; background: white; border-radius: 12px; display: flex; align-items: center; justify-content: center; border: 1px solid #f0f0f0; box-shadow: 0 4px 15px rgba(0,0,0,0.02); transition: 0.3s; padding: 15px; text-align: center; font-weight: 600; }
+        .sponsor-box { 
+            width: 180px; height: 100px; background: white; border-radius: 12px; 
+            display: flex; align-items: center; justify-content: center; 
+            border: 1px solid #f0f0f0; box-shadow: 0 4px 15px rgba(0,0,0,0.02); 
+            transition: 0.3s; padding: 15px; text-align: center; font-weight: 600; 
+        }
         .sponsor-box img { max-width: 100%; max-height: 100%; object-fit: contain; }
         .sponsor-box:hover { transform: scale(1.05); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
 
         /* Testimonials */
         .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .testi-card { background: white; padding: 35px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.04); border-bottom: 4px solid var(--gold-accent); position: relative; transition: 0.3s; }
+        .testi-card { 
+            background: white; padding: 35px; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.04); 
+            border-bottom: 4px solid var(--gold-accent); position: relative; transition: 0.3s; 
+        }
         .testi-card:hover { transform: translateY(-8px); }
         .quote-icon { font-family: 'Prompt', sans-serif; font-size: 4em; color: rgba(197, 160, 89, 0.15); position: absolute; top: 10px; right: 20px; line-height: 1; }
         .testi-text { font-size: 1.05em; color: var(--text-muted); line-height: 1.7; font-style: italic; margin-bottom: 20px; position: relative; z-index: 2; }
@@ -117,8 +191,7 @@
             .roadmap-container::after { left: 20px; }
             .roadmap-item { width: 100%; padding-left: 50px; text-align: left !important; }
             .roadmap-item.right { left: 0; }
-            .roadmap-item.left .roadmap-dot { right: auto; left: 8px; }
-            .roadmap-item.right .roadmap-dot { left: 8px; }
+            .roadmap-dot { left: 8px !important; right: auto !important; }
             .timeline-minimal { flex-direction: column; }
             .timeline-minimal::before { left: 23px; top: 0; bottom: 0; width: 2px; height: 100%; }
             .timeline-step { display: flex; text-align: left; margin-bottom: 20px; }
@@ -220,15 +293,20 @@
     <script>
         const SHEET_ID = '1h9P_yb0THhvzB9cJYmdETGsK6i8NkVfoOXRWH9RKzAI';
 
-        // ฟังก์ชันอัจฉริยะ: ช่วยแปลงลิงก์ Google Drive ธรรมดา ให้กลายเป็นลิงก์รูปภาพ (แบบเสถียรที่สุด)
-        function convertDriveLinkToImage(url) {
+        // ฟังก์ชันอัจฉริยะ: ทำความสะอาดลิงก์และจัดการ Google Drive Links
+        function cleanURL(url) {
             if (!url) return '';
-            // ตรวจจับลิงก์ Drive และเปลี่ยนเป็นลิงก์ Direct View
-            const driveMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+            
+            // ลบช่องว่างส่วนเกินหน้า-หลัง (ป้องกันปัญหา path ไม่ตรง)
+            const trimmedUrl = url.trim();
+            
+            // แปลงลิงก์ Google Drive ให้เป็นแบบ Direct Download
+            const driveMatch = trimmedUrl.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
             if (driveMatch && driveMatch[1]) {
                 return `https://drive.google.com/uc?export=view&id=${driveMatch[1]}`;
             }
-            return url;
+            
+            return trimmedUrl;
         }
 
         async function fetchSheet(name) {
@@ -242,112 +320,227 @@
             try {
                 // 1. Settings & Footer & History Image
                 const setData = await fetchSheet('Settings');
-                setData.table.rows.forEach(r => {
-                    const k = r.c[0]?.v; const v = r.c[1]?.v; if(!v) return;
-                    if(k==='HeroTitle') document.getElementById('hero-title').innerText = v;
-                    if(k==='HeroSubtitle') document.getElementById('hero-subtitle').innerText = v;
-                    if(k==='HeroDesc') document.getElementById('hero-desc').innerText = v;
-                    if(k==='StaffPortalURL') { document.getElementById('nav-staff-link').href = v; }
-                    if(k==='PresidentName') document.getElementById('footer-pres-name').innerText = v;
-                    if(k==='PresidentPhone') document.getElementById('footer-pres-phone').innerText = 'โทร: ' + v;
-                    if(k==='SecretaryName') document.getElementById('footer-sec-name').innerText = v;
-                    if(k==='SecretaryPhone') document.getElementById('footer-sec-phone').innerText = 'โทร: ' + v;
-                    if(k==='CampAddress') document.getElementById('footer-camp-addr').innerText = v;
-                    if(k==='UniAddress') document.getElementById('footer-uni-addr').innerText = v;
+                setData.table.rows.forEach(row => {
+                    if (!row.c[0] || !row.c[1]) return;
+                    const key = row.c[0].v.trim(); 
+                    const val = row.c[1].v.trim();
                     
-                    if(k==='HistoryMainImage') { 
-                        document.getElementById('history-main-image').src = convertDriveLinkToImage(v);
+                    if(key === 'HeroTitle') document.getElementById('hero-title').innerText = val;
+                    if(key === 'HeroSubtitle') document.getElementById('hero-subtitle').innerText = val;
+                    if(key === 'HeroDesc') document.getElementById('hero-desc').innerText = val;
+                    if(key === 'StaffPortalURL') document.getElementById('nav-staff-link').href = val;
+                    if(key === 'PresidentName') document.getElementById('footer-pres-name').innerText = val;
+                    if(key === 'PresidentPhone') document.getElementById('footer-pres-phone').innerText = 'โทร: ' + val;
+                    if(key === 'SecretaryName') document.getElementById('footer-sec-name').innerText = val;
+                    if(key === 'SecretaryPhone') document.getElementById('footer-sec-phone').innerText = 'โทร: ' + val;
+                    if(key === 'CampAddress') document.getElementById('footer-camp-addr').innerText = val;
+                    if(key === 'UniAddress') document.getElementById('footer-uni-addr').innerText = val;
+                    
+                    if(key === 'HistoryMainImage') { 
+                        document.getElementById('history-main-image').src = cleanURL(val);
                         document.getElementById('history-main-image-container').style.display = 'block';
                     }
                 });
 
                 // 2. About
                 const aboutData = await fetchSheet('About');
-                let bodyText = ""; aboutData.table.rows.forEach(r => { if(r.c[1]?.v?.length > bodyText.length) bodyText = r.c[1].v; });
+                let bodyText = ""; 
+                aboutData.table.rows.forEach(row => { 
+                    if(row.c[1] && row.c[1].v.length > bodyText.length) {
+                        bodyText = row.c[1].v; 
+                    }
+                });
                 document.getElementById('about-text-content').innerHTML = bodyText.replace(/\n/g, '<br><br>');
 
                 // 3. Impact
                 const impData = await fetchSheet('Impact');
-                let impH = ''; impData.table.rows.forEach((r, i) => { if(i>0) impH += `<div class="stat-card"><p class="stat-number">${r.c[0]?.v}</p><p style="color:var(--text-muted); font-size:1.1em; margin-top:10px;">${r.c[1]?.v}</p></div>`; });
+                let impH = ''; 
+                impData.table.rows.forEach((row, i) => { 
+                    if(i > 0 && row.c[0]) {
+                        const num = row.c[0].v;
+                        const desc = row.c[1] ? row.c[1].v : '';
+                        impH += `
+                            <div class="stat-card">
+                                <p class="stat-number">${num}</p>
+                                <p style="color:var(--text-muted); font-size:1.1em; margin-top:10px;">${desc}</p>
+                            </div>
+                        `;
+                    }
+                });
                 document.getElementById('impact-grid').innerHTML = impH;
 
                 // 4. Timeline
                 const timeData = await fetchSheet('Timeline');
-                let timeH = ''; timeData.table.rows.forEach(r => {
-                    const d = r.c[0]?.v; const t = r.c[1]?.v; if(!t) return;
-                    if(d?.toLowerCase()==='subtitle') { document.getElementById('timeline-subtitle').innerText = t; return; }
-                    if(d.includes('วันที่') || d.includes('ช่วงเวลา')) return;
-                    const act = r.c[3]?.v === 'ใช่' ? 'active' : '';
-                    timeH += `<div class="timeline-step ${act}"><div class="timeline-date">${d}</div><div class="timeline-dot"></div><div class="timeline-event">${t}</div><p style="font-size:0.85em; color:var(--text-muted);">${r.c[2]?.v||''}</p></div>`;
+                let timeH = ''; 
+                timeData.table.rows.forEach(row => {
+                    if (!row.c[0] || !row.c[1]) return;
+                    const date = row.c[0].v.trim(); 
+                    const title = row.c[1].v.trim();
+                    const desc = row.c[2] ? row.c[2].v : '';
+                    const highlight = row.c[3] ? row.c[3].v.trim() : '';
+
+                    if(date.toLowerCase() === 'subtitle' || date === 'ซับไตเติ้ล') { 
+                        document.getElementById('timeline-subtitle').innerText = title; 
+                        return; 
+                    }
+                    if(date.includes('วันที่') || date.includes('ช่วงเวลา')) return;
+                    
+                    const activeClass = (highlight === 'ใช่') ? 'active' : '';
+                    timeH += `
+                        <div class="timeline-step ${activeClass}">
+                            <div class="timeline-date">${date}</div>
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-event">${title}</div>
+                            <p style="font-size:0.85em; color:var(--text-muted); line-height:1.6;">${desc}</p>
+                        </div>
+                    `;
                 });
                 document.getElementById('timeline-dynamic-container').innerHTML = timeH;
 
-                // 5. Testimonials
-                const testi = await fetchSheet('Testimonials');
-                let testiH = ''; testi.table.rows.forEach((r,i) => {
-                    if(i===0) return;
-                    const msg = r.c[0]?.v; const name = r.c[1]?.v; const role = r.c[2]?.v; const badge = r.c[3]?.v;
-                    const img = convertDriveLinkToImage(r.c[4]?.v) || `https://ui-avatars.com/api/?name=${name}&background=random&color=fff`;
-                    if(!msg) return;
-                    testiH += `<div class="testi-card"><div class="quote-icon">"</div><p class="testi-text">"${msg}"</p><div class="testi-profile"><img src="${img}" class="testi-img"><div class="testi-info"><h4 style="margin:0; color:var(--crimson-red);">${name}</h4><p style="margin:0; font-size:0.9em; color:var(--text-muted);">${role}</p><span class="testi-badge">${badge}</span></div></div></div>`;
-                });
-                document.getElementById('testimonials-grid').innerHTML = testiH;
-
-                // 6. Sponsors (เพิ่มระบบแปลงลิงก์ Google Drive)
-                const sponData = await fetchSheet('Sponsors');
-                let sponH = ''; sponData.table.rows.forEach((r, i) => {
-                    if(i===0) return;
-                    const n = r.c[0]?.v; let img = r.c[1]?.v; const col = r.c[2]?.v || 'var(--crimson-red)';
+                // 5. Team
+                const teamData = await fetchSheet('Team');
+                let presHtml = ''; let vpHtml = ''; let otherHtml = ''; let depts = {};
+                
+                teamData.table.rows.forEach((row, i) => {
+                    if(i === 0 || !row.c[1]) return;
+                    const dept = row.c[0] ? row.c[0].v.trim() : ''; 
+                    const name = row.c[1].v.trim(); 
+                    const nickname = row.c[2] ? row.c[2].v.trim() : ''; 
+                    const role = row.c[3] ? row.c[3].v.trim() : ''; 
+                    const rawImg = row.c[4] ? row.c[4].v : '';
                     
-                    // แปลงลิงก์ Drive อัตโนมัติ
-                    img = convertDriveLinkToImage(img);
+                    const displayNick = nickname ? `(${nickname})` : '';
+                    let avatar = (rawImg && rawImg !== '-') ? cleanURL(rawImg) : `https://ui-avatars.com/api/?name=${nickname || name}&background=random&color=fff`;
+                    
+                    const card = `
+                        <div class="team-card" style="display:inline-block; margin:10px;">
+                            <div class="team-img-wrapper">
+                                <img src="${avatar}" class="team-img">
+                            </div>
+                            <h4 class="team-name">${name} <span style="color:var(--text-muted); font-weight:normal; font-size:0.9em;">${displayNick}</span></h4>
+                            <p class="team-role">${role}</p>
+                        </div>
+                    `;
+                    
+                    if(role.includes('ประธาน') && !role.includes('รอง')) {
+                        presHtml += card;
+                    } else if(role.includes('รองประธาน') || role.toUpperCase() !== 'STAFF') {
+                        vpHtml += card;
+                    } else { 
+                        if(!depts[dept]) depts[dept] = []; 
+                        depts[dept].push(`${name} ${displayNick}`); 
+                    }
+                });
+                
+                document.getElementById('board-container').innerHTML = `
+                    <div class="team-row">${presHtml}</div>
+                    <div class="team-row">${vpHtml}</div>
+                    <div class="team-row">${otherHtml}</div>
+                `;
+                
+                let stHtml = ''; 
+                for(let dp in depts) { 
+                    stHtml += `
+                        <div class="dept-box">
+                            <h5 class="dept-title">ฝ่าย${dp}</h5>
+                            <ul class="dept-list">
+                                ${depts[dp].map(member => `<li>• ${member}</li>`).join('')}
+                            </ul>
+                        </div>
+                    `; 
+                }
+                document.getElementById('staff-container').innerHTML = stHtml;
 
-                    const content = img ? `<img src="${img}" alt="${n}" style="max-width:80%; max-height:80%; object-fit:contain;">` : n;
-                    sponH += `<div class="sponsor-box" style="color:${col};">${content}</div>`;
+                // 6. Sponsors
+                const sponData = await fetchSheet('Sponsors');
+                let sponH = ''; 
+                sponData.table.rows.forEach((row, i) => {
+                    if(i === 0 || !row.c[0]) return;
+                    const name = row.c[0].v; 
+                    const rawImg = row.c[1] ? row.c[1].v : ''; 
+                    const color = row.c[2] ? row.c[2].v.trim() : 'var(--crimson-red)';
+                    
+                    const cleanImg = cleanURL(rawImg);
+                    const content = cleanImg ? `<img src="${cleanImg}" alt="${name}" style="max-width:80%; max-height:80%; object-fit:contain;">` : name;
+                    
+                    sponH += `<div class="sponsor-box" style="color:${color};">${content}</div>`;
                 });
                 document.getElementById('sponsors-grid').innerHTML = sponH;
 
                 // 7. Roadmap & Dropdown
                 const roadData = await fetchSheet('Roadmap');
                 let roadH = ''; let navH = '';
-                roadData.table.rows.forEach((r, i) => {
-                    if(i===0) return;
-                    const side = i % 2 !== 0 ? 'left' : 'right';
-                    const n = r.c[0]?.v; const y = r.c[1]?.v; const loc = r.c[2]?.v; const imgStr = r.c[4]?.v;
+                roadData.table.rows.forEach((row, i) => {
+                    if(i === 0 || !row.c[0]) return;
+                    const side = (i % 2 !== 0) ? 'left' : 'right';
+                    const name = row.c[0].v; 
+                    const year = row.c[1] ? row.c[1].v : ''; 
+                    const loc = row.c[2] ? row.c[2].v : ''; 
+                    const imgStr = row.c[4] ? row.c[4].v : '';
+                    
                     let imgHtml = '';
                     if (imgStr && imgStr !== '-') {
-                        const firstImg = convertDriveLinkToImage(imgStr.split(',')[0].trim());
+                        const firstImg = cleanURL(imgStr.split(',')[0]);
                         imgHtml = `<img src="${firstImg}" style="width:100%; height:220px; object-fit:cover; border-radius:8px; margin-bottom:15px;">`;
                     }
-                    roadH += `<div class="roadmap-item ${side}"><div class="roadmap-dot"></div><div class="roadmap-card">${imgHtml}<h4 style="margin:0 0 5px; color:var(--crimson-red); font-size:1.3em;">${n} (${y})</h4><p style="color:var(--gold-accent); margin:0 0 10px; font-weight:600;">📍 ${loc}</p><p style="color:var(--text-muted); line-height:1.6; font-size:0.95em;">${r.c[3]?.v}</p></div></div>`;
-                    navH += `<a href="${r.c[5]?.v || '#'}">${n} (${y})</a>`;
+                    
+                    roadH += `
+                        <div class="roadmap-item ${side}">
+                            <div class="roadmap-dot"></div>
+                            <div class="roadmap-card">
+                                ${imgHtml}
+                                <h4 style="margin:0 0 5px; color:var(--crimson-red); font-size:1.3em;">${name} (${year})</h4>
+                                <p style="color:var(--gold-accent); margin:0 0 10px; font-weight:600;">📍 ${loc}</p>
+                                <p style="color:var(--text-muted); line-height:1.6; font-size:0.95em;">${row.c[3] ? row.c[3].v : ''}</p>
+                            </div>
+                        </div>
+                    `;
+                    navH += `<a href="${row.c[5] ? row.c[5].v : '#'}">${name} (${year})</a>`;
                 });
                 document.getElementById('notion-history-container').innerHTML = roadH;
                 document.getElementById('nav-dropdown-items').innerHTML = navH;
 
-                // 8. Team
-                const teamData = await fetchSheet('Team');
-                let p_html = ''; let vp_html = ''; let other_html = ''; let depts = {};
-                teamData.table.rows.forEach((r, i) => {
-                    if(i===0) return;
-                    const d = r.c[0]?.v; const n = r.c[1]?.v; const nk = r.c[2]?.v; const rl = r.c[3]?.v; const img = r.c[4]?.v;
-                    const displayNick = nk ? `(${nk})` : '';
-                    let av = img && img !== '-' ? convertDriveLinkToImage(img) : `https://ui-avatars.com/api/?name=${nk || n}&background=random&color=fff`;
-                    const card = `<div class="team-card"><div class="team-img-wrapper"><img src="${av}" class="team-img"></div><h4 class="team-name">${n} <span style="color:var(--text-muted); font-weight:normal; font-size:0.9em;">${displayNick}</span></h4><p class="team-role">${rl}</p></div>`;
-                    if(rl.includes('ประธาน') && !rl.includes('รอง')) p_html += card;
-                    else if(rl.includes('รองประธาน') || rl.toUpperCase() !== 'STAFF') vp_html += card;
-                    else { if(!depts[d]) depts[d] = []; depts[d].push(`${n} ${displayNick}`); }
+                // 8. Testimonials
+                const testi = await fetchSheet('Testimonials');
+                let testiH = ''; 
+                testi.table.rows.forEach((row, i) => {
+                    if(i === 0 || !row.c[0]) return;
+                    const msg = row.c[0].v; 
+                    const name = row.c[1] ? row.c[1].v : ''; 
+                    const role = row.c[2] ? row.c[2].v : ''; 
+                    const badge = row.c[3] ? row.c[3].v : '';
+                    const rawImg = row.c[4] ? row.c[4].v : '';
+                    
+                    const img = cleanURL(rawImg) || `https://ui-avatars.com/api/?name=${name}&background=random&color=fff`;
+                    
+                    testiH += `
+                        <div class="testi-card">
+                            <div class="quote-icon">"</div>
+                            <p class="testi-text">"${msg}"</p>
+                            <div class="testi-profile">
+                                <img src="${img}" class="testi-img">
+                                <div class="testi-info">
+                                    <h4 style="margin:0; color:var(--crimson-red);">${name}</h4>
+                                    <p style="margin:0; font-size:0.9em; color:var(--text-muted);">${role}</p>
+                                    <span class="testi-badge">${badge}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
                 });
-                document.getElementById('board-container').innerHTML = `<div class="team-row">${p_html}</div><div class="team-row">${vp_html}</div><div class="team-row">${other_html}</div>`;
-                let stH = ''; for(let dp in depts) { stH += `<div class="dept-box"><h5 class="dept-title">ฝ่าย${dp}</h5><ul class="dept-list">${depts[dp].map(m=>`<li>${m}</li>`).join('')}</ul></div>`; }
-                document.getElementById('staff-container').innerHTML = stH;
+                document.getElementById('testimonials-grid').innerHTML = testiH;
 
-                // Scroll Animation
-                const obs = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting) e.target.classList.add('show'); }), {threshold: 0.1});
+                // Roadmap Scroll Animation
+                const obs = new IntersectionObserver(entries => {
+                    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('show'); });
+                }, { threshold: 0.1 });
                 document.querySelectorAll('.roadmap-item').forEach(it => obs.observe(it));
 
-            } catch (e) { console.error('CMS Error:', e); }
+            } catch (e) { 
+                console.error('CMS Error:', e); 
+            }
         }
+        
         window.addEventListener('DOMContentLoaded', init);
     </script>
 </body>

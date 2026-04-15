@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ค่ายวิศวพัฒน์ | Vidvapath Camp</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         /* =========================================
@@ -355,17 +356,22 @@
                 });
                 document.getElementById('about-text-content').innerHTML = bodyText.replace(/\n/g, '<br><br>');
 
-                // 3. Impact
+                // 3. Impact (อัปเกรดมีไอคอน)
                 const impData = await fetchSheet('Impact');
                 let impH = ''; 
                 impData.table.rows.forEach((row, i) => { 
                     if(i === 0) return;
                     const num = safeStr(row.c[0]);
                     const desc = safeStr(row.c[1]);
+                    const iconClass = row.c[2] ? safeStr(row.c[2]) : 'fa-solid fa-check-circle'; // ดึงไอคอนจากคอลัมน์ C
                     
                     if (num) {
                         impH += `
-                            <div class="stat-card">
+                            <div class="stat-card" style="padding-top: 50px; position: relative;">
+                                <div style="position: absolute; top: -25px; left: 50%; transform: translateX(-50%); width: 60px; height: 60px; background: var(--crimson-red); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(139, 26, 26, 0.3);">
+                                    <i class="${iconClass}" style="color: white; font-size: 1.5em;"></i>
+                                </div>
+                                
                                 <p class="stat-number">${num}</p>
                                 <p style="color:var(--text-muted); font-size:1.1em; margin-top:10px;">${desc}</p>
                             </div>
